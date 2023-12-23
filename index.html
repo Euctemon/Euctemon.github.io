@@ -8,23 +8,39 @@
 
 <body>
     <header>
-        <h1>Home</h1>
+        <h1 class="header-name">Home</h1>
     </header>
 
-    <div class="home-descript">
-        <p>
-            Hello and welcome to my homepage!
-        </p>
-    </div>
-    
-
-<div class="general-navs">
-    <div class="math">
-        <p>Mathematics</p>
-    </div>
-    
-    <div class="physics">
-        <p>Physics</p>
-    </div>
-</div>
+    <article>
+        <div class="general-info">
+            <h1>About me</h1>
+            <p>
+                Hello and welcome at my website. I graduated at CTU in biomechanical engineering. I have always been in love with mathematics and that is the reason I currently study mathematics at Charles University. My interests in physics are mainly in continuum mechanics and how to solve the equations arising in this area. The programming languages taught at CTU are mainly Matlab and c. In the last year of my studies I began to teach myself Haskell and I use this language ever since.
+            </p>
+        
+            <p>
+                During my studies at Charles University I caught myself leaning to abstract algebra. When looking at languages similar to Haskell I found Lean theorem prover. Lean is a functional language but on top of that also a theorem prover. This led me to choose a topic on theorem proving as a bachelor thesis. You can see a small code from Lean which shows how to prove that normally recursive and tail recursive definition of sum of a list is identical.
+            </p>
+        </div>
+        
+        <div class="general-navs">
+            <div class="math">
+                <div class="nav-heading">Mathematics</div>
+                <nav>
+                    <ul>
+                        <li><a href="differential_equations.html">Differential equations</a></li>
+                        <li>Groups and Fields</li>
+                    </ul>
+                </nav>
+            </div>
+            <div class="phys">
+                <div class="nav-heading">Physics</div>
+                <nav>
+                    <ul>
+                        <li>Langrangian</li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </article>
 </body>
