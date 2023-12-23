@@ -35,19 +35,6 @@ header {
     margin-right: 25%;
 }
 
-@media screen and (max-width: 400px) {
-    .general-navs {
-      grid-template-areas: "math" "phys";
-      margin: 0;
-      margin-left: 25%;
-      margin-right: 25%;
-    }
-    .general-info {
-     margin-left: 5%;
-     margin-right: 5%;
-    }    
-  }
-
 .math {
     grid-area: math;
     margin-left: 5%;
@@ -115,12 +102,5 @@ a {
     grid-template-columns: 1fr 3fr;
     grid-template-areas: "sidenav content"
                             "mainnav content";
-    }
-}
-
-@media screen and (max-width: 400px) {
-.main-article {
-    grid-template-rows: repeat(3,1fr);
-    grid-template-areas: "sidenav" "mainnav" "content";
     }
 }
