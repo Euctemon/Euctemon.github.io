@@ -1,3 +1,5 @@
+/* common layout */
+
 header {
     display: grid;
     grid-template-columns: repeat(3,1fr);
@@ -6,7 +8,6 @@ header {
     margin: 0px;
     text-align: center;
 }
-
 
 .header-name {
     grid-column: 2;
@@ -18,8 +19,11 @@ header {
     text-align: left;
 }
 
-/* home page styling */
 
+
+
+
+/* homepage styling */
 
 .general-info {
     margin-left: 20%;
@@ -28,51 +32,29 @@ header {
 
 .general-navs {
     display: grid;
-    gap: 5%;
+    gap: 30px;
+    grid-template-columns: 1fr 1fr;
     grid-template-areas: "math phys";
-    text-align: center;
     margin-left: 25%;
     margin-right: 25%;
 }
 
 .math {
     grid-area: math;
-    margin-left: 5%;
 }
 
 .phys {
     grid-area: phys;
-    margin-left: 5%;
 }
 
 
 
-/* booooooooooooo */
+
+
+/* thematic page styling */
 
 .home-return {
     margin-right: 50px;
-}
-
-.nav-heading {
-    font-weight: bolder;
-    font-size: larger;
-    color: gray;
-    text-align: left;
-}
-
-ul {
-    list-style-type: none;
-    text-align: left;
-    padding-left: 0;
-}
-ul li {
-    border-left: 2px solid brown;
-    padding-left: 10px;
-    margin-bottom: 10px;
-}
-
-a {
-    text-decoration: none;
 }
 
 .main-article {
@@ -81,12 +63,19 @@ a {
     grid-template-areas: "mainnav content sidenav";
 }
 
-
-.nav-item {
-    margin-top: 20px;
-    font-weight: bolder;
+@media screen and (max-width: 1000px) {
+    .main-article {
+        grid-template-columns: 1fr 3fr;
+        grid-template-areas: "mainnav content";
+        .sidenav {
+            display: none;
+        }
+    }
 }
 
+.content {
+    grid-area: content;
+}
 
 .mainnav {
     grid-area: mainnav;
@@ -96,10 +85,6 @@ a {
     grid-template-rows: 20px 1fr;
     display: flex;
     justify-content: center;
-}
-
-.content {
-    grid-area: content;
 }
 
 .sidenav {
@@ -112,12 +97,62 @@ a {
     justify-content: center;
 }
 
-@media screen and (max-width: 1000px) {
-.main-article {
-    grid-template-columns: 1fr 3fr;
-    grid-template-areas: "mainnav content";
-    .sidenav {
-        display: none;
-    }
-    }
+.nav-item {
+    margin-top: 20px;
+    font-weight: bolder;
 }
+
+.nav-heading {
+    font-weight: bolder;
+    font-size: larger;
+    color: gray;
+    text-align: left;
+}
+
+.nav-item ul {
+    list-style-type: none;
+    text-align: left;
+    padding-left: 0;
+}
+.nav-item li {
+    border-left: 2px solid brown;
+    padding-left: 10px;
+    margin-bottom: 10px;
+}
+
+.nav-item li:hover {
+    border-left: 5px solid brown;
+    transition: 300ms ease-in;
+}
+
+a {
+    text-decoration: none;
+}
+
+a:visited {
+    color: black;
+}
+
+
+
+
+
+/* Mathematics styling */
+
+.definition {
+    border: solid;
+    font-size: small;
+    border-color: gray;
+    background-color: #f8f8f8;
+    border-width: 1.5px 1.5px 1.5px 1.5px;
+    padding: 5px;
+}
+
+.definition::before {
+    content: 'DEFINITION \A';
+    white-space: pre-wrap;
+    color: gray;
+    font-family: 'Arial';
+    font-size: small;
+}
+
