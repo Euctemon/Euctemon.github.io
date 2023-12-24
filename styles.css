@@ -77,14 +77,25 @@ a {
 
 .main-article {
     display: grid;
-    grid-template-columns: 1fr 3fr 1fr;
+    grid-template-columns: 1fr 4fr 1fr;
     grid-template-areas: "mainnav content sidenav";
 }
 
+
+.nav-item {
+    margin-top: 20px;
+    font-weight: bolder;
+}
+
+
 .mainnav {
     grid-area: mainnav;
-    margin: 5%;
-    font-weight: bolder;
+    position: sticky;
+    top: 50px;
+    align-self: start;
+    grid-template-rows: 20px 1fr;
+    display: flex;
+    justify-content: center;
 }
 
 .content {
@@ -93,14 +104,20 @@ a {
 
 .sidenav {
     grid-area: sidenav;
-    margin: 5%;
-    font-weight: bolder;
+    position: sticky;
+    top: 50px;
+    align-self: start;
+    grid-template-rows: 20px 1fr;
+    display: flex;
+    justify-content: center;
 }
 
 @media screen and (max-width: 1000px) {
 .main-article {
     grid-template-columns: 1fr 3fr;
-    grid-template-areas: "sidenav content"
-                            "mainnav content";
+    grid-template-areas: "mainnav content";
+    .sidenav {
+        display: none;
+    }
     }
 }
