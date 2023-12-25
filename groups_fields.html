@@ -22,45 +22,61 @@
         <h1 class="header-name">Groups and fields</h1>
     </header>
 
-    <article>
-        <div class="main-article">
-            <div class="mainnav">
-            <div class="nav-item">
-            <div class="nav-heading">Groups and fields</div>
-            <nav>
-                <ul>
-                <li>Introduction</li>
-                <li>Monoids and Groups</li>
-                <li>Rings and Domains</li>
-                <li>Fields</li>
-                </ul>
-            </nav>
-            </div>
-            </div>
+    <div class="main-article">
+        <div class="mainnav">
+        <div class="nav-item">
+        <div class="nav-heading">Groups and fields</div>
+        <nav>
+            <ul>
+            <li>Introduction</li>
+            <li>Monoids and Groups</li>
+            <li>Rings and Domains</li>
+            <li>Fields</li>
+            </ul>
+        </nav>
+        </div>
+        </div>
 
-            <div class="sidenav">
-            <div class="nav-item">
-            <div class="nav-heading">Table of content</div>
-            <nav>
-                <ul>
-                <li>Introduction</li>
-                <li>Why Haskell</li>
-                </ul>
-            </nav>
-            </div>
-            </div>
-        
-            <div class="content">
-                <h1>Introduction</h1>
+        <div class="sidenav">
+        <div class="nav-item">
+        <div class="nav-heading">Table of content</div>
+        <nav>
+            <ul>
+            <li>Introduction</li>
+            <li>Why Haskell</li>
+            </ul>
+        </nav>
+        </div>
+        </div>
+    
+        <div class="content">
+            <article>
+                <h2>Introduction</h2>
                 <p>
-                We can start with a definition of a monoid. You cannot have much less axioms as that. It might seem almost useless but we will that it gets handy in defining a ring.
+                    When we study how to solve a system of linear algebaric equations in highschool we generally use integers or rationals as coefficients. One such example is is the following system with two unknows
                 </p>
+
+                $$\begin{aligned}
+                3x+2y&=1 \\
+                x-y&=2 \\
+                \end{aligned}$$
+
+                <p>
+                    What are we allowed to do with these equations? Well we can move the \(y\) to the other side of the equation with an opposite sign. This means we get \(x=2+y\). The we can substitute this expression to the first equation and we get \(3(2+y)+2y=1\). Then we can multiply the content in the brackets and get \((6+3y)+2y=1\). We move the brackets and add the coefficients for the variable \(y\) to get \(6+5y=1\). We subtract the number 6 from both sides and finally divide by the number 5 to find out that \(y=-1\). We substitute the result to the second equation to get \(x=1\). To perform these computations we required that the set of coefficients (in this example integers) need to satisfy many properties such as asociativity, commutativity, the existence of opposite and inverse number and few other properties.
+                </p>
+
+                <p>
+                    What if you want to teach the computer how to reason about a general field and not just integers? By teaching a computer I mean define and abstract field in a special software (theorem prover) such that you can then use the axioms that the field satisfy and prove another properties. For example you do not need to include the fact that the additive inverse of zero is zero. You can prove this from the axioms.
+                </p>
+
+                <!-- kompletní definice tělesa -->
+
                 <div class="definition">
                     <p>
                         Monoid is a set \(R\) with a binary operation \(\odot\) and an element 1 such that for all \(a,b \in R\) is \(a \odot b\) also in \(R\) and \(a \odot 1 = a\) and \(1 \odot a = a\).
                     </p>
                 </div>
-            </div>
+            </article>
         </div>
-    </article>
+        </div>
 </body>
