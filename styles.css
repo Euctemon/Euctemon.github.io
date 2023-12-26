@@ -75,6 +75,7 @@ header {
 
 .content {
     grid-area: content;
+    font-family: Helvetica;
 }
 
 .mainnav {
@@ -141,7 +142,6 @@ a:visited {
 
 .definition {
     border: solid;
-    font-size: small;
     border-color: gray;
     background-color: #f8f8f8;
     border-width: 1.5px 1.5px 1.5px 1.5px;
@@ -153,6 +153,34 @@ a:visited {
     white-space: pre-wrap;
     color: gray;
     font-family: 'Arial';
-    font-size: small;
+    /* font-size: small; */
 }
 
+/* Code styling */
+
+.code {
+    border: solid;
+    font-size: larger;
+    border-color: gray;
+    background-color: #f8f8f8;
+    border-width: 1.5px 1.5px 1.5px 6px;
+    padding: 5px;
+}
+
+.code-comment {
+    color: seagreen;
+}
+
+
+.lean-codeword {
+    font-weight: bolder;
+    color: dodgerblue ;
+}
+
+.lean-name {
+    color: darkgoldenrod ;
+}
+
+.lean-var {
+    color:blueviolet ;
+}

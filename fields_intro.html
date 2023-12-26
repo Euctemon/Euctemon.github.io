@@ -28,10 +28,8 @@
         <div class="nav-heading">Groups and fields</div>
         <nav>
             <ul>
-            <li>Introduction</li>
-            <li>Monoids and Groups</li>
-            <li>Rings and Domains</li>
-            <li>Fields</li>
+            <li><a href="fields_intro.html">Introduction</a></li>
+            <li><a href="fields_monoid.html">Monoids and Groups</a></li>
             </ul>
         </nav>
         </div>
@@ -73,7 +71,18 @@
 
                 <div class="definition">
                     <p>
-                        Monoid is a set \(R\) with a binary operation \(\odot\) and an element 1 such that for all \(a,b \in R\) is \(a \odot b\) also in \(R\) and \(a \odot 1 = a\) and \(1 \odot a = a\).
+                        Field is a set \(R\) with two binary operations \(\odot : R \rightarrow R \rightarrow R\) and \(\oplus : R \rightarrow R \rightarrow R\) and two distinct elements \(1 \in R\) and \(0 \in R\) such that they satisfy following axioms
+                        <ul>
+                            <li>\(\forall \, a,b,c \in R\) it follows that \((a \oplus b) \oplus c = a \oplus (b \oplus c)\)</li>
+                            <li>\(\forall \, a \in R\) it follows that \(a \oplus 0 = a\)</li>
+                            <li>\(\forall \, a \in R \enspace \exists \, b \in R\) such that \(a \oplus b = 0\)</li>
+                            <li>\(\forall \, a,b \in R\) it follows that \(a \oplus b = b \oplus a\)</li>
+                            <li>\(\forall \, a,b,c \in R\) it follows that \((a \odot b) \odot c = a \odot (b \odot c)\)</li>
+                            <li>\(\forall \, a \in R\) it follows that \(a \odot 1 = a\)</li>
+                            <li>\(\forall \, a \in R \enspace \exists \, b \in R\) such that \(a \odot b = 0\)</li>
+                            <li>\(\forall \, a,b \in R\) it follows that \(a \odot b = b \odot a\)</li>
+                            <li>\(\forall \, a,b,c \in R\) it follows that \(a \odot (b \oplus c) = a \odot b \oplus a \odot c\)</li>
+                        </ul>
                     </p>
                 </div>
             </article>
