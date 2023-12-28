@@ -29,19 +29,7 @@
         <nav>
             <ul>
             <li><a href="fields_intro.html">Introduction</a></li>
-            <li><a href="fields_monoid.html">Monoids and Groups</a></li>
-            </ul>
-        </nav>
-        </div>
-        </div>
-
-        <div class="sidenav">
-        <div class="nav-item">
-        <div class="nav-heading">Table of content</div>
-        <nav>
-            <ul>
-            <li>Introduction</li>
-            <li>Why Haskell</li>
+            <li><a href="fields_monoid.html">Monoids</a></li>
             </ul>
         </nav>
         </div>
@@ -51,7 +39,7 @@
             <article>
                 <h2>Introduction</h2>
                 <p>
-                    When we study how to solve a system of linear algebaric equations in highschool we generally use integers or rationals as coefficients. One such example is is the following system with two unknows
+                    Fields are an important object in mathematics. In abstract algebra one can study various connections between groups and fields which is for example helpful for reasoning about the possibility to find roots of a polynomial. More down to earth usage of fields is when one needs to solve a system of linear algebraic equations. The coefficients by the unknowns must be from a field. Why is that? Let's look at an example
                 </p>
 
                 $$\begin{aligned}
@@ -60,14 +48,8 @@
                 \end{aligned}$$
 
                 <p>
-                    What are we allowed to do with these equations? Well we can move the \(y\) to the other side of the equation with an opposite sign. This means we get \(x=2+y\). The we can substitute this expression to the first equation and we get \(3(2+y)+2y=1\). Then we can multiply the content in the brackets and get \((6+3y)+2y=1\). We move the brackets and add the coefficients for the variable \(y\) to get \(6+5y=1\). We subtract the number 6 from both sides and finally divide by the number 5 to find out that \(y=-1\). We substitute the result to the second equation to get \(x=1\). To perform these computations we required that the set of coefficients (in this example integers) need to satisfy many properties such as asociativity, commutativity, the existence of opposite and inverse number and few other properties.
+                    What do we do when we try to solve this system of equations? First we move the \(y\) to the other side of the equation with an opposite sign to get \(x=2+y\). We substitute this expression to the first equation to obtain \(3(2+y)+2y=1\). We multiply the content in the brackets to get \((6+3y)+2y=1\). We move the brackets to obtain \(6+(3y+2y)\) and add the coefficients for the variable \(y\) to get \(6+5y=1\). We subtract the number 6 from both sides and divide by the number \(5\) to find out that \(y=-1\). We substitute the result to the second equation to get \(x=1\). We used a lot of properties of numbers to arrive at this result. We freely used associativity of adding, the distributive property, existence of additive and multiplicative inverses and so on. How does a formal definition of fields look like? It is not pretty as a field is quite a complex algebraic structure. A lot of us needed to learn the propertis like associativity or distributivity of rationals or real numbers during math classes in highschool. Here is the definition
                 </p>
-
-                <p>
-                    What if you want to teach the computer how to reason about a general field and not just integers? By teaching a computer I mean define and abstract field in a special software (theorem prover) such that you can then use the axioms that the field satisfy and prove another properties. For example you do not need to include the fact that the additive inverse of zero is zero. You can prove this from the axioms.
-                </p>
-
-                <!-- kompletní definice tělesa -->
 
                 <div class="definition">
                     <p>
@@ -85,56 +67,9 @@
                         </ul>
                     </p>
                 </div>
+                
                 <p>
-                    fajdfd fajdfd fajdfdfajdfdfajdfdfajdfd fajdfd  fajdfd fajdfd fajdfdfajdfd fajdfd fajdfd fajdfd
-                    fajdfd fajdfd fajdfdfajdfdfajdfdfajdfd fajdfd  fajdfd fajdfd fajdfdfajdfd fajdfd fajdfd fajdfd
-                    fajdfd fajdfd fajdfdfajdfdfajdfdfajdfd fajdfd  fajdfd fajdfd fajdfdfajdfd fajdfd fajdfd fajdfd
-                    fajdfd fajdfd fajdfdfajdfdfajdfdfajdfd fajdfd  fajdfd fajdfd fajdfdfajdfd fajdfd fajdfd fajdfd
-                    fajdfd fajdfd fajdfdfajdfdfajdfdfajdfd fajdfd  fajdfd fajdfd fajdfdfajdfd fajdfd fajdfd fajdfd
-                    fajdfd fajdfd fajdfdfajdfdfajdfdfajdfd fajdfd  fajdfd fajdfd fajdfdfajdfd fajdfd fajdfd fajdfd
-                    fajdfd fajdfd fajdfdfajdfdfajdfdfajdfd fajdfd  fajdfd fajdfd fajdfdfajdfd fajdfd fajdfd fajdfd
-                    fajdfd fajdfd fajdfdfajdfdfajdfdfajdfd fajdfd  fajdfd fajdfd fajdfdfajdfd fajdfd fajdfd fajdfd
-                    fajdfd fajdfd fajdfdfajdfdfajdfdfajdfd fajdfd  fajdfd fajdfd fajdfdfajdfd fajdfd fajdfd fajdfd
-                    fajdfd fajdfd fajdfdfajdfdfajdfdfajdfd fajdfd  fajdfd fajdfd fajdfdfajdfd fajdfd fajdfd fajdfd
-                    fajdfd fajdfd fajdfdfajdfdfajdfdfajdfd fajdfd  fajdfd fajdfd fajdfdfajdfd fajdfd fajdfd fajdfd
-                    fajdfd fajdfd fajdfdfajdfdfajdfdfajdfd fajdfd  fajdfd fajdfd fajdfdfajdfd fajdfd fajdfd fajdfd
-                    v
-                    fajdfd fajdfd fajdfdfajdfdfajdfdfajdfd fajdfd  fajdfd fajdfd fajdfdfajdfd fajdfd fajdfd fajdfd
-                    fajdfd fajdfd fajdfdfajdfdfajdfdfajdfd fajdfd  fajdfd fajdfd fajdfdfajdfd fajdfd fajdfd fajdfd
-                </p>
-                <p>
-                    fajdfd fajdfd fajdfdfajdfdfajdfdfajdfd fajdfd  fajdfd fajdfd fajdfdfajdfd fajdfd fajdfd fajdfd
-                    fajdfd fajdfd fajdfdfajdfdfajdfdfajdfd fajdfd  fajdfd fajdfd fajdfdfajdfd fajdfd fajdfd fajdfd
-                    fajdfd fajdfd fajdfdfajdfdfajdfdfajdfd fajdfd  fajdfd fajdfd fajdfdfajdfd fajdfd fajdfd fajdfd
-                    fajdfd fajdfd fajdfdfajdfdfajdfdfajdfd fajdfd  fajdfd fajdfd fajdfdfajdfd fajdfd fajdfd fajdfd
-                    fajdfd fajdfd fajdfdfajdfdfajdfdfajdfd fajdfd  fajdfd fajdfd fajdfdfajdfd fajdfd fajdfd fajdfd
-                    fajdfd fajdfd fajdfdfajdfdfajdfdfajdfd fajdfd  fajdfd fajdfd fajdfdfajdfd fajdfd fajdfd fajdfd
-                    fajdfd fajdfd fajdfdfajdfdfajdfdfajdfd fajdfd  fajdfd fajdfd fajdfdfajdfd fajdfd fajdfd fajdfd
-                    fajdfd fajdfd fajdfdfajdfdfajdfdfajdfd fajdfd  fajdfd fajdfd fajdfdfajdfd fajdfd fajdfd fajdfd
-                    fajdfd fajdfd fajdfdfajdfdfajdfdfajdfd fajdfd  fajdfd fajdfd fajdfdfajdfd fajdfd fajdfd fajdfd
-                    fajdfd fajdfd fajdfdfajdfdfajdfdfajdfd fajdfd  fajdfd fajdfd fajdfdfajdfd fajdfd fajdfd fajdfd
-                    fajdfd fajdfd fajdfdfajdfdfajdfdfajdfd fajdfd  fajdfd fajdfd fajdfdfajdfd fajdfd fajdfd fajdfd
-                    fajdfd fajdfd fajdfdfajdfdfajdfdfajdfd fajdfd  fajdfd fajdfd fajdfdfajdfd fajdfd fajdfd fajdfd
-                    v
-                    fajdfd fajdfd fajdfdfajdfdfajdfdfajdfd fajdfd  fajdfd fajdfd fajdfdfajdfd fajdfd fajdfd fajdfd
-                    fajdfd fajdfd fajdfdfajdfdfajdfdfajdfd fajdfd  fajdfd fajdfd fajdfdfajdfd fajdfd fajdfd fajdfd
-                </p>
-                <p>
-                    fajdfd fajdfd fajdfdfajdfdfajdfdfajdfd fajdfd  fajdfd fajdfd fajdfdfajdfd fajdfd fajdfd fajdfd
-                    fajdfd fajdfd fajdfdfajdfdfajdfdfajdfd fajdfd  fajdfd fajdfd fajdfdfajdfd fajdfd fajdfd fajdfd
-                    fajdfd fajdfd fajdfdfajdfdfajdfdfajdfd fajdfd  fajdfd fajdfd fajdfdfajdfd fajdfd fajdfd fajdfd
-                    fajdfd fajdfd fajdfdfajdfdfajdfdfajdfd fajdfd  fajdfd fajdfd fajdfdfajdfd fajdfd fajdfd fajdfd
-                    fajdfd fajdfd fajdfdfajdfdfajdfdfajdfd fajdfd  fajdfd fajdfd fajdfdfajdfd fajdfd fajdfd fajdfd
-                    fajdfd fajdfd fajdfdfajdfdfajdfdfajdfd fajdfd  fajdfd fajdfd fajdfdfajdfd fajdfd fajdfd fajdfd
-                    fajdfd fajdfd fajdfdfajdfdfajdfdfajdfd fajdfd  fajdfd fajdfd fajdfdfajdfd fajdfd fajdfd fajdfd
-                    fajdfd fajdfd fajdfdfajdfdfajdfdfajdfd fajdfd  fajdfd fajdfd fajdfdfajdfd fajdfd fajdfd fajdfd
-                    fajdfd fajdfd fajdfdfajdfdfajdfdfajdfd fajdfd  fajdfd fajdfd fajdfdfajdfd fajdfd fajdfd fajdfd
-                    fajdfd fajdfd fajdfdfajdfdfajdfdfajdfd fajdfd  fajdfd fajdfd fajdfdfajdfd fajdfd fajdfd fajdfd
-                    fajdfd fajdfd fajdfdfajdfdfajdfdfajdfd fajdfd  fajdfd fajdfd fajdfdfajdfd fajdfd fajdfd fajdfd
-                    fajdfd fajdfd fajdfdfajdfdfajdfdfajdfd fajdfd  fajdfd fajdfd fajdfdfajdfd fajdfd fajdfd fajdfd
-                    v
-                    fajdfd fajdfd fajdfdfajdfdfajdfdfajdfd fajdfd  fajdfd fajdfd fajdfdfajdfd fajdfd fajdfd fajdfd
-                    fajdfd fajdfd fajdfdfajdfdfajdfdfajdfd fajdfd  fajdfd fajdfd fajdfdfajdfd fajdfd fajdfd fajdfd
+                    This is a long list of properties and it might be hard to remember them if one does not use them often. From the next chapter we will be building the field structure a little bit differently and will be encoding it in a theorem prover which is a software for writing mathematical definitions, theorems and proofs as programs.
                 </p>
             </article>
         </div>

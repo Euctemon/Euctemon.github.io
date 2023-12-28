@@ -18,7 +18,7 @@
 
 <body>
     <header>
-        <h1>Groups and fields</h1>
+        Groups and fields
     </header>
 
     <div class="main-article">
@@ -29,7 +29,7 @@
         <nav>
             <ul>
                 <li><a href="fields_intro.html">Introduction</a></li>
-                <li><a href="fields_monoid.html">Monoids and Groups</a></li>
+                <li><a href="fields_monoid.html">Monoids</a></li>
             </ul>
         </nav>
         </div>
@@ -40,8 +40,8 @@
         <div class="nav-heading">Table of content</div>
         <nav>
             <ul>
-            <li>Introduction</li>
-            <li>Why Haskell</li>
+            <li><a href="#keepitsimple">Keep it simple</a></li>
+            <li><a href="#commutmonoids">Commutative monoids</a></li>
             </ul>
         </nav>
         </div>
@@ -49,9 +49,9 @@
     
         <div class="content">
             <article>
-                <h2>Monoids and groups</h2>
+                <h2 id="keepitsimple">Keep it simple</h2>
                 <p>
-                    Nothing here but the definition!
+                    We start with a fairly simple algebraic structure called monoid. A monoid is just a set with one binary operation and one unique element called identity. The operation being binary just means that the operation takes two elements from the set and assign to them one specific element also in the set. This operation can be addition or multiplication but not only. For example string concatenation is also a valid binary operation taking two strings and producing another string. The name of identity element depends on the binary operation. For addition we take the identity to be a zero, for multiplication an one and for string concatenation a empty string. The formal definition of monoid is surely shorter than that of a field
                 </p>
 
                 <div class="definition">
@@ -67,20 +67,65 @@
                 </div>
 
                 <p>
-                    It can be formalized in LEAN as follows.
+                    Throughout all the chapters I will be using the theorem prover called <a href="https://lean-lang.org/">LEAN</a>. There is a lot of software for program verification and writing mathematical proofs, for example Coq, Isabelle, Prover9 and so on. What makes LEAN special for me personally is that it is a modern software and also a fully featured functional language. So let's go programming, or should I say proving? Here is how the definition of monoid looks in LEAN
                 </p>
 
 
-                <div class="code">
+<div class="code">
 <pre>
-<span class="lean-codeword">class</span> <span class="lean-name">mul_monoid</span> (α : <span class="lean-codeword">Type</span>) <span class="lean-codeword">where</span>
-    mul : <span class="lean-var">α</span> → <span class="lean-var">α</span> → <span class="lean-var">α</span>
-    one : <span class="lean-var">α</span>
-    assoc : ∀ <span class="lean-var">a b c</span> : <span class="lean-var">α</span>, <span class="lean-var">mul a</span> (<span class="lean-var">mul b c</span>) = <span class="lean-var">mul</span> (<span class="lean-var">mul a b</span>) <span class="lean-var">c</span>
-    mul_one_left : ∀ <span class="lean-var">a</span> : <span class="lean-var">α</span>, <span class="lean-var">mul a one</span> = <span class="lean-var">a</span>
-    mul_one_right : ∀ <span class="lean-var">a</span> : <span class="lean-var">α</span>, <span class="lean-var">mul one a</span> = <span class="lean-var">a</span>
+class mul_monoid (α : Type) where
+    mul : α → α → α
+    one : α
+    mul_assoc : ∀ a b c : α, mul a (mul b c) = mul (mul a b) c
+    mul_one_right : ∀ a : α, mul a one = a
+    mul_one_left : ∀ a : α, mul one a = a
 </pre>
-                </div>
+</div>
+
+                <p>
+                    The LEAN prover is based on higher order type theory and we will bump into the codeword type quite often. This doesn't need to bother you as we will focus just on the mathematics. For anyone who knows LEAN and accidentaly reads this - at the time of writing these chapters I am not proficient in LEAN and that means I will be using the prover in the most basic way. This means that sometimes I will have to type more than it would be necessary. On the other hand it might have the advantage that not much will be hidden in some obscure syntax or rules. Now is the time to prove that the identity we need in the definition of a monoid is unique.
+                </p>
+
+<div class="code">
+<pre>
+namespace mul_monoid
+
+example {α : Type} [mul_monoid α] (b : α) (h : ∀ a, mul a b = a) : b = (one : α) := by
+    have : mul one b = one := h one
+    rw [mul_one_left] at this
+    exact this
+</pre>
+</div>
+
+            <h2 id="commutmonoids">Commutative monoids</h2>
+            <p>
+                The binary operation specified in the definition of a monoid does not need to be commutative. This means that for any elements \(a\) and \(b\) in the monoid it holds that \(a \odot b = b \odot a\). How can we tell this to LEAN? One way is to define the commutative monoid from the ground up as follows
+
+<div class="code">
+<pre>
+class comm_mul_monoid_whole (α : Type) where
+    mul : α → α → α
+    one : α
+    mul_assoc : ∀ a b c : α, mul a (mul b c) = mul (mul a b) c
+    mul_one_right : ∀ a : α, mul a one = a
+    mul_comm : ∀ a b : α, mul a b = mul b a
+</pre>
+</div>
+
+            <p>
+                You might notice a little thing missing here. Where did mul_one_left go? We don't need it as we can prove it holds. We just use the axiom mul_one_right and then use the commutativity of the binary operation mul_comm. This is certainly possible but there is a better way. We can use the monoid definition to build up the definition for a commutative monoid as follows
+            </p>
+
+<div class="code">
+<pre>
+class comm_mul_monoid (α : Type) extends mul_monoid α where
+    mul_comm : ∀ a b : α, mul a b = mul b a
+</pre>
+</div>
+
+
+
+            </p>
             </article>
         </div>
         </div>

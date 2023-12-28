@@ -1,8 +1,8 @@
 /* common layout */
 
 body {
-    margin: 0;
-    font-family: "Source Sans Pro";
+    margin: 0 0 500px 0;
+    font-family: "Microsoft Yahei";
 }
 
 header {
@@ -52,10 +52,6 @@ header {
 
 /* thematic page styling */
 
-.home-return {
-    margin-right: 50px;
-}
-
 .main-article {
     display: grid;
     grid-template-columns: 1fr 4fr 1fr;
@@ -75,7 +71,7 @@ header {
 
 .content {
     grid-area: content;
-    margin: 10px;
+    margin-right: 5%;
 }
 
 .mainnav {
@@ -115,12 +111,6 @@ header {
     padding-left: 10px;
 }
 
-/* .nav-item li a:hover {
-    text-decoration: underline;
-    color: #922b21;
-} */
-
-
 a {
     text-decoration: none;
     color: gray;
@@ -128,10 +118,13 @@ a {
 }
 
 a:hover {
-    color: black;
+    color:#0D47A1;
     transition-duration: 0.5s;
 }
 
+h2 {
+    scroll-margin-top: 50px;
+}
 
 
 /* Mathematics styling */
