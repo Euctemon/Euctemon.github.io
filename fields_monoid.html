@@ -113,9 +113,28 @@ class comm_mul_monoid_whole (α : Type) where
 </div>
 
             <p>
-                You might notice a little thing missing here. Where did mul_one_left go? We don't need it as we can prove it holds. We just use the axiom mul_one_right and then use the commutativity of the binary operation mul_comm. This is certainly possible but there is a better way. We can use the monoid definition to build up the definition for a commutative monoid as follows
+                You might notice a little thing missing here. Where did <span class="code-inline">mul_one_left</span> go? We don't need it as we can prove it holds. We just use the axiom <span class="code-inline">mul_one_right</span> and then use the commutativity of the binary operation <span class="code-inline">mul_comm</span>. It can be formalized as follows
             </p>
 
+<div class="code">
+<pre>
+namespace comm_mul_monoid'
+
+example {α : Type} [comm_mul_monoid' α] (a : α) : mul (one : α) a = a := by
+    rw [mul_comm one]
+    rw [mul_one_right]    
+</pre>
+</div>
+
+
+
+
+
+
+
+            <p>
+                This is certainly possible but there is a better way. We can use the monoid definition to build up the definition for a commutative monoid as follows
+            </p>
 <div class="code">
 <pre>
 class comm_mul_monoid (α : Type) extends mul_monoid α where
