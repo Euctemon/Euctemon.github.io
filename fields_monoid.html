@@ -40,8 +40,8 @@
         <div class="nav-heading">Table of content</div>
         <nav>
             <ul>
-            <li><a href="#keepitsimple">Keep it simple</a></li>
-            <li><a href="#commutmonoids">Commutative monoids</a></li>
+            <li><a href="#monoids">Keep it simple</a></li>
+            <li><a href="#comm-monoids">Commutative monoids</a></li>
             </ul>
         </nav>
         </div>
@@ -49,7 +49,7 @@
     
         <div class="content">
             <article>
-                <h2 id="keepitsimple">Keep it simple</h2>
+                <h2 id="monoids">Monoids</h2>
                 <p>
                     We start with a fairly simple algebraic structure called monoid. A monoid is just a set with one binary operation and one unique element called identity. The operation being binary just means that the operation takes two elements from the set and assign to them one specific element also in the set. This operation can be addition or multiplication but not only. For example string concatenation is also a valid binary operation taking two strings and producing another string. The name of identity element depends on the binary operation. For addition we take the identity to be a zero, for multiplication an one and for string concatenation a empty string. The formal definition of monoid is surely shorter than that of a field
                 </p>
@@ -83,7 +83,7 @@ class mul_monoid (α : Type) where
 </div>
 
                 <p>
-                    The LEAN prover is based on higher order type theory and we will bump into the codeword type quite often. This doesn't need to bother you as we will focus just on the mathematics. For anyone who knows LEAN and accidentaly reads this - at the time of writing these chapters I am not proficient in LEAN and that means I will be using the prover in the most basic way. This means that sometimes I will have to type more than it would be necessary. On the other hand it might have the advantage that not much will be hidden in some obscure syntax or rules. Now is the time to prove that the identity we need in the definition of a monoid is unique.
+                    The LEAN prover is based on higher order type theory and we will bump into types quite often. This doesn't need to bother you as we will focus just on the mathematics. For anyone who knows LEAN and accidentaly reads this - at the time of writing these chapters I am not proficient in LEAN and that means I will be using the prover in the most basic way. This means that sometimes I will have to type more than it would be necessary. On the other hand it might have the advantage that not much will be hidden in some obscure syntax or rules. Now is the time to prove that the identity we need in the definition of a monoid is unique.
                 </p>
 
 <div class="code">
@@ -97,7 +97,40 @@ example {α : Type} [mul_monoid α] (b : α) (h : ∀ a, mul a b = a) : b = (one
 </pre>
 </div>
 
-            <h2 id="commutmonoids">Commutative monoids</h2>
+            <p>
+                With only the definition at hand we cannot prove anything interesting about the monoid structure. The good stuff happens when we start talking about monoid morphism. I will not talk about morphisms in this text. So is that it? Well if we can say something about an element such that it has an inverse element then we can sometimes discover another property the element satisfies. First we need a technical lemma which is mathematically trivial. If for elements \(a,b,c \in R\) it holds that \(a = b\) then surely \(c \odot a = c \odot b\). Luckily there is no problem telling this to lean
+            </p>
+
+<div class="code">
+<pre>
+theorem left_mul {α : Type} [mul_monoid α] (a b : α) (h : a = b) : ∀ c : α, mul c a = mul c b := by
+    intro c
+    have : mul c a = mul c a := rfl
+    rw [h]
+</pre>
+</div>
+
+    <p>
+        So back to the inverse elements. In the context of monoid it does not generally hold that \(c \odot a = c \odot b\) implies \(a = b\). You cannot mindlessly cancel the element \(c\). But you can do that if there exists and inverse element for \(c\). By that it is meant there exists such \(d\) so \(d \odot c = 1\). As we have not yet stated that the binary operation is multiplicative we need to be careful and say that \(c\) has a left inverse. Now we can prove that if an element has a left inverse then you can cancel it from left
+    </p>
+
+<idv class="code">
+<pre>
+theorem left_cancel {α : Type} [mul_monoid α] (a b c : α) (h : ∃ d, mul d c = one) : mul c a = mul c b → a = b := by
+    intro hc
+    apply Exists.elim h
+    intro d hd
+    have : mul d (mul c a) = mul d (mul c b) := by
+    apply left_mul
+    exact hc
+    repeat (rw [mul_assoc, hd, mul_one_left] at this)
+    exact this
+</pre>
+</idv>
+
+
+
+            <h2 id="comm-monoids">Commutative monoids</h2>
             <p>
                 The binary operation specified in the definition of a monoid does not need to be commutative. This means that for any elements \(a\) and \(b\) in the monoid it holds that \(a \odot b = b \odot a\). How can we tell this to LEAN? One way is to define the commutative monoid from the ground up as follows
 
