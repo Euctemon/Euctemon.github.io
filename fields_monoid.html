@@ -40,8 +40,9 @@
         <div class="nav-heading">Table of content</div>
         <nav>
             <ul>
-            <li><a href="#monoids">Keep it simple</a></li>
+            <li><a href="#monoids">Monoids</a></li>
             <li><a href="#comm-monoids">Commutative monoids</a></li>
+            <li><a href="#groups">Groups</a></li>
             </ul>
         </nav>
         </div>
@@ -114,7 +115,7 @@ theorem left_mul {α : Type} [mul_monoid α] (a b : α) (h : a = b) : ∀ c : α
         So back to the inverse elements. In the context of monoid it does not generally hold that \(c \odot a = c \odot b\) implies \(a = b\). You cannot mindlessly cancel the element \(c\). But you can do that if there exists and inverse element for \(c\). By that it is meant there exists such \(d\) so \(d \odot c = 1\). As we have not yet stated that the binary operation is multiplicative we need to be careful and say that \(c\) has a left inverse. Now we can prove that if an element has a left inverse then you can cancel it from left
     </p>
 
-<idv class="code">
+<div class="code">
 <pre>
 theorem left_cancel {α : Type} [mul_monoid α] (a b c : α) (h : ∃ d, mul d c = one) : mul c a = mul c b → a = b := by
     intro hc
@@ -126,13 +127,14 @@ theorem left_cancel {α : Type} [mul_monoid α] (a b c : α) (h : ∃ d, mul d c
     repeat (rw [mul_assoc, hd, mul_one_left] at this)
     exact this
 </pre>
-</idv>
+</div>
 
 
 
             <h2 id="comm-monoids">Commutative monoids</h2>
             <p>
                 The binary operation specified in the definition of a monoid does not need to be commutative. This means that for any elements \(a\) and \(b\) in the monoid it holds that \(a \odot b = b \odot a\). How can we tell this to LEAN? One way is to define the commutative monoid from the ground up as follows
+            </p>
 
 <div class="code">
 <pre>
@@ -159,12 +161,6 @@ example {α : Type} [comm_mul_monoid' α] (a : α) : mul (one : α) a = a := by
 </pre>
 </div>
 
-
-
-
-
-
-
             <p>
                 This is certainly possible but there is a better way. We can use the monoid definition to build up the definition for a commutative monoid as follows
             </p>
@@ -176,9 +172,66 @@ class comm_mul_monoid (α : Type) extends mul_monoid α where
 </div>
 
 
-
+            <h2 id="groups">Groups</h2>
+            <p>
+                Earlier we saw that if an element had an inverse we could deduce additional algebraic properties like left cancelation. What if every element in a given monoid has an inverse? We get a an algebraic structure called group. I will again state a plain-text definition and then we will look how to encode it in Lean. The typical definition people hear is this
             </p>
-            </article>
+
+            <div class="definition">
+                <p>
+                    Group is a set \(R\) with a binary operation \(\odot : R \rightarrow R \rightarrow R\) and an element \(1 \in R\) such that they satisfy following axioms
+                    <ul>
+                        <li>\(\forall \, a,b \in R\) we have \(a \odot b \in R\)</li>
+                        <li>\(\forall \, a,b,c \in R\) we have \((a \odot b) \odot c = a \odot (b \odot c)\)</li>
+                        <li>\(\forall \, a \in R\) we have \(a \odot 1 = a\)</li>
+                        <li>\(\forall \, a \in R\) we have \(1 \odot a = a\)</li>
+                        <li>\(\forall \, a \in R \enspace \exists \, b \in R\) such that \(b \odot a = 1\)</li>
+                    </ul>
+                </p>
+            </div>
+
+            <p>
+                The second definition is both shorter and I would say even clearer
+            </p>
+
+            <div class="definition">
+                <p>
+                    Group is a monoid \((R,\odot)\) where every element has its left inverse. This means
+                    <ul>
+                        <li>\(\forall \, a \in R \enspace \exists \, b \in R\) such that \(b \odot a = 1\)</li>
+                    </ul>
+                </p>
+            </div>
+
+            <p>
+                Are we bothered with the fact that we did not explicitly said that the element shoul have also right inverse? It is not so pleasant exercise to show that indeed if a group element has a left inverse \(b\) then \(b\) is also a right inverse. For this to prove we need a group structure. You might be tempted to recycle the lemma about left cancelation in monoids. There we assumed that a specific element had a left inverse and proved the left cancelation property. But from the fact that one element has a left inverse you cannot prove it is also its right inverse. You need to assume that all elements have a left inverse! The proof requires a little lemma about idempotence of inverses
+            </p>
+            
+<div class="code">
+<pre>
+namespace mul_monoid
+postfix:max "⁻¹" => mul_group.inv
+    
+theorem inv_idemp {α : Type} [mul_group α] (a : α) : mul (mul a a⁻¹) (mul a a⁻¹) = (mul a a⁻¹) := by
+    rw [mul_assoc]
+    rw [← mul_assoc a a⁻¹ a]
+    rw [mul_group.inv_left]
+    rw [mul_one_right]
+    
+theorem inv_right {α : Type} [mul_group α] (a : α) : mul a a⁻¹ = one := by
+    calc mul a a⁻¹ = mul one (mul a a⁻¹) := Eq.symm (mul_one_left (mul a a⁻¹))
+         _ = mul (mul (mul a a⁻¹)⁻¹ (mul a a⁻¹)) (mul a a⁻¹) := by rw [mul_group.inv_left (mul a a⁻¹)]
+         _ = mul (mul a a⁻¹)⁻¹ (mul (mul a a⁻¹) (mul a a⁻¹)) := by rw [mul_assoc ((mul a a⁻¹)⁻¹) (mul a a⁻¹) (mul a a⁻¹)]
+         _ = mul (mul a a⁻¹)⁻¹ (mul a a⁻¹) := by rw [inv_idemp]
+         _ = one := by rw [mul_group.inv_left]
+</pre>
+</div>
+
+        <p>
+            This is it. We proved that in a group, if an element \(a\) has a left inverse \(b\) then this exact \(b\) is also a right inverse. Beware that although for \(a \odot b = 1\) it holds that \(a \odot b = b \odot a\) it does not mean that the binary operation is commutative. This holds just for the element inverses.
+        </p>
+
+        </article>
         </div>
         </div>
 </body>

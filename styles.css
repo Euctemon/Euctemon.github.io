@@ -113,12 +113,9 @@ header {
 
 a {
     color: gray;
+    text-decoration: none;
     transition-duration: 0.5s;
 
-}
-
-:is(header,.mainnav,.sidenav) a {
-    text-decoration: none;
 }
 
 a:hover {
