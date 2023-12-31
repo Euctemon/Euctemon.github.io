@@ -41,7 +41,6 @@
         <nav>
             <ul>
             <li><a href="#monoids">Monoids</a></li>
-            <li><a href="#comm-monoids">Commutative monoids</a></li>
             <li><a href="#groups">Groups</a></li>
             </ul>
         </nav>
@@ -52,14 +51,13 @@
             <article>
                 <h2 id="monoids">Monoids</h2>
                 <p>
-                    We start with a fairly simple algebraic structure called monoid. A monoid is just a set with one binary operation and one unique element called identity. The operation being binary just means that the operation takes two elements from the set and assign to them one specific element also in the set. This operation can be addition or multiplication but not only. For example string concatenation is also a valid binary operation taking two strings and producing another string. The name of identity element depends on the binary operation. For addition we take the identity to be a zero, for multiplication an one and for string concatenation a empty string. The formal definition of monoid is surely shorter than that of a field
+                    We start with a simple algebraic structure called monoid. A monoid is just a set with one binary operation and one unique element called identity. The operation being binary just means that the operation takes two elements from the set and assign to them one specific element also in the set. This operation can be addition or multiplication but not only. For example string concatenation is also a valid binary operation taking two strings and producing another string. The name of identity element depends on the binary operation. For addition we take the identity to be the number zero, for multiplication the number one and for string concatenation the empty string. The formal definition of monoid is surely shorter than that of a field
                 </p>
 
                 <div class="definition">
                     <p>
                         Monoid is a set \(R\) with a binary operation \(\odot : R \rightarrow R \rightarrow R\) and an element \(1 \in R\) such that they satisfy following axioms
                         <ul>
-                            <li>\(\forall \, a,b \in R\) we have \(a \odot b \in R\)</li>
                             <li>\(\forall \, a,b,c \in R\) we have \((a \odot b) \odot c = a \odot (b \odot c)\)</li>
                             <li>\(\forall \, a \in R\) we have \(a \odot 1 = a\)</li>
                             <li>\(\forall \, a \in R\) we have \(1 \odot a = a\)</li>
@@ -68,9 +66,8 @@
                 </div>
 
                 <p>
-                    Throughout all the chapters I will be using the theorem prover called <a href="https://lean-lang.org/">LEAN</a>. There is a lot of software for program verification and writing mathematical proofs, for example Coq, Isabelle, Prover9 and so on. What makes LEAN special for me personally is that it is a modern software and also a fully featured functional language. So let's go programming, or should I say proving? Here is how the definition of monoid looks in LEAN
+                    When you want to define a very simple algebraic structure there axioms seems to be a good choice. First there is the associativity of the binary operation. It would be weird if something like \((a \odot a) \odot a = a \odot (a \odot a)\) wouldn't hold. The other two axioms specifies how the element \(1\) plays with the binary operation. If we just stated that there is a specific element in the set but we wouldn't know its behaviour would the element be really special? You are free to come up with almost any axioms for your structure. You can state just the associativity of the binary operation and nothing more. Then it would be called semigroup. Or if you really want you do not need to specify the associative property. But in these cases you end up with a structure which is hard to reason about as you cannot say almost anything about that structure. Now we will look at how to define monoids in LEAN. The definition is almost one to one copy of the written one. You can see that the the operations and axioms are bundled together. The mathematical definition is oblivious of the naming of the binary operation as long as the operation satisfy the axioms. Nevertheless we will be working with either the multiplication od addition and so I will name them in the code.
                 </p>
-
 
 <div class="code">
 <pre>
@@ -84,14 +81,14 @@ class mul_monoid (α : Type) where
 </div>
 
                 <p>
-                    The LEAN prover is based on higher order type theory and we will bump into types quite often. This doesn't need to bother you as we will focus just on the mathematics. For anyone who knows LEAN and accidentaly reads this - at the time of writing these chapters I am not proficient in LEAN and that means I will be using the prover in the most basic way. This means that sometimes I will have to type more than it would be necessary. On the other hand it might have the advantage that not much will be hidden in some obscure syntax or rules. Now is the time to prove that the identity we need in the definition of a monoid is unique.
+                    So what can we do with it? The first thing is that we will prove the uniqueness of the element \(1\). The proof of this fact is rather simple. Let's say that we have an element \(b\) such that if we choose an arbitrary element \(a\) then \(a \odot b = 1\). We can then choose \(1\) as the element \(a\) and then use the axiom of multiplying an element by \(1\) on the left side to arrive to the conclusion that \(b = 1\). Everything up to the lonely <span class="code-inline">:</span> is an assumption. You might be stumped by the expression  <span class="code-inline">M : mul_monoid α</span>. This means that \(M\) is a monoid with the underlying type \(\alpha\). When we speak about monoids we need to specify the underlying set. In the definition that was what the letter \(R\) stands. In the LEAN definition we treated the variable \(\alpha\) as something like the set \(R\). The problem is that variable \(\alpha\) is a type. There is a difference but at this point it won't cause any trouble. If you are bothered by this you can read the chapter on <a href="https://leanprover-community.github.io/mathematics_in_lean/C04_Sets_and_Functions.html">sets</a> from the book on mathematics in LEAN I mentioned earlier.
                 </p>
 
 <div class="code">
 <pre>
 namespace mul_monoid
 
-example {α : Type} [mul_monoid α] (b : α) (h : ∀ a, mul a b = a) : b = (one : α) := by
+example {α : Type} [M : mul_monoid α] (b : α) (h : ∀ a, mul a b = a) : b = (one : α) := by
     have : mul one b = one := h one
     rw [mul_one_left] at this
     exact this
@@ -99,25 +96,25 @@ example {α : Type} [mul_monoid α] (b : α) (h : ∀ a, mul a b = a) : b = (one
 </div>
 
             <p>
-                With only the definition at hand we cannot prove anything interesting about the monoid structure. The good stuff happens when we start talking about monoid morphism. I will not talk about morphisms in this text. So is that it? Well if we can say something about an element such that it has an inverse element then we can sometimes discover another property the element satisfies. First we need a technical lemma which is mathematically trivial. If for elements \(a,b,c \in R\) it holds that \(a = b\) then surely \(c \odot a = c \odot b\). Luckily there is no problem telling this to lean
+                With so little axioms at our disposal we cannot prove anything interesting about the monoid structure alone. There is one thing which uses just the definition of the monoid operation. The next theorem is literally just expressing the fact that we can actually use the monoid operation. In other words if \(a = b\) then it is also true that \(c \odot a = c \odot b\) for an arbitrary element \(c\)
             </p>
 
 <div class="code">
 <pre>
-theorem left_mul {α : Type} [mul_monoid α] (a b : α) (h : a = b) : ∀ c : α, mul c a = mul c b := by
+theorem left_mul {α : Type} [M : mul_monoid α] (a b : α) (h : a = b) : ∀ c : α, mul c a = mul c b := by
     intro c
     have : mul c a = mul c a := rfl
     rw [h]
 </pre>
 </div>
 
-    <p>
-        So back to the inverse elements. In the context of monoid it does not generally hold that \(c \odot a = c \odot b\) implies \(a = b\). You cannot mindlessly cancel the element \(c\). But you can do that if there exists and inverse element for \(c\). By that it is meant there exists such \(d\) so \(d \odot c = 1\). As we have not yet stated that the binary operation is multiplicative we need to be careful and say that \(c\) has a left inverse. Now we can prove that if an element has a left inverse then you can cancel it from left
-    </p>
+            <p>
+                With another assumption on a specific element we can prove something little more interesting. In the context of monoid it does not generally hold that \(c \odot a = c \odot b\) implies \(a = b\). You cannot mindlessly cancel the element \(c\). But you can do that if there exists and inverse element for \(c\). By that it is meant there exists such \(d\) so \(d \odot c = 1\). As we have not yet stated that the binary operation is multiplicative we need to be careful and say that \(c\) has a left inverse. Now we can prove that if an element has a left inverse then you can cancel it from left
+            </p>
 
 <div class="code">
 <pre>
-theorem left_cancel {α : Type} [mul_monoid α] (a b c : α) (h : ∃ d, mul d c = one) : mul c a = mul c b → a = b := by
+theorem left_cancel {α : Type} [M : mul_monoid α] (a b c : α) (h : ∃ d, mul d c = one) : mul c a = mul c b → a = b := by
     intro hc
     apply Exists.elim h
     intro d hd
@@ -129,52 +126,25 @@ theorem left_cancel {α : Type} [mul_monoid α] (a b c : α) (h : ∃ d, mul d c
 </pre>
 </div>
 
-
-
-            <h2 id="comm-monoids">Commutative monoids</h2>
             <p>
-                The binary operation specified in the definition of a monoid does not need to be commutative. This means that for any elements \(a\) and \(b\) in the monoid it holds that \(a \odot b = b \odot a\). How can we tell this to LEAN? One way is to define the commutative monoid from the ground up as follows
+                We will end the initial discussion of monoids with another interesting fact. If an element has both left inverse and right inverse then these inverses are identical. You might think that this is obvious but do not forget that we did not say that our binary operation is commutative! So proving this will cost us few lines.
             </p>
+
 
 <div class="code">
 <pre>
-class comm_mul_monoid_whole (α : Type) where
-    mul : α → α → α
-    one : α
-    mul_assoc : ∀ a b c : α, mul a (mul b c) = mul (mul a b) c
-    mul_one_right : ∀ a : α, mul a one = a
-    mul_comm : ∀ a b : α, mul a b = mul b a
+theorem left_right_inv {α : Type} [M : mul_monoid α] (a b c : α) (h : mul a b = one ∧ mul c a = one) : b = c := by
+    calc b = mul one b := by rw [mul_one_left]
+         _ = mul (mul c a) b := by rw [h.right]
+         _ = mul c (mul a b) := by rw [mul_assoc]
+         _ = mul c one := by rw [h.left]
+         _ = c := by rw [mul_one_right]
 </pre>
 </div>
-
-            <p>
-                You might notice a little thing missing here. Where did <span class="code-inline">mul_one_left</span> go? We don't need it as we can prove it holds. We just use the axiom <span class="code-inline">mul_one_right</span> and then use the commutativity of the binary operation <span class="code-inline">mul_comm</span>. It can be formalized as follows
-            </p>
-
-<div class="code">
-<pre>
-namespace comm_mul_monoid'
-
-example {α : Type} [comm_mul_monoid' α] (a : α) : mul (one : α) a = a := by
-    rw [mul_comm one]
-    rw [mul_one_right]    
-</pre>
-</div>
-
-            <p>
-                This is certainly possible but there is a better way. We can use the monoid definition to build up the definition for a commutative monoid as follows
-            </p>
-<div class="code">
-<pre>
-class comm_mul_monoid (α : Type) extends mul_monoid α where
-    mul_comm : ∀ a b : α, mul a b = mul b a
-</pre>
-</div>
-
 
             <h2 id="groups">Groups</h2>
             <p>
-                Earlier we saw that if an element had an inverse we could deduce additional algebraic properties like left cancelation. What if every element in a given monoid has an inverse? We get a an algebraic structure called group. I will again state a plain-text definition and then we will look how to encode it in Lean. The typical definition people hear is this
+                Earlier we saw that if an element had an inverse we could deduce additional algebraic properties like left cancelation. What if every element in a given monoid has an inverse? We get a an algebraic structure called group. I will again state a plain-text definition and then we will look how to encode it in Lean. The typical definition you will encounter will not use the word monoid and just list all the axioms as we did with the definition of a field.
             </p>
 
             <div class="definition">
@@ -191,12 +161,12 @@ class comm_mul_monoid (α : Type) extends mul_monoid α where
             </div>
 
             <p>
-                The second definition is both shorter and I would say even clearer
+                Our main job is to see how are the algebraic structures interconnected in hope to understand them better. The definition of a group stated as follows literally screams that a group is a really nice monoid when looking at the inverse elements.
             </p>
 
             <div class="definition">
                 <p>
-                    Group is a monoid \((R,\odot)\) where every element has its left inverse. This means
+                    Group is a monoid \((R,\odot)\) where the following axiom holds
                     <ul>
                         <li>\(\forall \, a \in R \enspace \exists \, b \in R\) such that \(b \odot a = 1\)</li>
                     </ul>
@@ -204,9 +174,22 @@ class comm_mul_monoid (α : Type) extends mul_monoid α where
             </div>
 
             <p>
-                Are we bothered with the fact that we did not explicitly said that the element shoul have also right inverse? It is not so pleasant exercise to show that indeed if a group element has a left inverse \(b\) then \(b\) is also a right inverse. For this to prove we need a group structure. You might be tempted to recycle the lemma about left cancelation in monoids. There we assumed that a specific element had a left inverse and proved the left cancelation property. But from the fact that one element has a left inverse you cannot prove it is also its right inverse. You need to assume that all elements have a left inverse! The proof requires a little lemma about idempotence of inverses
+                We can now define a group structure in LEAN and we will do it using the second version of the group definition
             </p>
-            
+
+<div class="code">
+<pre>
+class mul_group (α : Type) extends mul_monoid α where
+    inv : α → α
+    inv_left : ∀ a : α, mul (inv a) a = one  
+</pre>
+</div>
+
+            <p>
+                Again there is a little clash of types and sets. The LEAN definition states that the group features a unary operation called inverse which satisfy the inverse axiom. The part <span class="italic">there exists</span> in the statement of the axiom is hidden here. But again you do not need to worry about that.
+                But we should definetely be bothered by the fact that we did not explicitly said that the element should also have a right inverse. It is not so pleasant exercise to show that indeed if a group element has a left inverse \(b\) then it has also an right inverse and it is the same \(b\). For this to prove we need a group structure. You might be tempted to say that we already proved that. Well we proved that if and element has both inverses then they must be identical. Now we are trying to prove that just from the assumption of the existence of the left inverse we want to prove the existence of the right inverse and that the left and right inverses are identical. The proof requires a little lemma about the behaviour of inverses
+            </p>
+
 <div class="code">
 <pre>
 namespace mul_monoid
@@ -217,7 +200,16 @@ theorem inv_idemp {α : Type} [mul_group α] (a : α) : mul (mul a a⁻¹) (mul 
     rw [← mul_assoc a a⁻¹ a]
     rw [mul_group.inv_left]
     rw [mul_one_right]
-    
+</pre>
+</div>
+
+            <p>
+                You can see that i defined a postfix for the group inverse. This is one of the times I will cheat and not write the expression <span class="code-inline">mul_group.inv</span> because the code would be too cluttered by this. Of course you can write the full expression and do not try to setup the postfix style of the inverse operator.
+            </p>
+
+<div class="code">
+<pre>
+        
 theorem inv_right {α : Type} [mul_group α] (a : α) : mul a a⁻¹ = one := by
     calc mul a a⁻¹ = mul one (mul a a⁻¹) := Eq.symm (mul_one_left (mul a a⁻¹))
          _ = mul (mul (mul a a⁻¹)⁻¹ (mul a a⁻¹)) (mul a a⁻¹) := by rw [mul_group.inv_left (mul a a⁻¹)]
@@ -226,10 +218,6 @@ theorem inv_right {α : Type} [mul_group α] (a : α) : mul a a⁻¹ = one := by
          _ = one := by rw [mul_group.inv_left]
 </pre>
 </div>
-
-        <p>
-            This is it. We proved that in a group, if an element \(a\) has a left inverse \(b\) then this exact \(b\) is also a right inverse. Beware that although for \(a \odot b = 1\) it holds that \(a \odot b = b \odot a\) it does not mean that the binary operation is commutative. This holds just for the element inverses.
-        </p>
 
         </article>
         </div>
