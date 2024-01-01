@@ -21,30 +21,30 @@
         Groups and fields
     </header>
 
-    <div class="main-article">
+    <div class="main-class">
         <div class="mainnav">
-        <div class="nav-item">
-        <div class="nav-heading"><a href="index.html">Home</a></div>
-        <div class="nav-heading">Groups and fields</div>
-        <nav>
-            <ul>
-                <li><a href="fields_intro.html">Introduction</a></li>
-                <li><a href="fields_monoid.html">Monoids</a></li>
-            </ul>
-        </nav>
-        </div>
+            <div class="nav-item">
+                <div class="nav-heading"><a href="index.html">Home</a></div>
+                <div class="nav-heading">Groups and fields</div>
+                <nav>
+                    <ul>
+                        <li><a href="fields_intro.html">Introduction</a></li>
+                        <li><a href="fields_monoid.html">Monoids</a></li>
+                    </ul>
+                </nav>
+            </div>
         </div>
 
         <div class="sidenav">
-        <div class="nav-item">
-        <div class="nav-heading">Table of content</div>
-        <nav>
-            <ul>
-            <li><a href="#monoids">Monoids</a></li>
-            <li><a href="#groups">Groups</a></li>
-            </ul>
-        </nav>
-        </div>
+            <div class="nav-item">
+                <div class="nav-heading">Table of content</div>
+                <nav>
+                    <ul>
+                    <li><a href="#monoids">Monoids</a></li>
+                    <li><a href="#groups">Groups</a></li>
+                    </ul>
+                </nav>
+            </div>
         </div>
     
         <div class="content">
@@ -57,12 +57,12 @@
                 <div class="definition">
                     <p>
                         Monoid is a set \(R\) with a binary operation \(\odot : R \rightarrow R \rightarrow R\) and an element \(1 \in R\) such that they satisfy following axioms
-                        <ul>
-                            <li>\(\forall \, a,b,c \in R\) we have \((a \odot b) \odot c = a \odot (b \odot c)\)</li>
-                            <li>\(\forall \, a \in R\) we have \(a \odot 1 = a\)</li>
-                            <li>\(\forall \, a \in R\) we have \(1 \odot a = a\)</li>
-                        </ul>
                     </p>
+                    <ul>
+                        <li>\(\forall \, a,b,c \in R\) we have \((a \odot b) \odot c = a \odot (b \odot c)\)</li>
+                        <li>\(\forall \, a \in R\) we have \(a \odot 1 = a\)</li>
+                        <li>\(\forall \, a \in R\) we have \(1 \odot a = a\)</li>
+                    </ul>
                 </div>
 
                 <p>
@@ -95,9 +95,9 @@ example {α : Type} [M : mul_monoid α] (b : α) (h : ∀ a, mul a b = a) : b = 
 </pre>
 </div>
 
-            <p>
-                With so little axioms at our disposal we cannot prove anything interesting about the monoid structure alone. There is one thing which uses just the definition of the monoid operation. The next theorem is literally just expressing the fact that we can actually use the monoid operation. In other words if \(a = b\) then it is also true that \(c \odot a = c \odot b\) for an arbitrary element \(c\)
-            </p>
+                <p>
+                    With so little axioms at our disposal we cannot prove anything interesting about the monoid structure alone. There is one thing which uses just the definition of the monoid operation. The next theorem is literally just expressing the fact that we can actually use the monoid operation. In other words if \(a = b\) then it is also true that \(c \odot a = c \odot b\) for an arbitrary element \(c\)
+                </p>
 
 <div class="code">
 <pre>
@@ -108,9 +108,9 @@ theorem left_mul {α : Type} [M : mul_monoid α] (a b : α) (h : a = b) : ∀ c 
 </pre>
 </div>
 
-            <p>
-                With another assumption on a specific element we can prove something little more interesting. In the context of monoid it does not generally hold that \(c \odot a = c \odot b\) implies \(a = b\). You cannot mindlessly cancel the element \(c\). But you can do that if there exists and inverse element for \(c\). By that it is meant there exists such \(d\) so \(d \odot c = 1\). As we have not yet stated that the binary operation is multiplicative we need to be careful and say that \(c\) has a left inverse. Now we can prove that if an element has a left inverse then you can cancel it from left
-            </p>
+                <p>
+                    With another assumption on a specific element we can prove something little more interesting. In the context of monoid it does not generally hold that \(c \odot a = c \odot b\) implies \(a = b\). You cannot mindlessly cancel the element \(c\). But you can do that if there exists and inverse element for \(c\). By that it is meant there exists such \(d\) so \(d \odot c = 1\). As we have not yet stated that the binary operation is multiplicative we need to be careful and say that \(c\) has a left inverse. Now we can prove that if an element has a left inverse then you can cancel it from left
+                </p>
 
 <div class="code">
 <pre>
@@ -126,9 +126,9 @@ theorem left_cancel {α : Type} [M : mul_monoid α] (a b c : α) (h : ∃ d, mul
 </pre>
 </div>
 
-            <p>
-                We will end the initial discussion of monoids with another interesting fact. If an element has both left inverse and right inverse then these inverses are identical. You might think that this is obvious but do not forget that we did not say that our binary operation is commutative! So proving this will cost us few lines.
-            </p>
+                <p>
+                    We will end the initial discussion of monoids with another interesting fact. If an element has both left inverse and right inverse then these inverses are identical. You might think that this is obvious but do not forget that we did not say that our binary operation is commutative! So proving this will cost us few lines.
+                </p>
 
 
 <div class="code">
@@ -142,14 +142,15 @@ theorem left_right_inv {α : Type} [M : mul_monoid α] (a b c : α) (h : mul a b
 </pre>
 </div>
 
-            <h2 id="groups">Groups</h2>
-            <p>
-                Earlier we saw that if an element had an inverse we could deduce additional algebraic properties like left cancelation. What if every element in a given monoid has an inverse? We get a an algebraic structure called group. I will again state a plain-text definition and then we will look how to encode it in Lean. The typical definition you will encounter will not use the word monoid and just list all the axioms as we did with the definition of a field.
-            </p>
-
-            <div class="definition">
+                <h2 id="groups">Groups</h2>
                 <p>
-                    Group is a set \(R\) with a binary operation \(\odot : R \rightarrow R \rightarrow R\) and an element \(1 \in R\) such that they satisfy following axioms
+                    Earlier we saw that if an element had an inverse we could deduce additional algebraic properties like left cancelation. What if every element in a given monoid has an inverse? We get a an algebraic structure called group. I will again state a plain-text definition and then we will look how to encode it in Lean. The typical definition you will encounter will not use the word monoid and just list all the axioms as we did with the definition of a field.
+                </p>
+
+                <div class="definition">
+                    <p>
+                        Group is a set \(R\) with a binary operation \(\odot : R \rightarrow R \rightarrow R\) and an element \(1 \in R\) such that they satisfy following axioms
+                    </p>
                     <ul>
                         <li>\(\forall \, a,b \in R\) we have \(a \odot b \in R\)</li>
                         <li>\(\forall \, a,b,c \in R\) we have \((a \odot b) \odot c = a \odot (b \odot c)\)</li>
@@ -157,25 +158,24 @@ theorem left_right_inv {α : Type} [M : mul_monoid α] (a b c : α) (h : mul a b
                         <li>\(\forall \, a \in R\) we have \(1 \odot a = a\)</li>
                         <li>\(\forall \, a \in R \enspace \exists \, b \in R\) such that \(b \odot a = 1\)</li>
                     </ul>
-                </p>
-            </div>
+                </div>
 
-            <p>
-                Our main job is to see how are the algebraic structures interconnected in hope to understand them better. The definition of a group stated as follows literally screams that a group is a really nice monoid when looking at the inverse elements.
-            </p>
-
-            <div class="definition">
                 <p>
-                    Group is a monoid \((R,\odot)\) where the following axiom holds
-                    <ul>
-                        <li>\(\forall \, a \in R \enspace \exists \, b \in R\) such that \(b \odot a = 1\)</li>
-                    </ul>
+                    Our main job is to see how are the algebraic structures interconnected in hope to understand them better. The definition of a group stated as follows literally screams that a group is a really nice monoid when looking at the inverse elements.
                 </p>
-            </div>
 
-            <p>
-                We can now define a group structure in LEAN and we will do it using the second version of the group definition
-            </p>
+                <div class="definition">
+                    <p>
+                        Group is a monoid \((R,\odot)\) where the following axiom holds
+                    </p>
+                        <ul>
+                            <li>\(\forall \, a \in R \enspace \exists \, b \in R\) such that \(b \odot a = 1\)</li>
+                        </ul>
+                </div>
+
+                <p>
+                    We can now define a group structure in LEAN and we will do it using the second version of the group definition
+                </p>
 
 <div class="code">
 <pre>
@@ -185,10 +185,10 @@ class mul_group (α : Type) extends mul_monoid α where
 </pre>
 </div>
 
-            <p>
-                Again there is a little clash of types and sets. The LEAN definition states that the group features a unary operation called inverse which satisfy the inverse axiom. The part <span class="italic">there exists</span> in the statement of the axiom is hidden here. But again you do not need to worry about that.
-                But we should definetely be bothered by the fact that we did not explicitly said that the element should also have a right inverse. It is not so pleasant exercise to show that indeed if a group element has a left inverse \(b\) then it has also an right inverse and it is the same \(b\). For this to prove we need a group structure. You might be tempted to say that we already proved that. Well we proved that if and element has both inverses then they must be identical. Now we are trying to prove that just from the assumption of the existence of the left inverse we want to prove the existence of the right inverse and that the left and right inverses are identical. The proof requires a little lemma about the behaviour of inverses
-            </p>
+                <p>
+                    Again there is a little clash of types and sets. The LEAN definition states that the group features a unary operation called inverse which satisfy the inverse axiom. The part <span class="italic">there exists</span> in the statement of the axiom is hidden here. But again you do not need to worry about that.
+                    But we should definetely be bothered by the fact that we did not explicitly said that the element should also have a right inverse. It is not so pleasant exercise to show that indeed if a group element has a left inverse \(b\) then it has also an right inverse and it is the same \(b\). For this to prove we need a group structure. You might be tempted to say that we already proved that. Well we proved that if and element has both inverses then they must be identical. Now we are trying to prove that just from the assumption of the existence of the left inverse we want to prove the existence of the right inverse and that the left and right inverses are identical. The proof requires a little lemma about the behaviour of inverses
+                </p>
 
 <div class="code">
 <pre>
@@ -203,9 +203,9 @@ theorem inv_idemp {α : Type} [mul_group α] (a : α) : mul (mul a a⁻¹) (mul 
 </pre>
 </div>
 
-            <p>
-                You can see that i defined a postfix for the group inverse. This is one of the times I will cheat and not write the expression <span class="code-inline">mul_group.inv</span> because the code would be too cluttered by this. Of course you can write the full expression and do not try to setup the postfix style of the inverse operator.
-            </p>
+                <p>
+                    You can see that i defined a postfix for the group inverse. This is one of the times I will cheat and not write the expression <span class="code-inline">mul_group.inv</span> because the code would be too cluttered by this. Of course you can write the full expression and do not try to setup the postfix style of the inverse operator.
+                </p>
 
 <div class="code">
 <pre>
