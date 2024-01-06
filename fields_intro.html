@@ -75,6 +75,16 @@
                 <p>
                     It is not in my power and my knowledge to introduce you to LEAN so that you can instantly grab a computer and start proving. If you really want to try fiddle with LEAN then you can go to <a href="https://lean-lang.org/">LEAN official site</a> which contains a help on how to start. You find few tutorials on that web too and <a href="https://leanprover-community.github.io/mathematics_in_lean/index.html">Mathematics in LEAN</a> is the best choice for ... mathematics. There is also other software designed for theorem proving like Isabelle, Coq or Prover9. I like LEAN because apart from being a theorem prover it is also a beatiful functional language.
                 </p>
+
+
+<div class="code">
+<pre>
+example {α : Type} [M : mul_monoid α] (b : α) (h : ∀ a, a ⊙ b = a) : b = 𝟙 := by
+    have : mul one b = one := h one
+    rw [mul_one_left] at this
+    exact this
+</pre>
+</div>
             </article>
         </div>
         </div>
