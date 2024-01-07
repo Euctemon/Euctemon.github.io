@@ -13,19 +13,19 @@
   <!-- To automatically render math in text elements, include the auto-render extension: -->
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/contrib/auto-render.min.js" integrity="sha384-mll67QQFJfxn0IYznZYonOWZ644AWYC+Pt2cHqMaRhXVrursRwvLnLaebdGIlYNa" crossorigin="anonymous" onload="renderMathInElement(document.body);"></script>
 
-  <title>Groups and Fields</title>
+  <title>Fields</title>
 </head>
 
 <body>
     <header>
-        <div>Groups and fields</div>
+        <div>Fields in LEAN</div>
     </header>
 
     <div class="main-class">
         <div class="mainnav">
             <div class="nav-item">
                 <div class="nav-heading"><a href="index.html">Home</a></div>
-                <div class="nav-heading">Groups and fields</div>
+                <div class="nav-heading">Fields</div>
                 <nav>
                     <ul>
                     <li><a href="fields_intro.html">Introduction</a></li>
@@ -39,7 +39,12 @@
             <article>
                 <h2>Introduction</h2>
                 <p>
-                    Fields are an important object in mathematics. In abstract algebra one can study various connections between groups and fields which is for example helpful for reasoning about the possibility to find roots of a polynomial. More down to earth usage of fields is when one needs to solve a system of linear algebraic equations. The coefficients by the unknowns must be from a field. Why is that? Let's look at an example
+                    These few upcoming pages are my attempt to formalize few definitions and theorem from basic abstract algebra. The goal is to start with monoids and work the way up to fields. The catch is that I will be using a theorem prover called <a href="https://lean-lang.org/">LEAN</a> a formalize all the mathematics in this software. You can think about a theorem prover as a software which enables you to write mathematics almost as a computer program. This text will be havily centered around the LEAN theorem prover. This means that if you are here just for the mathematics you might have troubles reading these pages as they will be filled with many code snippets. It takes a considerable amout of time to learn a software for theorem proving. I will try to explain the basic syntax as we go through the definitions and theorem but it is not in my power to teach you how to use LEAN on the spot.If however you find out that you would like to try it personally then the official site mentioned earlier contains the install and setup instructions. After that you might be interested in <a href="https://leanprover-community.github.io/mathematics_in_lean/index.html">Mathematics in LEAN</a> which is a website specially dedicated to teach you how to do mathematics in LEAN.
+                </p>
+
+                <h2>What are fields</h2>
+                <p>
+                    Fields are an important object in mathematics. We first learn about them in highschool. There we talk about the properties of natural numbers, integer, fractions and real numbers. The last two form a field. But at highschool you don't usually hear the formal definition of a field. Instead we learn that the addition and multiplication are commutative and associative, that all nonzero integers and real numbers have an multiplicative inverse and so on. If you don't study for a degree in mathematics then it might be possible that you use the field structure for one thing only and that is solving a system of linear algebraic equations. The coefficients by the unknows must be from a field. Why? That is a tough questions. Probably the best answer is that it works quite well and we like it. Let's look at an example
                 </p>
 
                 $$\begin{aligned}
@@ -48,7 +53,7 @@
                 \end{aligned}$$
 
                 <p>
-                    What do we do when we try to solve this system of equations? First we move the \(y\) to the other side of the equation with an opposite sign to get \(x=2+y\). We substitute this expression to the first equation to obtain \(3(2+y)+2y=1\). We multiply the content in the brackets to get \((6+3y)+2y=1\). We move the brackets to obtain \(6+(3y+2y)\) and add the coefficients for the variable \(y\) to get \(6+5y=1\). We subtract the number 6 from both sides and divide by the number \(5\) to find out that \(y=-1\). We substitute the result to the second equation to get \(x=1\). We used a lot of properties of numbers to arrive at this result. We freely used associativity of adding, the distributive property, existence of additive and multiplicative inverses and so on. How does a formal definition of fields look like? It is not pretty as a field is quite a complex algebraic structure. A lot of us needed to learn the propertis like associativity or distributivity of rationals or real numbers during math classes in highschool. Here is the definition
+                    What do we do when we try to solve this system of equations? First we move the \(y\) to the other side of the equation with an opposite sign to get \(x=2+y\). We substitute this expression to the first equation to obtain \(3(2+y)+2y=1\). We multiply the content in the brackets to get \((6+3y)+2y=1\). We move the brackets to obtain \(6+(3y+2y)\) and add the coefficients for the variable \(y\) to get \(6+5y=1\). We subtract the number 6 from both sides and divide by the number \(5\) to find out that \(y=-1\). We substitute the result to the second equation to get \(x=1\). What if we did not know that the fractions are distributative? Then we couldn't perform the third step and wouldn't be able to solve this system of equations! So we know that the field structure is useful for something. Let's look at the formal definition
                 </p>
 
                 <div class="definition">
@@ -69,22 +74,8 @@
                 </div>
                 
                 <p>
-                    This is a long list of properties and it might be hard to remember them if one does not use them often. From the next chapter we will be building the field structure a little bit differently and will be encoding it in a theorem prover called LEAN which is a software for writing mathematical definitions, theorems and proofs as programs. In the next chapter I will start formalizing monoids and groups both "on paper" and in LEAN. If you do not care about the programming side of these notes you can just read the text and skip the code snippets.
+                    How does a mathematician think about this algebraic structure? For a mathematician the equal yet more useful definition is that field is a particular type of group and monoid with additional axiom of having a multiplicative inverse for all nonzero elements. This goal of this text is to build the necessary algebric structures in order to get to this definition and hopefully explain why a mathematician would remember the definition in such a manner.
                 </p>
-
-                <p>
-                    It is not in my power and my knowledge to introduce you to LEAN so that you can instantly grab a computer and start proving. If you really want to try fiddle with LEAN then you can go to <a href="https://lean-lang.org/">LEAN official site</a> which contains a help on how to start. You find few tutorials on that web too and <a href="https://leanprover-community.github.io/mathematics_in_lean/index.html">Mathematics in LEAN</a> is the best choice for ... mathematics. There is also other software designed for theorem proving like Isabelle, Coq or Prover9. I like LEAN because apart from being a theorem prover it is also a beatiful functional language.
-                </p>
-
-
-<div class="code">
-<pre>
-example {α : Type} [M : mul_monoid α] (b : α) (h : ∀ a, a ⊙ b = a) : b = 𝟙 := by
-    have : mul one b = one := h one
-    rw [mul_one_left] at this
-    exact this
-</pre>
-</div>
             </article>
         </div>
         </div>

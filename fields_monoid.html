@@ -51,7 +51,7 @@
             <article>
                 <h2 id="monoids">Monoids</h2>
                 <p>
-                    We start with a simple algebraic structure called monoid. A monoid is just a set with one binary operation and one unique element called identity. The operation being binary just means that the operation takes two elements from the set and assign to them one specific element also in the set. This operation can be addition or multiplication but not only. For example string concatenation is also a valid binary operation taking two strings and producing another string. The name of identity element depends on the binary operation. For addition we take the identity to be the number zero, for multiplication the number one and for string concatenation the empty string. The formal definition of monoid is surely shorter than that of a field
+                    We start with a simple algebraic structure called monoid. A monoid is just a set with one binary operation and one unique element called identity satisfying three axioms. The operation being binary just means that the operation takes two elements from the set and assign to them one specific element also in the set. This operation can be addition or multiplication but not only. For example string concatenation is also a valid binary operation taking two strings and producing another string. The name of identity element depends on the binary operation. For addition we take the identity to be the number zero, for multiplication the number one and for string concatenation the empty string. The formal definition of monoid is surely shorter than that of a field
                 </p>
 
                 <div class="definition">
@@ -66,7 +66,8 @@
                 </div>
 
                 <p>
-                    When you want to define a very simple algebraic structure there axioms seems to be a good choice. First there is the associativity of the binary operation. It would be weird if something like \((a \odot a) \odot a = a \odot (a \odot a)\) wouldn't hold. The other two axioms specifies how the element \(1\) plays with the binary operation. If we just stated that there is a specific element in the set but we wouldn't know its behaviour would the element be really special? You are free to come up with almost any axioms for your structure. You can state just the associativity of the binary operation and nothing more. Then it would be called semigroup. Or if you really want you do not need to specify the associative property. But in these cases you end up with a structure which is hard to reason about as you cannot say almost anything about that structure. Now we will look at how to define monoids in LEAN. The definition is almost one to one copy of the written one. You can see that the the operations and axioms are bundled together. The mathematical definition is oblivious of the naming of the binary operation as long as the operation satisfy the axioms. Nevertheless we will be working with either the multiplication od addition and so I will name them in the code.
+                    When you want to define a very simple algebraic structure there axioms seems to be a good choice. First there is the associativity of the binary operation. It would be weird if something like \((a \odot a) \odot a = a \odot (a \odot a)\) wouldn't hold. The other two axioms specifies how the element \(1\) plays with the binary operation. If we just stated that there is a specific element in the set but we wouldn't know its behaviour would the element be really special? You are free to come up with almost any axioms for your structure. You can state just the associativity of the binary operation and nothing more. Then it would be called semigroup. Or if you really want you do not need to specify the associative property. But in these cases you end up with a structure which is hard to reason about as you cannot say almost anything about that structure. Now we will look at how to define monoids in LEAN. The definition is almost one to one copy of the written one. You can see that the the operations and axioms are bundled together. The mathematical definition is oblivious of the naming of the binary operation as long as the operation satisfy the axioms. This means we can have a monoid of words and write \(\text{he} \odot \text{llo} = \text{hello}\). In this text we will use \(\odot\) as a symbol for multiplication and \(\oplus\) as a symbol for addition. Now comes the part of translating this definition into LEAN
+                    
                 </p>
 
 <div class="code">
@@ -81,64 +82,94 @@ class mul_monoid (α : Type) where
 </div>
 
                 <p>
-                    So what can we do with it? The first thing is that we will prove the uniqueness of the element \(1\). The proof of this fact is rather simple. Let's say that we have an element \(b\) such that if we choose an arbitrary element \(a\) then \(a \odot b = 1\). We can then choose \(1\) as the element \(a\) and then use the axiom of multiplying an element by \(1\) on the left side to arrive to the conclusion that \(b = 1\). Everything up to the lonely <span class="code-inline">:</span> is an assumption. You might be stumped by the expression  <span class="code-inline">M : mul_monoid α</span>. This means that \(M\) is a monoid with the underlying type \(\alpha\). When we speak about monoids we need to specify the underlying set. In the definition that was what the letter \(R\) stands. In the LEAN definition we treated the variable \(\alpha\) as something like the set \(R\). The problem is that variable \(\alpha\) is a type. There is a difference but at this point it won't cause any trouble. If you are bothered by this you can read the chapter on <a href="https://leanprover-community.github.io/mathematics_in_lean/C04_Sets_and_Functions.html">sets</a> from the book on mathematics in LEAN I mentioned earlier.
+                    We can define the structure using the word <span class="bold">class</span> or <span class="bold">structure</span>. There is a difference but for it is enough to know that for defining algebraic structures we should use <span class="italic">class</span>. The next thing is that this definition is dependent on a type. We saw back in the mathematical definition that the operation is defined on a set. The theorem provers work with types. You can define a set as a specific type and use it but for now this definition is all we need. After that we define the type of multiplication and identity in a haskell-type syntax and state the three axioms. So what can we do with it? The first thing is to say that \(1 = 1\). This is just to show you how the syntax works
                 </p>
 
 <div class="code">
 <pre>
-namespace mul_monoid
+example {α : Type} [M : mul_monoid α] : mul_monoid.one = (mul_monoid.one : α) := by rfl
+</pre>
+</div>
+                    
+                <p>
+                    First thing we need to do is to say that we use a variable \(\alpha\) a that \(\alpha\) is a multiplicative monoid. Then we write the semicolon and state the body of theorem. After that we write semicolon with the equal sign to start the proof. In this example we use the reflexivity of equality so we can just write <span class="bold">by rfl</span>. We don't want to name the proof so we use the keyword <span class="bold"> example</span>. Now we prove a slightly harder thing and that the element \(1\) is unique. The proof of this fact is rather simple. Let's say that we have an element \(b\) such that if we choose an arbitrary element \(a\) then \(a \odot b = 1\). We can then choose \(1\) as the element \(a\) and then use the axiom of multiplying an element by \(1\) on the left side to arrive to the conclusion that \(b = 1\). Here is the corresponding code
+                </p>
 
-example {α : Type} [M : mul_monoid α] (b : α) (h : ∀ a, mul a b = a) : b = (one : α) := by
-    have : mul one b = one := h one
-    rw [mul_one_left] at this
+<div class="code">
+<pre>
+variable {α : Type}
+variable [M : mul_monoid α]
+
+example (b : α) (h : ∀ a, mul_monoid.mul a b = a) : b = mul_monoid.one := by
+    have : mul_monoid.mul mul_monoid.one b = mul_monoid.one := by rw [h mul_monoid.one]
+    rw [mul_monoid.mul_one_left] at this
     exact this
 </pre>
 </div>
 
                 <p>
-                    With so little axioms at our disposal we cannot prove anything interesting about the monoid structure alone. There is one thing which uses just the definition of the monoid operation. The next theorem is literally just expressing the fact that we can actually use the monoid operation. In other words if \(a = b\) then it is also true that \(c \odot a = c \odot b\) for an arbitrary element \(c\)
+                    In order not to pollute the theorem we moved the variable \(\alpha\) and the fact that it is a multiplicative monoid out of the declaration. The second thing is that we used <span class="bold">have</span> keyword to state and prove another fact inside the main proof. You can see that it has the same structure. Although we did not write any assumption, we see a semicolon, a statement of the mini-theorem, a semicolon with equal sign a proof with <span class="bold">by</span>. If we have a definitional equality like with the second and third axiom, we can just rewrite it with the keyword <span class="bold">rw</span>. In order to write less we introduce a little notation for multiplication and identity element. We also name the sub-theorem in the <span class="bold">have</span> clause. Otherwise LEAN automatically generates a name for it, most often called <span class="bold">this</span>.
                 </p>
 
 <div class="code">
 <pre>
-theorem left_mul {α : Type} [M : mul_monoid α] (a b : α) (h : a = b) : ∀ c : α, mul c a = mul c b := by
+notation "𝟙" => mul_monoid.one
+infixl:70 "⊙" => mul_monoid.mul
+
+variable {α : Type}
+variable [M : mul_monoid α]
+    
+example (b : α) (h : ∀ a, a ⊙ b = a) : b = 𝟙 := by
+    have one_mul_b_eq_one : 𝟙 ⊙ b = 𝟙 := by rw [h 𝟙]
+    rw [mul_monoid.mul_one_left] at one_mul_b_eq_one
+    exact one_mul_b_eq_one
+</pre>
+</div>
+
+                <p>
+                    I will no longer write the variables and notation in the code snippets but if you try to use these snippets be sure to include the variables a notation at the top of the file. With so little axioms at our disposal we cannot prove anything interesting about the monoid structure alone. There is one thing which uses just the definition of the monoid operation. The next theorem is literally just expressing the fact that we can actually use the monoid operation. In other words if \(a = b\) then it is also true that \(c \odot a = c \odot b\) for an arbitrary element \(c\)
+                </p>
+
+<div class="code">
+<pre>
+theorem left_mul (a b : α) (h : a = b) : ∀ c : α, c ⊙ a = c ⊙ b := by
     intro c
-    have : mul c a = mul c a := rfl
     rw [h]
 </pre>
 </div>
 
                 <p>
-                    With another assumption on a specific element we can prove something little more interesting. In the context of monoid it does not generally hold that \(c \odot a = c \odot b\) implies \(a = b\). You cannot mindlessly cancel the element \(c\). But you can do that if there exists and inverse element for \(c\). By that it is meant there exists such \(d\) so \(d \odot c = 1\). As we have not yet stated that the binary operation is multiplicative we need to be careful and say that \(c\) has a left inverse. Now we can prove that if an element has a left inverse then you can cancel it from left
+                    When dealing with universal quatificators as in this example you need to get rid of it. This means that you need to fix an arbitrary element of the monoid and then prove that the assumption holds for the element. As the element was arbitrary you proved that it holds for all elements. The keyword <span class="bold">intro c</span> fixec an element and labels it as \(c\). With another assumption on a specific element we can prove something little more interesting. In the context of monoid it does not generally hold that \(c \odot a = c \odot b\) implies \(a = b\). You cannot mindlessly cancel the element \(c\). But you can do that if there exists and inverse element for \(c\). By that it is meant there exists such \(d\) so \(d \odot c = 1\). As we have not yet stated that the binary operation is multiplicative we need to be careful and say that \(c\) has a left inverse. Now we can prove that if an element has a left inverse then you can cancel it from left
                 </p>
 
 <div class="code">
 <pre>
-theorem left_cancel {α : Type} [M : mul_monoid α] (a b c : α) (h : ∃ d, mul d c = one) : mul c a = mul c b → a = b := by
-    intro hc
+theorem left_cancel (a b c : α) (h : ∃ d, d ⊙ c = 𝟙) : c ⊙ a = c ⊙ b → a = b := by
+    intro c_mul_left
     apply Exists.elim h
-    intro d hd
-    have : mul d (mul c a) = mul d (mul c b) := by
-    apply left_mul
-    exact hc
-    repeat (rw [mul_assoc, hd, mul_one_left] at this)
+    intro d d_inv
+    have : d ⊙ (c ⊙ a) = d ⊙ (c ⊙ b) := by
+        apply left_mul
+        exact c_mul_left
+    repeat (rw [mul_monoid.mul_assoc, d_inv, mul_monoid.mul_one_left] at this)
     exact this
 </pre>
 </div>
 
                 <p>
-                    We will end the initial discussion of monoids with another interesting fact. If an element has both left inverse and right inverse then these inverses are identical. You might think that this is obvious but do not forget that we did not say that our binary operation is commutative! So proving this will cost us few lines.
+                    In this theorem we assumed that there exists an inverse element for \(c\) and then wrote an implication. This is actually identical to stating two assumptions, that there exists an inverse and that \(c \odot a = c \odot b\) holds. You can disect the implication with the keyword <span class="bold">intro</span> too. Now <span class="bold">c_mul_left</span> is a variable which holds the fact that \(c \odot a = c \odot b\). To get rid of the existential quantifier we use <span class="bold">apply Exists.elim</span> and finally we can repeat a set of commans with keyword <span class="bold">repeat</span>. We will end the initial discussion of monoids with another interesting fact. If an element has both left inverse and right inverse then these inverses are identical. You might think that this is obvious but do not forget that we did not say that our binary operation is commutative. So proving this will cost us few lines. Instead of furiously rewriting everything we use the keyword <span class="bold">calc</span> to express a chain of reasoning.
                 </p>
 
 
 <div class="code">
 <pre>
-theorem left_right_inv {α : Type} [M : mul_monoid α] (a b c : α) (h : mul a b = one ∧ mul c a = one) : b = c := by
-    calc b = mul one b := by rw [mul_one_left]
-         _ = mul (mul c a) b := by rw [h.right]
-         _ = mul c (mul a b) := by rw [mul_assoc]
-         _ = mul c one := by rw [h.left]
-         _ = c := by rw [mul_one_right]
+theorem left_inv_eq_right_inv (a b c : α) (h1 : a ⊙ b = 𝟙) (h2 : c ⊙ a = 𝟙) : b = c := by
+    calc b = 𝟙 ⊙ b := by rw [mul_monoid.mul_one_left]
+         _ = (c ⊙ a) ⊙ b := by rw [h2]
+         _ = c ⊙ (a ⊙ b) := by rw [mul_monoid.mul_assoc]
+         _ = c ⊙ 𝟙 := by rw [h1]
+         _ = c := by rw [mul_monoid.mul_one_right]
+    
 </pre>
 </div>
 
