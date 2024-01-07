@@ -70,109 +70,85 @@
                     
                 </p>
 
-<div class="code">
-<pre>
-class mul_monoid (α : Type) where
-    mul : α → α → α
-    one : α
-    mul_assoc : ∀ a b c : α, mul a (mul b c) = mul (mul a b) c
-    mul_one_right : ∀ a : α, mul a one = a
-    mul_one_left : ∀ a : α, mul one a = a
-</pre>
-</div>
+<div class="code"><pre><span></span><span class="kd">class</span><span class="w"> </span><span class="n">mul_monoid</span><span class="w"> </span><span class="o">(</span><span class="n">α</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="kt">Type</span><span class="o">)</span><span class="w"> </span><span class="n">where</span>
+<span class="w">  </span><span class="n">mul</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">α</span><span class="w"> </span><span class="bp">→</span><span class="w"> </span><span class="n">α</span><span class="w"> </span><span class="bp">→</span><span class="w"> </span><span class="n">α</span>
+<span class="w">  </span><span class="n">one</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">α</span>
+<span class="w">  </span><span class="n">mul_assoc</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="bp">∀</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">α</span><span class="o">,</span><span class="w"> </span><span class="n">mul</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">(</span><span class="n">mul</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="n">c</span><span class="o">)</span><span class="w"> </span><span class="bp">=</span><span class="w"> </span><span class="n">mul</span><span class="w"> </span><span class="o">(</span><span class="n">mul</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">b</span><span class="o">)</span><span class="w"> </span><span class="n">c</span>
+<span class="w">  </span><span class="n">mul_one_right</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="bp">∀</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">α</span><span class="o">,</span><span class="w"> </span><span class="n">mul</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">one</span><span class="w"> </span><span class="bp">=</span><span class="w"> </span><span class="n">a</span>
+<span class="w">  </span><span class="n">mul_one_left</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="bp">∀</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">α</span><span class="o">,</span><span class="w"> </span><span class="n">mul</span><span class="w"> </span><span class="n">one</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="bp">=</span><span class="w"> </span><span class="n">a</span>
+</pre></div>
 
                 <p>
                     We can define the structure using the word <span class="bold">class</span> or <span class="bold">structure</span>. There is a difference but for it is enough to know that for defining algebraic structures we should use <span class="italic">class</span>. The next thing is that this definition is dependent on a type. We saw back in the mathematical definition that the operation is defined on a set. The theorem provers work with types. You can define a set as a specific type and use it but for now this definition is all we need. After that we define the type of multiplication and identity in a haskell-type syntax and state the three axioms. So what can we do with it? The first thing is to say that \(1 = 1\). This is just to show you how the syntax works
                 </p>
 
-<div class="code">
-<pre>
-example {α : Type} [M : mul_monoid α] : mul_monoid.one = (mul_monoid.one : α) := by rfl
-</pre>
-</div>
-                    
+<div class="code"><pre><span></span><span class="kd">example</span><span class="w"> </span><span class="o">{</span><span class="n">α</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="kt">Type</span><span class="o">}</span><span class="w"> </span><span class="o">[</span><span class="n">M</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">mul_monoid</span><span class="w"> </span><span class="n">α</span><span class="o">]</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">mul_monoid.one</span><span class="w"> </span><span class="bp">=</span><span class="w"> </span><span class="o">(</span><span class="n">mul_monoid.one</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">α</span><span class="o">)</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="kd">by</span><span class="w"> </span><span class="n">rfl</span>
+</pre></div>
+
                 <p>
                     First thing we need to do is to say that we use a variable \(\alpha\) a that \(\alpha\) is a multiplicative monoid. Then we write the semicolon and state the body of theorem. After that we write semicolon with the equal sign to start the proof. In this example we use the reflexivity of equality so we can just write <span class="bold">by rfl</span>. We don't want to name the proof so we use the keyword <span class="bold"> example</span>. Now we prove a slightly harder thing and that the element \(1\) is unique. The proof of this fact is rather simple. Let's say that we have an element \(b\) such that if we choose an arbitrary element \(a\) then \(a \odot b = 1\). We can then choose \(1\) as the element \(a\) and then use the axiom of multiplying an element by \(1\) on the left side to arrive to the conclusion that \(b = 1\). Here is the corresponding code
                 </p>
 
-<div class="code">
-<pre>
-variable {α : Type}
-variable [M : mul_monoid α]
-
-example (b : α) (h : ∀ a, mul_monoid.mul a b = a) : b = mul_monoid.one := by
-    have : mul_monoid.mul mul_monoid.one b = mul_monoid.one := by rw [h mul_monoid.one]
-    rw [mul_monoid.mul_one_left] at this
-    exact this
-</pre>
-</div>
+<div class="code"><pre>
+<span class="kd">variable</span><span class="w"> </span><span class="o">{</span><span class="n">α</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="kt">Type</span><span class="o">}</span>
+<span class="kd">variable</span><span class="w"> </span><span class="o">[</span><span class="n">M</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">mul_monoid</span><span class="w"> </span><span class="n">α</span><span class="o">]</span>
+    
+<span></span><span class="kd">example</span><span class="w"> </span><span class="o">(</span><span class="n">b</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">α</span><span class="o">)</span><span class="w"> </span><span class="o">(</span><span class="n">h</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="bp">∀</span><span class="w"> </span><span class="n">a</span><span class="o">,</span><span class="w"> </span><span class="n">mul_monoid.mul</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="bp">=</span><span class="w"> </span><span class="n">a</span><span class="o">)</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="bp">=</span><span class="w"> </span><span class="n">mul_monoid.one</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="kd">by</span>
+<span class="w">  </span><span class="k">have</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">mul_monoid.mul</span><span class="w"> </span><span class="n">mul_monoid.one</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="bp">=</span><span class="w"> </span><span class="n">mul_monoid.one</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="kd">by</span><span class="w"> </span><span class="n">rw</span><span class="w"> </span><span class="o">[</span><span class="n">h</span><span class="w"> </span><span class="n">mul_monoid.one</span><span class="o">]</span>
+<span class="w">  </span><span class="n">rw</span><span class="w"> </span><span class="o">[</span><span class="n">mul_monoid.mul_one_left</span><span class="o">]</span><span class="w"> </span><span class="n">at</span><span class="w"> </span><span class="n">this</span>
+<span class="w">  </span><span class="n">exact</span><span class="w"> </span><span class="n">this</span>
+</pre></div>
 
                 <p>
                     In order not to pollute the theorem we moved the variable \(\alpha\) and the fact that it is a multiplicative monoid out of the declaration. The second thing is that we used <span class="bold">have</span> keyword to state and prove another fact inside the main proof. You can see that it has the same structure. Although we did not write any assumption, we see a semicolon, a statement of the mini-theorem, a semicolon with equal sign a proof with <span class="bold">by</span>. If we have a definitional equality like with the second and third axiom, we can just rewrite it with the keyword <span class="bold">rw</span>. In order to write less we introduce a little notation for multiplication and identity element. We also name the sub-theorem in the <span class="bold">have</span> clause. Otherwise LEAN automatically generates a name for it, most often called <span class="bold">this</span>.
                 </p>
 
-<div class="code">
-<pre>
-notation "𝟙" => mul_monoid.one
-infixl:70 "⊙" => mul_monoid.mul
-
-variable {α : Type}
-variable [M : mul_monoid α]
+<div class="code"><pre><span></span><span class="kd">notation</span><span class="w"> </span><span class="n">"𝟙"</span><span class="w"> </span><span class="bp">=&gt;</span><span class="w"> </span><span class="n">mul_monoid.one</span>
+<span class="kd">infixl</span><span class="o">:</span><span class="mi">70</span><span class="w"> </span><span class="n">"⊙"</span><span class="w"> </span><span class="bp">=&gt;</span><span class="w"> </span><span class="n">mul_monoid.mul</span>
     
-example (b : α) (h : ∀ a, a ⊙ b = a) : b = 𝟙 := by
-    have one_mul_b_eq_one : 𝟙 ⊙ b = 𝟙 := by rw [h 𝟙]
-    rw [mul_monoid.mul_one_left] at one_mul_b_eq_one
-    exact one_mul_b_eq_one
-</pre>
-</div>
+<span class="kd">example</span><span class="w"> </span><span class="o">(</span><span class="n">b</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">α</span><span class="o">)</span><span class="w"> </span><span class="o">(</span><span class="n">h</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="bp">∀</span><span class="w"> </span><span class="n">a</span><span class="o">,</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="bp">⊙</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="bp">=</span><span class="w"> </span><span class="n">a</span><span class="o">)</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="bp">=</span><span class="w"> </span><span class="mi">𝟙</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="kd">by</span>
+<span class="w">  </span><span class="k">have</span><span class="w"> </span><span class="n">one_mul_b_eq_one</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="mi">𝟙</span><span class="w"> </span><span class="bp">⊙</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="bp">=</span><span class="w"> </span><span class="mi">𝟙</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="n">h</span><span class="w"> </span><span class="mi">𝟙</span>
+<span class="w">  </span><span class="n">rw</span><span class="w"> </span><span class="o">[</span><span class="n">mul_monoid.mul_one_left</span><span class="o">]</span><span class="w"> </span><span class="n">at</span><span class="w"> </span><span class="n">one_mul_b_eq_one</span>
+<span class="w">  </span><span class="n">exact</span><span class="w"> </span><span class="n">one_mul_b_eq_one</span>
+</pre></div>
 
                 <p>
                     I will no longer write the variables and notation in the code snippets but if you try to use these snippets be sure to include the variables a notation at the top of the file. With so little axioms at our disposal we cannot prove anything interesting about the monoid structure alone. There is one thing which uses just the definition of the monoid operation. The next theorem is literally just expressing the fact that we can actually use the monoid operation. In other words if \(a = b\) then it is also true that \(c \odot a = c \odot b\) for an arbitrary element \(c\)
                 </p>
 
-<div class="code">
-<pre>
-theorem left_mul (a b : α) (h : a = b) : ∀ c : α, c ⊙ a = c ⊙ b := by
-    intro c
-    rw [h]
-</pre>
-</div>
+<div class="code"><pre><span></span><span class="kd">theorem</span><span class="w"> </span><span class="n">left_mul</span><span class="w"> </span><span class="o">(</span><span class="n">a</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">α</span><span class="o">)</span><span class="w"> </span><span class="o">(</span><span class="n">h</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="bp">=</span><span class="w"> </span><span class="n">b</span><span class="o">)</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="bp">∀</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">α</span><span class="o">,</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="bp">⊙</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="bp">=</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="bp">⊙</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="kd">by</span>
+<span class="w">  </span><span class="n">intro</span><span class="w"> </span><span class="n">c</span>
+<span class="w">  </span><span class="n">rw</span><span class="w"> </span><span class="o">[</span><span class="n">h</span><span class="o">]</span>
+</pre></div>
+                                        
 
                 <p>
                     When dealing with universal quatificators as in this example you need to get rid of it. This means that you need to fix an arbitrary element of the monoid and then prove that the assumption holds for the element. As the element was arbitrary you proved that it holds for all elements. The keyword <span class="bold">intro c</span> fixec an element and labels it as \(c\). With another assumption on a specific element we can prove something little more interesting. In the context of monoid it does not generally hold that \(c \odot a = c \odot b\) implies \(a = b\). You cannot mindlessly cancel the element \(c\). But you can do that if there exists and inverse element for \(c\). By that it is meant there exists such \(d\) so \(d \odot c = 1\). As we have not yet stated that the binary operation is multiplicative we need to be careful and say that \(c\) has a left inverse. Now we can prove that if an element has a left inverse then you can cancel it from left
                 </p>
 
-<div class="code">
-<pre>
-theorem left_cancel (a b c : α) (h : ∃ d, d ⊙ c = 𝟙) : c ⊙ a = c ⊙ b → a = b := by
-    intro c_mul_left
-    apply Exists.elim h
-    intro d d_inv
-    have : d ⊙ (c ⊙ a) = d ⊙ (c ⊙ b) := by
-        apply left_mul
-        exact c_mul_left
-    repeat (rw [mul_monoid.mul_assoc, d_inv, mul_monoid.mul_one_left] at this)
-    exact this
-</pre>
-</div>
-
+<div class="code"><pre><span></span><span class="kd">theorem</span><span class="w"> </span><span class="n">left_cancel</span><span class="w"> </span><span class="o">(</span><span class="n">a</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">α</span><span class="o">)</span><span class="w"> </span><span class="o">(</span><span class="n">h</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="bp">∃</span><span class="w"> </span><span class="n">d</span><span class="o">,</span><span class="w"> </span><span class="n">d</span><span class="w"> </span><span class="bp">⊙</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="bp">=</span><span class="w"> </span><span class="mi">𝟙</span><span class="o">)</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="bp">⊙</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="bp">=</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="bp">⊙</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="bp">→</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="bp">=</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="kd">by</span>
+<span class="w">  </span><span class="n">intro</span><span class="w"> </span><span class="n">c_mul_left</span>
+<span class="w">  </span><span class="n">apply</span><span class="w"> </span><span class="n">Exists.elim</span><span class="w"> </span><span class="n">h</span>
+<span class="w">  </span><span class="n">intro</span><span class="w"> </span><span class="n">d</span><span class="w"> </span><span class="n">d_inv</span>
+<span class="w">  </span><span class="k">have</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">d</span><span class="w"> </span><span class="bp">⊙</span><span class="w"> </span><span class="o">(</span><span class="n">c</span><span class="w"> </span><span class="bp">⊙</span><span class="w"> </span><span class="n">a</span><span class="o">)</span><span class="w"> </span><span class="bp">=</span><span class="w"> </span><span class="n">d</span><span class="w"> </span><span class="bp">⊙</span><span class="w"> </span><span class="o">(</span><span class="n">c</span><span class="w"> </span><span class="bp">⊙</span><span class="w"> </span><span class="n">b</span><span class="o">)</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="kd">by</span>
+<span class="w">    </span><span class="n">apply</span><span class="w"> </span><span class="n">left_mul</span>
+<span class="w">    </span><span class="n">exact</span><span class="w"> </span><span class="n">c_mul_left</span>
+<span class="w">  </span><span class="n">repeat</span><span class="w"> </span><span class="o">(</span><span class="n">rw</span><span class="w"> </span><span class="o">[</span><span class="n">mul_monoid.mul_assoc</span><span class="o">,</span><span class="w"> </span><span class="n">d_inv</span><span class="o">,</span><span class="w"> </span><span class="n">mul_monoid.mul_one_left</span><span class="o">]</span><span class="w"> </span><span class="n">at</span><span class="w"> </span><span class="n">this</span><span class="o">)</span>
+<span class="w">  </span><span class="n">exact</span><span class="w"> </span><span class="n">this</span>
+</pre></div>
+                    
                 <p>
                     In this theorem we assumed that there exists an inverse element for \(c\) and then wrote an implication. This is actually identical to stating two assumptions, that there exists an inverse and that \(c \odot a = c \odot b\) holds. You can disect the implication with the keyword <span class="bold">intro</span> too. Now <span class="bold">c_mul_left</span> is a variable which holds the fact that \(c \odot a = c \odot b\). To get rid of the existential quantifier we use <span class="bold">apply Exists.elim</span> and finally we can repeat a set of commans with keyword <span class="bold">repeat</span>. We will end the initial discussion of monoids with another interesting fact. If an element has both left inverse and right inverse then these inverses are identical. You might think that this is obvious but do not forget that we did not say that our binary operation is commutative. So proving this will cost us few lines. Instead of furiously rewriting everything we use the keyword <span class="bold">calc</span> to express a chain of reasoning.
                 </p>
 
-
-<div class="code">
-<pre>
-theorem left_inv_eq_right_inv (a b c : α) (h1 : a ⊙ b = 𝟙) (h2 : c ⊙ a = 𝟙) : b = c := by
-    calc b = 𝟙 ⊙ b := by rw [mul_monoid.mul_one_left]
-         _ = (c ⊙ a) ⊙ b := by rw [h2]
-         _ = c ⊙ (a ⊙ b) := by rw [mul_monoid.mul_assoc]
-         _ = c ⊙ 𝟙 := by rw [h1]
-         _ = c := by rw [mul_monoid.mul_one_right]
-    
-</pre>
-</div>
-
+<div class="code"><pre><span></span><span class="kd">theorem</span><span class="w"> </span><span class="n">left_inv_eq_right_inv</span><span class="w"> </span><span class="o">(</span><span class="n">a</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">α</span><span class="o">)</span><span class="w"> </span><span class="o">(</span><span class="n">h1</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="bp">⊙</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="bp">=</span><span class="w"> </span><span class="mi">𝟙</span><span class="o">)</span><span class="w"> </span><span class="o">(</span><span class="n">h2</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="bp">⊙</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="bp">=</span><span class="w"> </span><span class="mi">𝟙</span><span class="o">)</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="bp">=</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="kd">by</span>
+<span class="w">  </span><span class="k">calc</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="bp">=</span><span class="w"> </span><span class="mi">𝟙</span><span class="w"> </span><span class="bp">⊙</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="kd">by</span><span class="w"> </span><span class="n">rw</span><span class="w"> </span><span class="o">[</span><span class="n">mul_monoid.mul_one_left</span><span class="o">]</span>
+<span class="w">      </span><span class="n">_</span><span class="w"> </span><span class="bp">=</span><span class="w"> </span><span class="o">(</span><span class="n">c</span><span class="w"> </span><span class="bp">⊙</span><span class="w"> </span><span class="n">a</span><span class="o">)</span><span class="w"> </span><span class="bp">⊙</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="kd">by</span><span class="w"> </span><span class="n">rw</span><span class="w"> </span><span class="o">[</span><span class="n">h2</span><span class="o">]</span>
+<span class="w">      </span><span class="n">_</span><span class="w"> </span><span class="bp">=</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="bp">⊙</span><span class="w"> </span><span class="o">(</span><span class="n">a</span><span class="w"> </span><span class="bp">⊙</span><span class="w"> </span><span class="n">b</span><span class="o">)</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="kd">by</span><span class="w"> </span><span class="n">rw</span><span class="w"> </span><span class="o">[</span><span class="n">mul_monoid.mul_assoc</span><span class="o">]</span>
+<span class="w">      </span><span class="n">_</span><span class="w"> </span><span class="bp">=</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="bp">⊙</span><span class="w"> </span><span class="mi">𝟙</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="kd">by</span><span class="w"> </span><span class="n">rw</span><span class="w"> </span><span class="o">[</span><span class="n">h1</span><span class="o">]</span>
+<span class="w">      </span><span class="n">_</span><span class="w"> </span><span class="bp">=</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="kd">by</span><span class="w"> </span><span class="n">rw</span><span class="w"> </span><span class="o">[</span><span class="n">mul_monoid.mul_one_right</span><span class="o">]</span>
+</pre></div>
+                    
                 <h2 id="groups">Groups</h2>
                 <p>
                     Earlier we saw that if an element had an inverse we could deduce additional algebraic properties like left cancelation. What if every element in a given monoid has an inverse? We get a an algebraic structure called group. I will again state a plain-text definition and then we will look how to encode it in Lean. The typical definition you will encounter will not use the word monoid and just list all the axioms as we did with the definition of a field.
