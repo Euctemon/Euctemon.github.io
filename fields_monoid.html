@@ -20,57 +20,53 @@
 
 <body>
     <header>
-        Groups and fields
+        <div class="hamburger-menu">
+            <input id="menu-toggle" type="checkbox" />
+            <label class="menu-btn" for="menu-toggle"><span hidden>Menu</span>
+        <div class="burger-lines">
+            <span class="bar bar1"></span>
+            <span class="bar bar2"></span>
+            <span class="bar bar3"></span>
+        </div>
+        </label>
+        
+        <div class="mainnav">
+            <nav class="nav-item">
+            <ul>
+                <li class="nav-heading"><a href="index.html">Home</a></li>
+                <li class="nav-heading">Monoids and Groups</li>
+                <li><a href="fields_intro.html">Introduction</a></li>
+                <li><a href="fields_monoid.html">Monoids and groups</a></li>
+            </ul>
+        </nav>
+        </div>
+        </div>
+        
+        <div class="header-name">Algebraic structures</div>
+        
     </header>
 
-    <div class="main-class">
-        <div class="mainnav">
-            <div class="nav-item">
-                <div class="nav-heading"><a href="index.html">Home</a></div>
-                <div class="nav-heading">Monoids and Groups</div>
-                <nav>
-                    <ul>
-                        <li><a href="fields_intro.html">Introduction</a></li>
-                        <li><a href="fields_monoid.html">Monoids and groups</a></li>
-                    </ul>
-                </nav>
-            </div>
+    <article>
+        <h2 id="monoids">Monoids</h2>
+        <p>
+            We start with a simple algebraic structure called monoid. A monoid is just a set with one binary operation and one unique element called identity satisfying three axioms. The operation being binary just means that the operation takes two elements from the set and assign to them one specific element also in the set. This operation can be addition or multiplication but not only. For example string concatenation is also a valid binary operation taking two strings and producing another string. The name of identity element depends on the binary operation. For addition we take the identity to be the number zero, for multiplication the number one and for string concatenation the empty string. The formal definition of monoid is surely shorter than that of a field
+        </p>
+
+        <div class="definition">
+            <p>
+                Monoid is a set \(R\) with a binary operation \(\odot : R \rightarrow R \rightarrow R\) and an element \(1 \in R\) such that they satisfy following axioms
+            </p>
+            <ul>
+                <li>\(\forall \, a,b,c \in R\) we have \((a \odot b) \odot c = a \odot (b \odot c)\)</li>
+                <li>\(\forall \, a \in R\) we have \(a \odot 1 = a\)</li>
+                <li>\(\forall \, a \in R\) we have \(1 \odot a = a\)</li>
+            </ul>
         </div>
 
-        <div class="sidenav">
-            <div class="nav-item">
-                <div class="nav-heading">Table of content</div>
-                <nav>
-                    <ul>
-                    <li><a href="#monoids">Monoids</a></li>
-                    <li><a href="#groups">Groups</a></li>
-                    </ul>
-                </nav>
-            </div>
-        </div>
-    
-        <div class="content">
-            <article>
-                <h2 id="monoids">Monoids</h2>
-                <p>
-                    We start with a simple algebraic structure called monoid. A monoid is just a set with one binary operation and one unique element called identity satisfying three axioms. The operation being binary just means that the operation takes two elements from the set and assign to them one specific element also in the set. This operation can be addition or multiplication but not only. For example string concatenation is also a valid binary operation taking two strings and producing another string. The name of identity element depends on the binary operation. For addition we take the identity to be the number zero, for multiplication the number one and for string concatenation the empty string. The formal definition of monoid is surely shorter than that of a field
-                </p>
-
-                <div class="definition">
-                    <p>
-                        Monoid is a set \(R\) with a binary operation \(\odot : R \rightarrow R \rightarrow R\) and an element \(1 \in R\) such that they satisfy following axioms
-                    </p>
-                    <ul>
-                        <li>\(\forall \, a,b,c \in R\) we have \((a \odot b) \odot c = a \odot (b \odot c)\)</li>
-                        <li>\(\forall \, a \in R\) we have \(a \odot 1 = a\)</li>
-                        <li>\(\forall \, a \in R\) we have \(1 \odot a = a\)</li>
-                    </ul>
-                </div>
-
-                <p>
-                    When you want to define a very simple algebraic structure there axioms seems to be a good choice. First there is the associativity of the binary operation. It would be weird if something like \((a \odot a) \odot a = a \odot (a \odot a)\) wouldn't hold. The other two axioms specifies how the element \(1\) plays with the binary operation. If we just stated that there is a specific element in the set but we wouldn't know its behaviour would the element be really special? You are free to come up with almost any axioms for your structure. You can state just the associativity of the binary operation and nothing more. Then it would be called semigroup. Or if you really want you do not need to specify the associative property. But in these cases you end up with a structure which is hard to reason about as you cannot say almost anything about that structure. Now we will look at how to define monoids in LEAN. The definition is almost one to one copy of the written one. You can see that the the operations and axioms are bundled together. The mathematical definition is oblivious of the naming of the binary operation as long as the operation satisfy the axioms. This means we can have a monoid of words and write \(\text{he} \odot \text{llo} = \text{hello}\). In this text we will use \(\odot\) as a symbol for multiplication and \(\oplus\) as a symbol for addition. Now comes the part of translating this definition into LEAN
-                    
-                </p>
+        <p>
+            When you want to define a very simple algebraic structure there axioms seems to be a good choice. First there is the associativity of the binary operation. It would be weird if something like \((a \odot a) \odot a = a \odot (a \odot a)\) wouldn't hold. The other two axioms specifies how the element \(1\) plays with the binary operation. If we just stated that there is a specific element in the set but we wouldn't know its behaviour would the element be really special? You are free to come up with almost any axioms for your structure. You can state just the associativity of the binary operation and nothing more. Then it would be called semigroup. Or if you really want you do not need to specify the associative property. But in these cases you end up with a structure which is hard to reason about as you cannot say almost anything about that structure. Now we will look at how to define monoids in LEAN. The definition is almost one to one copy of the written one. You can see that the the operations and axioms are bundled together. The mathematical definition is oblivious of the naming of the binary operation as long as the operation satisfy the axioms. This means we can have a monoid of words and write \(\text{he} \odot \text{llo} = \text{hello}\). In this text we will use \(\odot\) as a symbol for multiplication and \(\oplus\) as a symbol for addition. Now comes the part of translating this definition into LEAN
+            
+        </p>
 
 <div class="code"><pre><span></span><span class="kd">class</span><span class="w"> </span><span class="n">mul_monoid</span><span class="w"> </span><span class="o">(</span><span class="n">α</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="kt">Type</span><span class="o">)</span><span class="w"> </span><span class="n">where</span>
 <span class="w">  </span><span class="n">mul</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">α</span><span class="w"> </span><span class="bp">→</span><span class="w"> </span><span class="n">α</span><span class="w"> </span><span class="bp">→</span><span class="w"> </span><span class="n">α</span>
@@ -80,16 +76,16 @@
 <span class="w">  </span><span class="n">mul_one_left</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="bp">∀</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">α</span><span class="o">,</span><span class="w"> </span><span class="n">mul</span><span class="w"> </span><span class="n">one</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="bp">=</span><span class="w"> </span><span class="n">a</span>
 </pre></div>
 
-                <p>
-                    We can define the structure using the word <span class="bold">class</span> or <span class="bold">structure</span>. There is a difference but for it is enough to know that for defining algebraic structures we should use <span class="bold">class</span>. The next thing is that this definition is dependent on a type. We saw back in the mathematical definition that the operation is defined on a set. The theorem provers work with types. You can define a set as a specific type and use it but for now this definition is all we need. After that we define the type of multiplication and identity in a haskell-type syntax and state the three axioms. So what can we do with it? The first thing is to say that \(1 = 1\). This is just to show you how the syntax works
-                </p>
+        <p>
+            We can define the structure using the word <span class="bold">class</span> or <span class="bold">structure</span>. There is a difference but for it is enough to know that for defining algebraic structures we should use <span class="bold">class</span>. The next thing is that this definition is dependent on a type. We saw back in the mathematical definition that the operation is defined on a set. The theorem provers work with types. You can define a set as a specific type and use it but for now this definition is all we need. After that we define the type of multiplication and identity in a haskell-type syntax and state the three axioms. So what can we do with it? The first thing is to say that \(1 = 1\). This is just to show you how the syntax works
+        </p>
 
 <div class="code"><pre><span></span><span class="kd">example</span><span class="w"> </span><span class="o">{</span><span class="n">α</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="kt">Type</span><span class="o">}</span><span class="w"> </span><span class="o">[</span><span class="n">M</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">mul_monoid</span><span class="w"> </span><span class="n">α</span><span class="o">]</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">mul_monoid.one</span><span class="w"> </span><span class="bp">=</span><span class="w"> </span><span class="o">(</span><span class="n">mul_monoid.one</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">α</span><span class="o">)</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="kd">by</span><span class="w"> </span><span class="n">rfl</span>
 </pre></div>
 
-                <p>
-                    First thing we need to do is to say that we use a variable \(\alpha\) a that \(\alpha\) is a multiplicative monoid. Then we write the semicolon and state the body of theorem. After that we write semicolon with the equal sign to start the proof. In this example we use the reflexivity of equality so we can just write <span class="bold">by rfl</span>. We don't want to name the proof so we use the keyword <span class="bold"> example</span>. Now we prove a slightly harder thing and that the element \(1\) is unique. The proof of this fact is rather simple. Let's say that we have an element \(b\) such that if we choose an arbitrary element \(a\) then \(a \odot b = 1\). We can then choose \(1\) as the element \(a\) and then use the axiom of multiplying an element by \(1\) on the left side to arrive to the conclusion that \(b = 1\). Here is the corresponding code
-                </p>
+        <p>
+            First thing we need to do is to say that we use a variable \(\alpha\) a that \(\alpha\) is a multiplicative monoid. Then we write the semicolon and state the body of theorem. After that we write semicolon with the equal sign to start the proof. In this example we use the reflexivity of equality so we can just write <span class="bold">by rfl</span>. We don't want to name the proof so we use the keyword <span class="bold"> example</span>. Now we prove a slightly harder thing and that the element \(1\) is unique. The proof of this fact is rather simple. Let's say that we have an element \(b\) such that if we choose an arbitrary element \(a\) then \(a \odot b = 1\). We can then choose \(1\) as the element \(a\) and then use the axiom of multiplying an element by \(1\) on the left side to arrive to the conclusion that \(b = 1\). Here is the corresponding code
+        </p>
 
 <div class="code"><pre>
 <span class="kd">variable</span><span class="w"> </span><span class="o">{</span><span class="n">α</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="kt">Type</span><span class="o">}</span>
@@ -101,9 +97,9 @@
 <span class="w">  </span><span class="n">exact</span><span class="w"> </span><span class="n">this</span>
 </pre></div>
 
-                <p>
-                    In order not to pollute the theorem we moved the variable \(\alpha\) and the fact that it is a multiplicative monoid out of the declaration. The second thing is that we used <span class="bold">have</span> keyword to state and prove another fact inside the main proof. You can see that it has the same structure. Although we did not write any assumption, we see a semicolon, a statement of the mini-theorem, a semicolon with equal sign a proof with <span class="bold">by</span>. If we have a definitional equality like with the second and third axiom, we can just rewrite it with the keyword <span class="bold">rw</span>. In order to write less we introduce a little notation for multiplication and identity element. We also name the sub-theorem in the <span class="bold">have</span> clause. Otherwise LEAN automatically generates a name for it, most often called <span class="bold">this</span>.
-                </p>
+        <p>
+            In order not to pollute the theorem we moved the variable \(\alpha\) and the fact that it is a multiplicative monoid out of the declaration. The second thing is that we used <span class="bold">have</span> keyword to state and prove another fact inside the main proof. You can see that it has the same structure. Although we did not write any assumption, we see a semicolon, a statement of the mini-theorem, a semicolon with equal sign a proof with <span class="bold">by</span>. If we have a definitional equality like with the second and third axiom, we can just rewrite it with the keyword <span class="bold">rw</span>. In order to write less we introduce a little notation for multiplication and identity element. We also name the sub-theorem in the <span class="bold">have</span> clause. Otherwise LEAN automatically generates a name for it, most often called <span class="bold">this</span>.
+        </p>
 
 <div class="code"><pre><span></span><span class="kd">notation</span><span class="w"> </span><span class="mi">"𝟙"</span><span class="w"> </span><span class="bp">=&gt;</span><span class="w"> </span><span class="n">mul_monoid.one</span>
 <span class="kd">infixl</span><span class="o">:</span><span class="n">70</span><span class="w"> </span><span class="bp">"⊙"</span><span class="w"> </span><span class="bp">=&gt;</span><span class="w"> </span><span class="n">mul_monoid.mul</span>
@@ -114,9 +110,9 @@
 <span class="w">  </span><span class="n">exact</span><span class="w"> </span><span class="n">one_mul_b_eq_one</span>
 </pre></div>
 
-                <p>
-                    I will no longer write the variables and notation in the code snippets but if you try to use these snippets be sure to include the variables a notation at the top of the file. With so little axioms at our disposal we cannot prove anything interesting about the monoid structure alone. There is one thing which uses just the definition of the monoid operation. The next theorem is literally just expressing the fact that we can actually use the monoid operation. In other words if \(a = b\) then it is also true that \(c \odot a = c \odot b\) for an arbitrary element \(c\)
-                </p>
+        <p>
+            I will no longer write the variables and notation in the code snippets but if you try to use these snippets be sure to include the variables a notation at the top of the file. With so little axioms at our disposal we cannot prove anything interesting about the monoid structure alone. There is one thing which uses just the definition of the monoid operation. The next theorem is literally just expressing the fact that we can actually use the monoid operation. In other words if \(a = b\) then it is also true that \(c \odot a = c \odot b\) for an arbitrary element \(c\)
+        </p>
 
 <div class="code"><pre><span></span><span class="kd">theorem</span><span class="w"> </span><span class="n">left_mul</span><span class="w"> </span><span class="o">(</span><span class="n">a</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">α</span><span class="o">)</span><span class="w"> </span><span class="o">(</span><span class="n">h</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="bp">=</span><span class="w"> </span><span class="n">b</span><span class="o">)</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="bp">∀</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">α</span><span class="o">,</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="bp">⊙</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="bp">=</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="bp">⊙</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="kd">by</span>
 <span class="w">  </span><span class="n">intro</span><span class="w"> </span><span class="n">c</span>
@@ -124,9 +120,9 @@
 </pre></div>
                                         
 
-                <p>
-                    When dealing with universal quatificators as in this example you need to get rid of it. This means that you need to fix an arbitrary element of the monoid and then prove that the assumption holds for the element. As the element was arbitrary you proved that it holds for all elements. The keyword <span class="bold">intro c</span> fixec an element and labels it as \(c\). With another assumption on a specific element we can prove something little more interesting. In the context of monoid it does not generally hold that \(c \odot a = c \odot b\) implies \(a = b\). You cannot mindlessly cancel the element \(c\). But you can do that if there exists and inverse element for \(c\). By that it is meant there exists such \(d\) so \(d \odot c = 1\). As we have not yet stated that the binary operation is multiplicative we need to be careful and say that \(c\) has a left inverse. Now we can prove that if an element has a left inverse then you can cancel it from left
-                </p>
+        <p>
+            When dealing with universal quatificators as in this example you need to get rid of it. This means that you need to fix an arbitrary element of the monoid and then prove that the assumption holds for the element. As the element was arbitrary you proved that it holds for all elements. The keyword <span class="bold">intro c</span> fixec an element and labels it as \(c\). With another assumption on a specific element we can prove something little more interesting. In the context of monoid it does not generally hold that \(c \odot a = c \odot b\) implies \(a = b\). You cannot mindlessly cancel the element \(c\). But you can do that if there exists and inverse element for \(c\). By that it is meant there exists such \(d\) so \(d \odot c = 1\). As we have not yet stated that the binary operation is multiplicative we need to be careful and say that \(c\) has a left inverse. Now we can prove that if an element has a left inverse then you can cancel it from left
+        </p>
 
 <div class="code"><pre><span></span><span class="kd">theorem</span><span class="w"> </span><span class="n">left_cancel</span><span class="w"> </span><span class="o">(</span><span class="n">a</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">α</span><span class="o">)</span><span class="w"> </span><span class="o">(</span><span class="n">h</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="bp">∃</span><span class="w"> </span><span class="n">d</span><span class="o">,</span><span class="w"> </span><span class="n">d</span><span class="w"> </span><span class="bp">⊙</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="bp">=</span><span class="w"> </span><span class="mi">𝟙</span><span class="o">)</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="bp">⊙</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="bp">=</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="bp">⊙</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="bp">→</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="bp">=</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="kd">by</span>
 <span class="w">  </span><span class="n">intro</span><span class="w"> </span><span class="n">c_mul_left</span>
@@ -139,9 +135,9 @@
 <span class="w">  </span><span class="n">exact</span><span class="w"> </span><span class="n">this</span>
 </pre></div>
                     
-                <p>
-                    In this theorem we assumed that there exists an inverse element for \(c\) and then wrote an implication. This is actually identical to stating two assumptions, that there exists an inverse and that \(c \odot a = c \odot b\) holds. You can disect the implication with the keyword <span class="bold">intro</span> too. Now <span class="bold">c_mul_left</span> is a variable which holds the fact that \(c \odot a = c \odot b\). To get rid of the existential quantifier we use <span class="bold">apply Exists.elim</span> and finally we can repeat a set of commans with keyword <span class="bold">repeat</span>. We will end the initial discussion of monoids with another interesting fact. If an element has both left inverse and right inverse then these inverses are identical. You might think that this is obvious but do not forget that we did not say that our binary operation is commutative. So proving this will cost us few lines. Instead of furiously rewriting everything we use the keyword <span class="bold">calc</span> to express a chain of reasoning.
-                </p>
+        <p>
+            In this theorem we assumed that there exists an inverse element for \(c\) and then wrote an implication. This is actually identical to stating two assumptions, that there exists an inverse and that \(c \odot a = c \odot b\) holds. You can disect the implication with the keyword <span class="bold">intro</span> too. Now <span class="bold">c_mul_left</span> is a variable which holds the fact that \(c \odot a = c \odot b\). To get rid of the existential quantifier we use <span class="bold">apply Exists.elim</span> and finally we can repeat a set of commans with keyword <span class="bold">repeat</span>. We will end the initial discussion of monoids with another interesting fact. If an element has both left inverse and right inverse then these inverses are identical. You might think that this is obvious but do not forget that we did not say that our binary operation is commutative. So proving this will cost us few lines. Instead of furiously rewriting everything we use the keyword <span class="bold">calc</span> to express a chain of reasoning.
+        </p>
 
 <div class="code"><pre><span></span><span class="kd">theorem</span><span class="w"> </span><span class="n">left_inv_eq_right_inv</span><span class="w"> </span><span class="o">(</span><span class="n">a</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">α</span><span class="o">)</span><span class="w"> </span><span class="o">(</span><span class="n">h1</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="bp">⊙</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="bp">=</span><span class="w"> </span><span class="mi">𝟙</span><span class="o">)</span><span class="w"> </span><span class="o">(</span><span class="n">h2</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="bp">⊙</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="bp">=</span><span class="w"> </span><span class="mi">𝟙</span><span class="o">)</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="bp">=</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="kd">by</span>
 <span class="w">  </span><span class="k">calc</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="bp">=</span><span class="w"> </span><span class="mi">𝟙</span><span class="w"> </span><span class="bp">⊙</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="kd">by</span><span class="w"> </span><span class="n">rw</span><span class="w"> </span><span class="o">[</span><span class="n">mul_monoid.mul_one_left</span><span class="o">]</span>
@@ -151,40 +147,40 @@
 <span class="w">      </span><span class="n">_</span><span class="w"> </span><span class="bp">=</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="kd">by</span><span class="w"> </span><span class="n">rw</span><span class="w"> </span><span class="o">[</span><span class="n">mul_monoid.mul_one_right</span><span class="o">]</span>
 </pre></div>
                     
-                <h2 id="groups">Groups</h2>
-                <p>
-                    Earlier we saw that if an element had an inverse we could deduce additional algebraic properties like left cancelation. What if every element in a given monoid has an inverse? We get a an algebraic structure called group. I will again state a plain-text definition and then we will look how to encode it in Lean. The typical definition you will encounter will not use the word monoid and just list all the axioms as we did with the definition of a field.
-                </p>
+        <h2 id="groups">Groups</h2>
+        <p>
+            Earlier we saw that if an element had an inverse we could deduce additional algebraic properties like left cancelation. What if every element in a given monoid has an inverse? We get a an algebraic structure called group. I will again state a plain-text definition and then we will look how to encode it in Lean. The typical definition you will encounter will not use the word monoid and just list all the axioms as we did with the definition of a field.
+        </p>
 
-                <div class="definition">
-                    <p>
-                        Group is a set \(R\) with a binary operation \(\odot : R \rightarrow R \rightarrow R\) and an element \(1 \in R\) such that they satisfy following axioms
-                    </p>
-                    <ul>
-                        <li>\(\forall \, a,b \in R\) we have \(a \odot b \in R\)</li>
-                        <li>\(\forall \, a,b,c \in R\) we have \((a \odot b) \odot c = a \odot (b \odot c)\)</li>
-                        <li>\(\forall \, a \in R\) we have \(a \odot 1 = a\)</li>
-                        <li>\(\forall \, a \in R\) we have \(1 \odot a = a\)</li>
-                        <li>\(\forall \, a \in R \enspace \exists \, b \in R\) such that \(b \odot a = 1\)</li>
-                    </ul>
-                </div>
+        <div class="definition">
+            <p>
+                Group is a set \(R\) with a binary operation \(\odot : R \rightarrow R \rightarrow R\) and an element \(1 \in R\) such that they satisfy following axioms
+            </p>
+            <ul>
+                <li>\(\forall \, a,b \in R\) we have \(a \odot b \in R\)</li>
+                <li>\(\forall \, a,b,c \in R\) we have \((a \odot b) \odot c = a \odot (b \odot c)\)</li>
+                <li>\(\forall \, a \in R\) we have \(a \odot 1 = a\)</li>
+                <li>\(\forall \, a \in R\) we have \(1 \odot a = a\)</li>
+                <li>\(\forall \, a \in R \enspace \exists \, b \in R\) such that \(b \odot a = 1\)</li>
+            </ul>
+        </div>
 
-                <p>
-                    Our main job is to see how are the algebraic structures interconnected in hope to understand them better. The definition of a group stated as follows literally screams that a group is a really nice monoid when looking at the inverse elements.
-                </p>
+        <p>
+            Our main job is to see how are the algebraic structures interconnected in hope to understand them better. The definition of a group stated as follows literally screams that a group is a really nice monoid when looking at the inverse elements.
+        </p>
 
-                <div class="definition">
-                    <p>
-                        Group is a monoid \((R,\odot)\) where the following axiom holds
-                    </p>
-                        <ul>
-                            <li>\(\forall \, a \in R \enspace \exists \, b \in R\) such that \(b \odot a = 1\)</li>
-                        </ul>
-                </div>
+        <div class="definition">
+            <p>
+                Group is a monoid \((R,\odot)\) where the following axiom holds
+            </p>
+            <ul>
+                <li>\(\forall \, a \in R \enspace \exists \, b \in R\) such that \(b \odot a = 1\)</li>
+            </ul>
+        </div>
 
-                <p>
-                    We can now define a group structure in LEAN and we will do it using the second version of the group definition
-                </p>
+        <p>
+            We can now define a group structure in LEAN and we will do it using the second version of the group definition
+        </p>
 
 <div class="code">
 <pre>
@@ -194,10 +190,10 @@ class mul_group (α : Type) extends mul_monoid α where
 </pre>
 </div>
 
-                <p>
-                    Again there is a little clash of types and sets. The LEAN definition states that the group features a unary operation called inverse which satisfy the inverse axiom. The part <span class="italic">there exists</span> in the statement of the axiom is hidden here. But again you do not need to worry about that.
-                    But we should definetely be bothered by the fact that we did not explicitly said that the element should also have a right inverse. It is not so pleasant exercise to show that indeed if a group element has a left inverse \(b\) then it has also an right inverse and it is the same \(b\). For this to prove we need a group structure. You might be tempted to say that we already proved that. Well we proved that if and element has both inverses then they must be identical. Now we are trying to prove that just from the assumption of the existence of the left inverse we want to prove the existence of the right inverse and that the left and right inverses are identical. The proof requires a little lemma about the behaviour of inverses
-                </p>
+        <p>
+            Again there is a little clash of types and sets. The LEAN definition states that the group features a unary operation called inverse which satisfy the inverse axiom. The part <span class="italic">there exists</span> in the statement of the axiom is hidden here. But again you do not need to worry about that.
+            But we should definetely be bothered by the fact that we did not explicitly said that the element should also have a right inverse. It is not so pleasant exercise to show that indeed if a group element has a left inverse \(b\) then it has also an right inverse and it is the same \(b\). For this to prove we need a group structure. You might be tempted to say that we already proved that. Well we proved that if and element has both inverses then they must be identical. Now we are trying to prove that just from the assumption of the existence of the left inverse we want to prove the existence of the right inverse and that the left and right inverses are identical. The proof requires a little lemma about the behaviour of inverses
+        </p>
 
 <div class="code">
 <pre>
@@ -212,9 +208,9 @@ theorem inv_idemp {α : Type} [mul_group α] (a : α) : mul (mul a a⁻¹) (mul 
 </pre>
 </div>
 
-                <p>
-                    You can see that i defined a postfix for the group inverse. This is one of the times I will cheat and not write the expression <span class="code-inline">mul_group.inv</span> because the code would be too cluttered by this. Of course you can write the full expression and do not try to setup the postfix style of the inverse operator.
-                </p>
+        <p>
+            You can see that i defined a postfix for the group inverse. This is one of the times I will cheat and not write the expression <span class="bold">mul_group.inv</span> because the code would be too cluttered by this. Of course you can write the full expression and do not try to setup the postfix style of the inverse operator.
+        </p>
 
 <div class="code">
 <pre>
@@ -228,17 +224,10 @@ theorem inv_right {α : Type} [mul_group α] (a : α) : mul a a⁻¹ = one := by
 </pre>
 </div>
 
-                <h2>Homomorphisms</h2>
-                <p>
-                    Not yet done
-                </p>
+        <h2>Homomorphisms</h2>
+        <p>
+            Not yet done
+        </p>
 
-
-
-
-
-
-        </article>
-        </div>
-    </div>
+    </article>
 </body>

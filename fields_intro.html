@@ -19,65 +19,71 @@
 
 <body>
     <header>
-        <div>Fields in LEAN</div>
+        <div class="hamburger-menu">
+            <input id="menu-toggle" type="checkbox" />
+            <label class="menu-btn" for="menu-toggle"><span hidden>Menu</span>
+        <div class="burger-lines">
+            <span class="bar bar1"></span>
+            <span class="bar bar2"></span>
+            <span class="bar bar3"></span>
+        </div>
+        </label>
+        
+        <div class="mainnav">
+            <nav class="nav-item">
+            <ul>
+                <li class="nav-heading"><a href="index.html">Home</a></li>
+                <li class="nav-heading">Monoids and Groups</li>
+                <li><a href="fields_intro.html">Introduction</a></li>
+                <li><a href="fields_monoid.html">Monoids and groups</a></li>
+            </ul>
+        </nav>
+        </div>
+        </div>
+        
+        <div class="header-name">Algebraic structures</div>
+        
     </header>
 
-    <div class="main-class">
-        <div class="mainnav">
-            <div class="nav-item">
-                <div class="nav-heading"><a href="index.html">Home</a></div>
-                <div class="nav-heading">Fields</div>
-                <nav>
-                    <ul>
-                    <li><a href="fields_intro.html">Introduction</a></li>
-                    <li><a href="fields_monoid.html">Monoids and groups</a></li>
-                    </ul>
-                </nav>
-            </div>
+    <article>
+        <h2>Introduction</h2>
+        <p>
+            These few upcoming pages are my attempt to formalize few definitions and theorem from basic abstract algebra. The goal is to start with monoids and work the way up to fields. The catch is that I will be using a theorem prover called <a href="https://lean-lang.org/">LEAN</a> a formalize all the mathematics in this software. You can think about a theorem prover as a software which enables you to write mathematics almost as a computer program. This text will be havily centered around the LEAN theorem prover. This means that if you are here just for the mathematics you might have troubles reading these pages as they will be filled with many code snippets. It takes a considerable amout of time to learn a software for theorem proving. I will try to explain the basic syntax as we go through the definitions and theorem but it is not in my power to teach you how to use LEAN on the spot.If however you find out that you would like to try it personally then the official site mentioned earlier contains the install and setup instructions. After that you might be interested in <a href="https://leanprover-community.github.io/mathematics_in_lean/index.html">Mathematics in LEAN</a> which is a website specially dedicated to teach you how to do mathematics in LEAN.
+        </p>
+
+        <h2>What are fields</h2>
+        <p>
+            Fields are an important object in mathematics. We first learn about them in highschool. There we talk about the properties of natural numbers, integer, fractions and real numbers. The last two form a field. But at highschool you don't usually hear the formal definition of a field. Instead we learn that the addition and multiplication are commutative and associative, that all nonzero integers and real numbers have an multiplicative inverse and so on. If you don't study for a degree in mathematics then it might be possible that you use the field structure for one thing only and that is solving a system of linear algebraic equations. The coefficients by the unknows must be from a field. Why? That is a tough questions. Probably the best answer is that it works quite well and we like it. Let's look at an example
+        </p>
+
+        $$\begin{aligned}
+        3x+2y&=1 \\
+        x-y&=2 \\
+        \end{aligned}$$
+
+        <p>
+            What do we do when we try to solve this system of equations? First we move the \(y\) to the other side of the equation with an opposite sign to get \(x=2+y\). We substitute this expression to the first equation to obtain \(3(2+y)+2y=1\). We multiply the content in the brackets to get \((6+3y)+2y=1\). We move the brackets to obtain \(6+(3y+2y)\) and add the coefficients for the variable \(y\) to get \(6+5y=1\). We subtract the number 6 from both sides and divide by the number \(5\) to find out that \(y=-1\). We substitute the result to the second equation to get \(x=1\). What if we did not know that the fractions are distributative? Then we couldn't perform the third step and wouldn't be able to solve this system of equations! So we know that the field structure is useful for something. Let's look at the formal definition
+        </p>
+
+        <div class="definition">
+            <p>
+                Field is a set \(R\) with two binary operations \(\odot : R \rightarrow R \rightarrow R\) and \(\oplus : R \rightarrow R \rightarrow R\) and two distinct elements \(1 \in R\) and \(0 \in R\) such that they satisfy following axioms
+            </p>
+            <ul>
+                <li>\(\forall \, a,b,c \in R\) it follows that \((a \oplus b) \oplus c = a \oplus (b \oplus c)\)</li>
+                <li>\(\forall \, a \in R\) it follows that \(a \oplus 0 = a\)</li>
+                <li>\(\forall \, a \in R \enspace \exists \, b \in R\) such that \(a \oplus b = 0\)</li>
+                <li>\(\forall \, a,b \in R\) it follows that \(a \oplus b = b \oplus a\)</li>
+                <li>\(\forall \, a,b,c \in R\) it follows that \((a \odot b) \odot c = a \odot (b \odot c)\)</li>
+                <li>\(\forall \, a \in R\) it follows that \(a \odot 1 = a\)</li>
+                <li>\(\forall \, a \in R \enspace \exists \, b \in R\) such that \(a \odot b = 0\)</li>
+                <li>\(\forall \, a,b \in R\) it follows that \(a \odot b = b \odot a\)</li>
+                <li>\(\forall \, a,b,c \in R\) it follows that \(a \odot (b \oplus c) = a \odot b \oplus a \odot c\)</li>
+            </ul>
         </div>
-    
-        <div class="content">
-            <article>
-                <h2>Introduction</h2>
-                <p>
-                    These few upcoming pages are my attempt to formalize few definitions and theorem from basic abstract algebra. The goal is to start with monoids and work the way up to fields. The catch is that I will be using a theorem prover called <a href="https://lean-lang.org/">LEAN</a> a formalize all the mathematics in this software. You can think about a theorem prover as a software which enables you to write mathematics almost as a computer program. This text will be havily centered around the LEAN theorem prover. This means that if you are here just for the mathematics you might have troubles reading these pages as they will be filled with many code snippets. It takes a considerable amout of time to learn a software for theorem proving. I will try to explain the basic syntax as we go through the definitions and theorem but it is not in my power to teach you how to use LEAN on the spot.If however you find out that you would like to try it personally then the official site mentioned earlier contains the install and setup instructions. After that you might be interested in <a href="https://leanprover-community.github.io/mathematics_in_lean/index.html">Mathematics in LEAN</a> which is a website specially dedicated to teach you how to do mathematics in LEAN.
-                </p>
-
-                <h2>What are fields</h2>
-                <p>
-                    Fields are an important object in mathematics. We first learn about them in highschool. There we talk about the properties of natural numbers, integer, fractions and real numbers. The last two form a field. But at highschool you don't usually hear the formal definition of a field. Instead we learn that the addition and multiplication are commutative and associative, that all nonzero integers and real numbers have an multiplicative inverse and so on. If you don't study for a degree in mathematics then it might be possible that you use the field structure for one thing only and that is solving a system of linear algebraic equations. The coefficients by the unknows must be from a field. Why? That is a tough questions. Probably the best answer is that it works quite well and we like it. Let's look at an example
-                </p>
-
-                $$\begin{aligned}
-                3x+2y&=1 \\
-                x-y&=2 \\
-                \end{aligned}$$
-
-                <p>
-                    What do we do when we try to solve this system of equations? First we move the \(y\) to the other side of the equation with an opposite sign to get \(x=2+y\). We substitute this expression to the first equation to obtain \(3(2+y)+2y=1\). We multiply the content in the brackets to get \((6+3y)+2y=1\). We move the brackets to obtain \(6+(3y+2y)\) and add the coefficients for the variable \(y\) to get \(6+5y=1\). We subtract the number 6 from both sides and divide by the number \(5\) to find out that \(y=-1\). We substitute the result to the second equation to get \(x=1\). What if we did not know that the fractions are distributative? Then we couldn't perform the third step and wouldn't be able to solve this system of equations! So we know that the field structure is useful for something. Let's look at the formal definition
-                </p>
-
-                <div class="definition">
-                    <p>
-                        Field is a set \(R\) with two binary operations \(\odot : R \rightarrow R \rightarrow R\) and \(\oplus : R \rightarrow R \rightarrow R\) and two distinct elements \(1 \in R\) and \(0 \in R\) such that they satisfy following axioms
-                    </p>
-                    <ul>
-                        <li>\(\forall \, a,b,c \in R\) it follows that \((a \oplus b) \oplus c = a \oplus (b \oplus c)\)</li>
-                        <li>\(\forall \, a \in R\) it follows that \(a \oplus 0 = a\)</li>
-                        <li>\(\forall \, a \in R \enspace \exists \, b \in R\) such that \(a \oplus b = 0\)</li>
-                        <li>\(\forall \, a,b \in R\) it follows that \(a \oplus b = b \oplus a\)</li>
-                        <li>\(\forall \, a,b,c \in R\) it follows that \((a \odot b) \odot c = a \odot (b \odot c)\)</li>
-                        <li>\(\forall \, a \in R\) it follows that \(a \odot 1 = a\)</li>
-                        <li>\(\forall \, a \in R \enspace \exists \, b \in R\) such that \(a \odot b = 0\)</li>
-                        <li>\(\forall \, a,b \in R\) it follows that \(a \odot b = b \odot a\)</li>
-                        <li>\(\forall \, a,b,c \in R\) it follows that \(a \odot (b \oplus c) = a \odot b \oplus a \odot c\)</li>
-                    </ul>
-                </div>
-                
-                <p>
-                    How does a mathematician think about this algebraic structure? For a mathematician the equal yet more useful definition is that field is a particular type of group and monoid with additional axiom of having a multiplicative inverse for all nonzero elements. This goal of this text is to build the necessary algebric structures in order to get to this definition and hopefully explain why a mathematician would remember the definition in such a manner.
-                </p>
-            </article>
-        </div>
-    </div>
+        
+        <p>
+            How does a mathematician think about this algebraic structure? For a mathematician the equal yet more useful definition is that field is a particular type of group and monoid with additional axiom of having a multiplicative inverse for all nonzero elements. This goal of this text is to build the necessary algebric structures in order to get to this definition and hopefully explain why a mathematician would remember the definition in such a manner.
+        </p>
+    </article>
 </body>
