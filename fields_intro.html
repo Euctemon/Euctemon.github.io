@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <link rel="stylesheet" href="styles.css">
   <link rel="icon" href="favicon.ico">
+  <script src="scripts.js"></script>
   <meta name="viewport" content="width=device-width,initial-scale=1" />
 
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css" integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X" crossorigin="anonymous">
@@ -18,32 +19,32 @@
 </head>
 
 <body>
+
+
     <header>
-        <div class="hamburger-menu">
-            <input id="menu-toggle" type="checkbox" />
-            <label class="menu-btn" for="menu-toggle"><span hidden>Menu</span>
-        <div class="burger-lines">
-            <span class="bar bar1"></span>
-            <span class="bar bar2"></span>
-            <span class="bar bar3"></span>
+        <div class="header-grid">
+            <button class="nav-button" onClick="openMenu('mainnav-wrapper','nav-ico')" type="button"><span hidden>Menu</span>
+            <img src="sidebarOpen.svg" id="nav-ico">
+            </button>
+        <h1 class="header-name">Algebraic structures</h1>
         </div>
-        </label>
         
-        <div class="nav-wrap">
-            <nav class="nav-elem">
+        <div id="mainnav-wrapper">
+        <nav>
             <ul>
-                <li class="nav-heading"><a href="index.html">Home</a></li>
+                <li><a href="index.html">Home</a></li>
                 <li><a href="fields_intro.html">Introduction</a></li>
                 <li><a href="fields_monoid.html">Monoids and groups</a></li>
             </ul>
         </nav>
         </div>
-        </div>
+        </header>
         
-        <div class="header-name"><h1>Algebraic structures</h1></div>
-        
-    </header>
+              
 
+
+    <div class="main-wrap">
+    <div class="main-content">
     <article>
         <h2>Introduction</h2>
         <p>
@@ -85,4 +86,18 @@
             How does a mathematician think about this algebraic structure? For a mathematician the equal yet more useful definition is that field is a particular type of group and monoid with additional axiom of having a multiplicative inverse for all nonzero elements. This goal of this text is to build the necessary algebric structures in order to get to this definition and hopefully explain why a mathematician would remember the definition in such a manner.
         </p>
     </article>
+    </div>
+
+
+        <div class="sidenav-wrapper">
+            <div class="navi">
+            <nav>
+            <ul>
+            <li><a href=#>Home</a></li>
+            <li><a href=#>Math</a></li>
+            </ul>
+            </nav>
+            </div>
+            </div>
+    </div>
 </body>
