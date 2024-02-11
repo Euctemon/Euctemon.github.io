@@ -4,9 +4,13 @@
   <meta charset="UTF-8">
   <link rel="stylesheet" href="styles.css">
   <link rel="icon" href="favicon.ico">
-  <script src="scripts.js"></script>
+  <script src="scripts.js" defer></script>
   <meta name="viewport" content="width=device-width,initial-scale=1" />
 
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lora&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css" integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X" crossorigin="anonymous">
 
@@ -45,7 +49,8 @@
     <div class="main-wrap">
     <div class="main-content">
     <article>
-        <h2 id="monoids">Monoids</h2>
+        <section id="monoids">
+        <h2>Monoids</h2>
         <p>
             We start with a simple algebraic structure called monoid. A monoid is just a set with one binary operation and one unique element called identity satisfying three axioms. The operation being binary just means that the operation takes two elements from the set and assign to them one specific element also in the set. This operation can be addition or multiplication but not only. For example string concatenation is also a valid binary operation taking two strings and producing another string. The name of identity element depends on the binary operation. For addition we take the identity to be the number zero, for multiplication the number one and for string concatenation the empty string. The formal definition of monoid is surely shorter than that of a field
         </p>
@@ -92,9 +97,9 @@
         <p>
             In this theorem we assumed that there exists an inverse element for \(c\) and then wrote an implication. This is actually identical to stating two assumptions, that there exists an inverse and that \(c \odot a = c \odot b\) holds. You can disect the implication with the keyword <span class="bold">intro</span> too. Now <span class="bold">c_mul_left</span> is a variable which holds the fact that \(c \odot a = c \odot b\). To get rid of the existential quantifier we use <span class="bold">apply Exists.elim</span> and finally we can repeat a set of commans with keyword <span class="bold">repeat</span>. We will end the initial discussion of monoids with another interesting fact. If an element has both left inverse and right inverse then these inverses are identical. You might think that this is obvious but do not forget that we did not say that our binary operation is commutative. So proving this will cost us few lines. Instead of furiously rewriting everything we use the keyword <span class="bold">calc</span> to express a chain of reasoning.
         </p>
-
-                    
-        <h2 id="groups">Groups</h2>
+    </section>
+    <section id="groups">
+        <h2>Groups</h2>
         <p>
             Earlier we saw that if an element had an inverse we could deduce additional algebraic properties like left cancelation. What if every element in a given monoid has an inverse? We get a an algebraic structure called group. I will again state a plain-text definition and then we will look how to encode it in Lean. The typical definition you will encounter will not use the word monoid and just list all the axioms as we did with the definition of a field.
         </p>
@@ -170,12 +175,7 @@ theorem inv_right {α : Type} [mul_group α] (a : α) : mul a a⁻¹ = one := by
          _ = one := by rw [mul_group.inv_left]
 </pre>
 </div>
-
-        <h2>Homomorphisms</h2>
-        <p>
-            Not yet done
-        </p>
-
+</section>
     </article>
 </div>
 
@@ -184,8 +184,8 @@ theorem inv_right {α : Type} [mul_group α] (a : α) : mul a a⁻¹ = one := by
     <div class="sidenav-content">
     <nav>
     <ul>
-    <li><a href=#>Home</a></li>
-    <li><a href=#>Math</a></li>
+    <li><a href="#monoids">Monoids</a></li>
+    <li><a href="#groups">Groups</a></li>
     </ul>
     </nav>
     </div>
