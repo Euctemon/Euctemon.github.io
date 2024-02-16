@@ -4,8 +4,7 @@ body {
     margin: 0;
     font-family: "Roboto Slab", serif;
     font-weight: 300;
-    line-height: 160%;
-    font-size: 26px;
+    font-size: 18px;
 }
 
 
@@ -136,7 +135,7 @@ section {
 
 .main-wrap {
     display:flex;
-    margin: 0 15%;
+    margin: 0 25%;
     justify-content: center;
 }
 
