@@ -25,8 +25,8 @@ var currentID = '#' + current.getAttribute("id");
 const currentNAV = document.querySelector(`a[href=${CSS.escape(currentID)}]`);
 let scrollY = window.scrollY;
 
-const sectionHeight = current.offsetHeight-100;
-const sectionTop = current.offsetTop-150;
+const sectionHeight = current.offsetHeight;
+const sectionTop = current.offsetTop-200;
 
  if (
       scrollY > sectionTop &&
