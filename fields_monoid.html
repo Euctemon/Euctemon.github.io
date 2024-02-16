@@ -4,9 +4,13 @@
   <meta charset="UTF-8">
   <link rel="stylesheet" href="styles.css">
   <link rel="icon" href="favicon.ico">
-  <script src="scripts.js" defer></script>
+  
   <meta name="viewport" content="width=device-width,initial-scale=1" />
 
+
+
+
+  <script src="personal_scripts.js" defer></script>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -42,7 +46,6 @@
         </nav>
         </div>
         </header>
-        
               
 
 
@@ -98,7 +101,7 @@
             In this theorem we assumed that there exists an inverse element for \(c\) and then wrote an implication. This is actually identical to stating two assumptions, that there exists an inverse and that \(c \odot a = c \odot b\) holds. You can disect the implication with the keyword <span class="bold">intro</span> too. Now <span class="bold">c_mul_left</span> is a variable which holds the fact that \(c \odot a = c \odot b\). To get rid of the existential quantifier we use <span class="bold">apply Exists.elim</span> and finally we can repeat a set of commans with keyword <span class="bold">repeat</span>. We will end the initial discussion of monoids with another interesting fact. If an element has both left inverse and right inverse then these inverses are identical. You might think that this is obvious but do not forget that we did not say that our binary operation is commutative. So proving this will cost us few lines. Instead of furiously rewriting everything we use the keyword <span class="bold">calc</span> to express a chain of reasoning.
         </p>
     </section>
-    <section id="groups">
+        <section id="groups">
         <h2>Groups</h2>
         <p>
             Earlier we saw that if an element had an inverse we could deduce additional algebraic properties like left cancelation. What if every element in a given monoid has an inverse? We get a an algebraic structure called group. I will again state a plain-text definition and then we will look how to encode it in Lean. The typical definition you will encounter will not use the word monoid and just list all the axioms as we did with the definition of a field.
@@ -175,7 +178,7 @@ theorem inv_right {α : Type} [mul_group α] (a : α) : mul a a⁻¹ = one := by
          _ = one := by rw [mul_group.inv_left]
 </pre>
 </div>
-</section>
+    </section>
     </article>
 </div>
 

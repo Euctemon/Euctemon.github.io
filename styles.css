@@ -2,9 +2,9 @@
 
 body {
     margin: 0;
-    font-family: 'Lora', serif;
+    font-family: "Roboto Slab", serif;
     line-height: 160%;
-    font-size: calc(15px + 0.390625vw);
+    font-size: calc(14px + 0.390625vw);
 }
 
 
@@ -77,7 +77,7 @@ body {
     border:0;
     padding:0;
 }
-    
+
 header {
     border-bottom: solid 1px;
     border-color: #efefef;
@@ -99,15 +99,6 @@ header {
     justify-content: center;
     font-size: larger;
     font-weight: bolder;
-}
-
-
-
-
-
-    
-nav {
-    padding: 11px 30px 0 30px;
 }
     
 nav ul {
@@ -138,19 +129,23 @@ nav a:hover {
 }
 
 h2 {
-    margin-top: 150px;
     font-size:larger;
 }
     
 .main-wrap {
     display:flex;
-    margin: 0 5% 0;
+    margin: 0 15%;
+    justify-content: center;
 }
-    
+
+section {
+    scroll-margin-top: 5em;
+}
+
 .main-content {
     width: min(1600px,90%);
     line-height: 150%;
-    margin: 0 auto;
+    margin-right: 100px;
 }
     
     
@@ -161,12 +156,15 @@ h2 {
 .sidenav-content {
     position:sticky;
     align-self:start;
-    top:100px;
+    top:150px;
 }
     
     
 @media (max-width : 1740px) {
     .sidenav-wrapper {display:none;}
+    .main-wrap {
+        margin: 0 5%;
+    }
 }
     
     
