@@ -142,7 +142,7 @@ section {
 .main-content {
     width: min(1600px,90%);
     line-height: 150%;
-    margin-right: 200px;
+    margin-right: 100px;
 }
         
 .sidenav-wrapper {
