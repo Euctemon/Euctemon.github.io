@@ -1,5 +1,11 @@
 /* general styling */
 
+
+@font-face {
+    font-family: "Roboto Slab", serif;
+    src: url('https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100..900&display=swap');
+}
+
 body {
     margin: 0;
     font-family: "Roboto Slab", serif;
@@ -139,9 +145,16 @@ section {
     justify-content: center;
 }
 
+/* divné kouzlo pro overflow ve flex */
+.main-wrap > * {
+    min-width: 0;
+}
+
 .main-content {
-    width: min(1600px,90%);
     line-height: 150%;
+}
+
+.with-sidebar {
     margin-right: 100px;
 }
         
@@ -158,6 +171,7 @@ section {
     position:sticky;
     align-self:start;
     top:150px;
+    width: 200px;
 
     nav ul {
         margin: 0;
@@ -170,7 +184,7 @@ section {
     }
 
     nav a {
-        border-left: solid 5px white;
+        border-left: solid 5px grey;
         text-decoration:none;
         padding-left: 15px;
         color:black;
@@ -193,6 +207,9 @@ section {
     .main-wrap {
         margin: 0 5%;
     }
+    .with-sidebar {
+        margin-right: 0;
+    }
 }
     
     
@@ -210,6 +227,8 @@ section {
     background-color: white;
     border-width: 1px;
     padding: 15px;
+    overflow-x: scroll;
+    min-width: 900px;
 }
 
 .definition::before {
@@ -219,3 +238,9 @@ section {
     font-family: 'Arial';
 }
 
+/* code styling */
+
+.scrollable-box {
+    overflow-x: scroll;
+    margin: auto;
+}
