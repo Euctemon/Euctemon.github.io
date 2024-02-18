@@ -1,20 +1,10 @@
 /* general styling */
-
-
-@font-face {
-    font-family: "Roboto Slab", serif;
-    src: url('https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100..900&display=swap');
-}
-
 body {
     margin: 0;
     font-family: "Roboto Slab", serif;
     font-weight: 300;
     font-size: 18px;
 }
-
-
-
 
 /* homepage styling */
 
@@ -85,8 +75,9 @@ body {
     }
 
     .divider {
-        padding-top: 20px;
-        font-weight: 400;
+        padding-top: 40px;
+        padding-bottom: 10px;
+        font-weight: 500;
     }
     }
     
@@ -160,6 +151,7 @@ section {
         
 .sidenav-wrapper {
     position:relative;
+    min-width: 250px;
 }
 
 
@@ -171,7 +163,6 @@ section {
     position:sticky;
     align-self:start;
     top:150px;
-    width: 200px;
 
     nav ul {
         margin: 0;
@@ -227,7 +218,6 @@ section {
     background-color: white;
     border-width: 1px;
     padding: 15px;
-    overflow-x: scroll;
     min-width: 900px;
 }
 
