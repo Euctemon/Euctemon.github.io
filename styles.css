@@ -175,7 +175,7 @@ section {
     }
 
     nav a {
-        border-left: solid 5px grey;
+        border-left: solid 5px white;
         text-decoration:none;
         padding-left: 15px;
         color:black;
@@ -202,11 +202,6 @@ section {
         margin-right: 0;
     }
 }
-    
-    
-
-
-
 
 
 
