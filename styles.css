@@ -218,7 +218,8 @@ section {
     background-color: white;
     border-width: 1px;
     padding: 15px;
-    min-width: 900px;
+    min-width: 500px;
+    margin: 5px 0px;
 }
 
 .definition::before {
@@ -232,5 +233,4 @@ section {
 
 .scrollable-box {
     overflow-x: scroll;
-    margin: auto;
 }
