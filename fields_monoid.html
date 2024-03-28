@@ -18,14 +18,13 @@
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.js" integrity="sha384-g7c+Jr9ZivxKLnZTDUhnkOnsh30B4H0rpLUpJ4jAIKs4fnJI+sEnkvrMWph2EDg4" crossorigin="anonymous"></script>
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/contrib/auto-render.min.js" integrity="sha384-mll67QQFJfxn0IYznZYonOWZ644AWYC+Pt2cHqMaRhXVrursRwvLnLaebdGIlYNa" crossorigin="anonymous" onload="renderMathInElement(document.body);"></script>
 
-  <!-- code highlight -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
 
-<!-- and it's easy to individually load additional languages -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/haskell.min.js"></script>
+  <link rel="stylesheet" href="highlight.css">
+  <script src="https://github.com/leanprover/theorem_proving_in_lean4/blob/master/highlight.js"></script>
+  <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
+  
+  <script>hljs.highlightAll();</script>
 
-<script>hljs.highlightAll();</script>
 
   <title>Groups and Fields</title>
 </head>
@@ -79,19 +78,37 @@
             When you want to define a very simple algebraic structure there axioms seems to be a good choice. First there is the associativity of the binary operation. It would be weird if something like \((a \oplus a) \oplus a = a \oplus (a \oplus a)\) wouldn't hold. The other two axioms specifies how the element \(0\) plays with the binary operation. If we just stated that there is a specific element in the set but we wouldn't know its behaviour would the element be really special? You are free to come up with almost any axioms for your structure. You can state just the associativity of the binary operation and nothing more. Then it would be called semigroup. Or if you really want you do not need to specify the associative property. But in these cases you end up with a structure which is hard to reason about as you cannot say almost anything about that structure. Now we will look at how to define monoids in LEAN. The definition is almost one to one copy of the written one. You can see that the the operations and axioms are bundled together. The mathematical definition is oblivious of the naming of the binary operation as long as the operation satisfy the axioms. This means we can have a monoid of words and write \(\text{he} \oplus \text{llo} = \text{hello}\). In this text we will use \(\odot\) as a symbol for multiplication and \(\oplus\) as a symbol for addition. Now comes the part of translating this definition into LEAN            
         </p>
 
-
-<pre><code class="haskell">
-class add_monoid (α : Type) extends Add α where
-zero : α
-add_assoc : ∀ a b c : α, a + (b + c) = (a + b) + c
-add_zero_right : ∀ a : α, a + zero = a
-add_zero_left : ∀ a : α, zero + a = a
-</code></pre>
+<div class="scrollable-box">
+<code class="highlight"><pre><span></span><span class="kn">class</span><span class="w"> </span><span class="n">add_monoid</span><span class="w"> </span><span class="o">(</span><span class="n">α</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="kt">Type</span><span class="o">)</span><span class="w"> </span><span class="kn">extends</span><span class="w"> </span><span class="n">Add</span><span class="w"> </span><span class="n">α</span><span class="w"> </span><span class="kn">where</span>
+    <span class="w">  </span><span class="n">zero</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">α</span>
+    <span class="w">  </span><span class="n">add_assoc</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="bp">∀</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">α</span><span class="o">,</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="bp">+</span><span class="w"> </span><span class="o">(</span><span class="n">b</span><span class="w"> </span><span class="bp">+</span><span class="w"> </span><span class="n">c</span><span class="o">)</span><span class="w"> </span><span class="bp">=</span><span class="w"> </span><span class="o">(</span><span class="n">a</span><span class="w"> </span><span class="bp">+</span><span class="w"> </span><span class="n">b</span><span class="o">)</span><span class="w"> </span><span class="bp">+</span><span class="w"> </span><span class="n">c</span>
+    <span class="w">  </span><span class="n">add_zero_right</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="bp">∀</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">α</span><span class="o">,</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="bp">+</span><span class="w"> </span><span class="n">zero</span><span class="w"> </span><span class="bp">=</span><span class="w"> </span><span class="n">a</span>
+    <span class="w">  </span><span class="n">add_zero_left</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="bp">∀</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">α</span><span class="o">,</span><span class="w"> </span><span class="n">zero</span><span class="w"> </span><span class="bp">+</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="bp">=</span><span class="w"> </span><span class="n">a</span></pre></code>
+</div>
 
         <p>
             We can define the algebraic structure using the keyword <span class="code"><span class="kd">class</span></span> or <span class="code"><span class="kd">structure</span></span>. There is a difference but for our purpose it is enough to know that for defining algebraic structures we should use the <span class="code"><span class="kd">class</span></span> keyword. After the name of the structure we see <span class="code"><span class="n">α</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="kt">Type</span></span>. This means that the definition is dependent on a free type variable <span class="code"><span class="n">α</span></span>. Then the axioms follows again defined by the corresponding types. This is a little different than our mathematical definition. In Lean everything needs to have a type. It turns out that sets are modelled as types too. If you write <span class="code"><span class="n">S</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">Set</span><span class="w"> </span><span class="n">α</span></span> you declare that the variable <span class="code"><span class="n">S</span></span> is of type set.
         </p>
 
+
+
+<div>
+    <code class="highlight">
+<pre><span></span><span class="kn">notation</span><span class="w"> </span><span class="s2">"𝟘"</span><span class="w"> </span><span class="bp">=&gt;</span><span class="w"> </span><span class="n">add_monoid</span><span class="bp">.</span><span class="n">zero</span>
+
+<span class="kn">example</span><span class="w"> </span><span class="o">{</span><span class="n">α</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="kt">Type</span><span class="o">}</span><span class="w"> </span><span class="o">[</span><span class="n">M</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">add_monoid</span><span class="w"> </span><span class="n">α</span><span class="o">]</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="mi">𝟘</span><span class="w"> </span><span class="bp">=</span><span class="w"> </span><span class="o">(</span><span class="mi">𝟘</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">α</span><span class="o">)</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">rfl</span>
+
+
+<span class="kn">variable</span><span class="w"> </span><span class="o">{</span><span class="n">α</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="kt">Type</span><span class="o">}</span>
+<span class="kn">variable</span><span class="w"> </span><span class="o">[</span><span class="n">M</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">add_monoid</span><span class="w"> </span><span class="n">α</span><span class="o">]</span>
+
+<span class="kn">example</span><span class="w"> </span><span class="o">(</span><span class="n">b</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">α</span><span class="o">)</span><span class="w"> </span><span class="o">(</span><span class="n">h</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="bp">∀</span><span class="w"> </span><span class="n">a</span><span class="o">,</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="bp">+</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="bp">=</span><span class="w"> </span><span class="n">a</span><span class="o">)</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="bp">=</span><span class="w"> </span><span class="mi">𝟘</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="k">by</span>
+<span class="w">  </span><span class="k">have</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="mi">𝟘</span><span class="w"> </span><span class="bp">+</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="bp">=</span><span class="w"> </span><span class="mi">𝟘</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">rw</span><span class="w"> </span><span class="o">[</span><span class="n">h</span><span class="w"> </span><span class="mi">𝟘</span><span class="o">]</span>
+<span class="w">  </span><span class="n">rw</span><span class="w"> </span><span class="o">[</span><span class="n">add_monoid</span><span class="bp">.</span><span class="n">add_zero_left</span><span class="o">]</span><span class="w"> </span><span class="k">at</span><span class="w"> </span><span class="n">this</span>
+<span class="w">  </span><span class="n">exact</span><span class="w"> </span><span class="n">this</span>
+</pre>
+    </code>
+</div>
 
 
         <p>
