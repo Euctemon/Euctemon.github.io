@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="../styles_and_graphics/styles.css">
-    <link rel="icon" href="../styles_and_graphics/favicon.ico">
+    <link rel="stylesheet" type="text/css" href="styles/styles.css">
+    <link rel="icon" href="styles_and_graphics/favicon.ico">
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
 
     <!-- Katex extension -->
@@ -72,4 +72,12 @@
     Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla sollicitudin urna semper lacinia eleifend. Aliquam erat volutpat. Duis eget mollis felis. Suspendisse sodales dictum libero, in commodo tellus convallis ut. Maecenas quis quam non ipsum interdum laoreet id vitae turpis. Aenean malesuada nunc in orci bibendum, eu consequat sem lacinia. Duis convallis volutpat erat sed rutrum. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Sed sagittis quam libero. Donec tristique dui ac urna dignissim pretium. Morbi pellentesque semper tincidunt. Sed gravida felis a egestas dignissim. Mauris nec fringilla eros
     </p>
 
+
+
+    <pre class="shiki github-light" style="background-color:#fff;color:#24292e" tabindex="0"><code><span class="line"></span>
+        <span class="line"><span style="color:#D73A49">inductive</span><span style="color:#6F42C1"> Sum</span><span style="color:#24292E"> (α : </span><span style="color:#D73A49">Type</span><span style="color:#24292E"> u) (β : </span><span style="color:#D73A49">Type</span><span style="color:#24292E"> u) : </span><span style="color:#D73A49">Type</span><span style="color:#24292E"> u </span><span style="color:#D73A49">where</span></span>
+        <span class="line"><span style="color:#24292E">  | inl : α → Sum α β</span></span>
+        <span class="line"><span style="color:#24292E">  | inr : β → Sum α β</span></span>
+        <span class="line"></span></code>
+    </pre>
 </body>

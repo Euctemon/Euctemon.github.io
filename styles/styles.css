@@ -5,7 +5,7 @@
     font-family: 'Roboto Slab';
     font-style: normal;
     font-weight: 200;
-    src: url('fonts/roboto-slab-200.woff2') format('woff2');
+    src: url('../fonts/roboto-slab-200.woff2') format('woff2');
 }
   
 @font-face {
@@ -13,7 +13,7 @@
     font-family: 'Roboto Slab';
     font-style: normal;
     font-weight: 400;
-    src: url('fonts/roboto-slab-regular.woff2') format('woff2');
+    src: url('../fonts/roboto-slab-regular.woff2') format('woff2');
 }
   
 
@@ -38,7 +38,6 @@ body {
 .welcome-text {
     width: max(500px,40%);
     margin: 3% 0 10%;
-    font-weight: 400;
 }
 
 .welcome-text > h1 {
