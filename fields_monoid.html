@@ -79,6 +79,25 @@
 
 
 
+<div>
+    <code class="highlight">
+<pre><span></span><span class="kn">notation</span><span class="w"> </span><span class="s2">"𝟘"</span><span class="w"> </span><span class="bp">=&gt;</span><span class="w"> </span><span class="n">add_monoid</span><span class="bp">.</span><span class="n">zero</span>
+
+<span class="kn">example</span><span class="w"> </span><span class="o">{</span><span class="n">α</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="kt">Type</span><span class="o">}</span><span class="w"> </span><span class="o">[</span><span class="n">M</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">add_monoid</span><span class="w"> </span><span class="n">α</span><span class="o">]</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="mi">𝟘</span><span class="w"> </span><span class="bp">=</span><span class="w"> </span><span class="o">(</span><span class="mi">𝟘</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">α</span><span class="o">)</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">rfl</span>
+
+
+<span class="kn">variable</span><span class="w"> </span><span class="o">{</span><span class="n">α</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="kt">Type</span><span class="o">}</span>
+<span class="kn">variable</span><span class="w"> </span><span class="o">[</span><span class="n">M</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">add_monoid</span><span class="w"> </span><span class="n">α</span><span class="o">]</span>
+
+<span class="kn">example</span><span class="w"> </span><span class="o">(</span><span class="n">b</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">α</span><span class="o">)</span><span class="w"> </span><span class="o">(</span><span class="n">h</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="bp">∀</span><span class="w"> </span><span class="n">a</span><span class="o">,</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="bp">+</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="bp">=</span><span class="w"> </span><span class="n">a</span><span class="o">)</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="bp">=</span><span class="w"> </span><span class="mi">𝟘</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="k">by</span>
+<span class="w">  </span><span class="k">have</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="mi">𝟘</span><span class="w"> </span><span class="bp">+</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="bp">=</span><span class="w"> </span><span class="mi">𝟘</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">rw</span><span class="w"> </span><span class="o">[</span><span class="n">h</span><span class="w"> </span><span class="mi">𝟘</span><span class="o">]</span>
+<span class="w">  </span><span class="n">rw</span><span class="w"> </span><span class="o">[</span><span class="n">add_monoid</span><span class="bp">.</span><span class="n">add_zero_left</span><span class="o">]</span><span class="w"> </span><span class="k">at</span><span class="w"> </span><span class="n">this</span>
+<span class="w">  </span><span class="n">exact</span><span class="w"> </span><span class="n">this</span>
+</pre>
+    </code>
+</div>
+
+
         <p>
             First thing we need to do is to say that we use a variable \(\alpha\) a that \(\alpha\) is a multiplicative monoid. Then we write the semicolon and state the body of theorem. After that we write semicolon with the equal sign to start the proof. In this example we use the reflexivity of equality so we can just write <span class="bold">by rfl</span>. We don't want to name the proof so we use the keyword <span class="bold"> example</span>. Now we prove a slightly harder thing and that the element \(1\) is unique. The proof of this fact is rather simple. Let's say that we have an element \(b\) such that if we choose an arbitrary element \(a\) then \(a \odot b = 1\). We can then choose \(1\) as the element \(a\) and then use the axiom of multiplying an element by \(1\) on the left side to arrive to the conclusion that \(b = 1\). Here is the corresponding code
         </p>
