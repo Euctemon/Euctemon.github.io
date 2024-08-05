@@ -6,31 +6,66 @@
   <link rel="icon" href="favicon.ico">
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100..900&display=swap" rel="stylesheet">
 
   <title>Home</title>
 </head>
 
 <body>
-    
-    <div class="home-info">
+<div class="welcome-flex">
+    <div class="welcome-text">
+        <h1>Hello world</h1>
         <p>
-            Welcome to my website. This is my blog where I write about things in math and physics.
+        This is my personal website where I write about programming and mathematics.
         </p>
     </div>
 
-    <div class="home-navs">
-        <nav>
-            <ul id="math-topics">
-            <li><a href="fields_intro.html">Fields</a></li>
-            </ul>
-        </nav>
-        <nav>
-            <ul id="physics-topics">
-            <li><a href="continuum_mech.html">Continuum mechanics</a></li>
-            </ul>
-        </nav>
+    <div class="welcome-svg">
+        <svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+                <marker
+                id="arrow"
+                viewBox="0 0 10 10"
+                refX="5"
+                refY="5"
+                markerWidth="6"
+                markerHeight="6"
+                orient="auto-start-reverse">
+                <path d="M 0 0 L 10 5 L 0 10 z" />
+                </marker>
+            </defs>
+            
+            <line x1="22" y1="22" x2="42" y2="42" stroke="black" stroke-width="0.3" marker-end="url(#arrow)" />
+            <path d="M 25 10 C 55 5, 80 15, 100 40" stroke="black" fill="transparent" stroke-width="0.3" marker-end="url(#arrow)" />
+            <path d="M 10 25 C 5 55, 15 80, 40 100" stroke="black" fill="transparent" stroke-width="0.3" marker-end="url(#arrow)" />
+            
+            <foreignObject x="0" y="0" width="30" height="30">$$P$$</foreignObject>
+            <foreignObject x="55" y="-10" width="30" height="30">$$\pi_1$$</foreignObject>
+            <foreignObject x="-5" y="60" width="30" height="30">$$\pi_2$$</foreignObject>
+            <foreignObject x="30" y="10" width="30" height="30">$$\exists!\varphi$$</foreignObject>
+            
+            
+            <line x1="60" y1="50" x2="95" y2="50" stroke="black" stroke-width="0.3" marker-end="url(#arrow)" />
+            <line x1="60" y1="105" x2="95" y2="105" stroke="black" stroke-width="0.3" marker-end="url(#arrow)" />
+            <line x1="50" y1="60" x2="50" y2="95" stroke="black" stroke-width="0.3" marker-end="url(#arrow)" />
+            <line x1="105" y1="60" x2="105" y2="95" stroke="black" stroke-width="0.3" marker-end="url(#arrow)" />
+            
+            
+            <foreignObject x="35" y="35" width="30" height="30">$$A$$</foreignObject>
+            <foreignObject x="90" y="35" width="30" height="30">$$B$$</foreignObject>
+            <foreignObject x="35" y="90" width="30" height="30">$$C$$</foreignObject>
+            <foreignObject x="90" y="90" width="30" height="30">$$D$$</foreignObject>
+            
+            <foreignObject x="62" y="25" width="30" height="30">$$\alpha_1$$</foreignObject>
+            <foreignObject x="62" y="80" width="30" height="30">$$\beta$$</foreignObject>
+            <foreignObject x="27" y="57" width="30" height="30">$$\alpha_2$$</foreignObject>
+            <foreignObject x="97" y="57" width="30" height="30">$$\gamma$$</foreignObject>
+        </svg>
     </div>
+    
+    
+    
+    <p>
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla sollicitudin urna semper lacinia eleifend. Aliquam erat volutpat. Duis eget mollis felis. Suspendisse sodales dictum libero, in commodo tellus convallis ut. Maecenas quis quam non ipsum interdum laoreet id vitae turpis. Aenean malesuada nunc in orci bibendum, eu consequat sem lacinia. Duis convallis volutpat erat sed rutrum. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Sed sagittis quam libero. Donec tristique dui ac urna dignissim pretium. Morbi pellentesque semper tincidunt. Sed gravida felis a egestas dignissim. Mauris nec fringilla eros
+    </p>
+
 </body>
