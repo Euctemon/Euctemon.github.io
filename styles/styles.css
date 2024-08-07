@@ -15,17 +15,15 @@
     font-weight: 400;
     src: url('../fonts/roboto-slab-regular.woff2') format('woff2');
 }
-  
 
-html {
+body {
+    margin: 0;
     font-family: "Roboto Slab";
     font-weight: 200;
 }
 
-body {
-    margin: 0;
-}
 
+/* mainpage classes */
 .welcome-flex {
     display: flex;
     flex-flow: wrap;
@@ -45,54 +43,10 @@ body {
     margin: 0;
 }
 
-
 .welcome-svg {
     width: 300px;
     font-size:0.6rem;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-/* homepage styling */
-
-.home-info {
-    margin-left: 10%;
-    margin-right: 10%;
-    margin-top: 100px;
-}
-
-.home-navs {
-    display: flex;
-    flex-wrap: wrap;
-    margin-left: 10%;
-    margin-right: 10%;
-}
-
-#math-topics::before {
-    content: "Math topics";
-    color:grey;
-    font-weight: bolder;
-}
-
-#physics-topics::before {
-    content: "Physics topics";
-    color:grey;
-    font-weight: bolder;
-}
-
-
-
-
-
 
 
 

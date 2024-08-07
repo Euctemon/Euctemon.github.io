@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <link rel="stylesheet" type="text/css" href="../styles/styles.css">
+    <link rel="icon" href="../styles/favicon.ico">
+    
+
+    <!-- Katex extension -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" integrity="sha384-nB0miv6/jRmo5UMMR1wu3Gz6NLsoTkbqJghGIsx//Rlm+ZU03BU6SQNC66uf4l5+" crossorigin="anonymous">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" integrity="sha384-7zkQWkzuo3B5mTepMUcHkMB5jZaolc2xDwL6VFqjFALcbeS9Ggm/Yr2r3Dy4lfFg" crossorigin="anonymous"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" integrity="sha384-43gviWU0YVjaDtb/GhzOouOXtZMP/7XUzwPTstBeZFe/+rCMvRwr4yROQP43s0Xk" crossorigin="anonymous"
+        onload="renderMathInElement(document.body);"></script>
+    <script type="text/javascript" src="../styles/personal_scripts.js"></script>
+    <title>SAT solvers</title>
+</head>
+
+<body>
+
+    <header>
+        <div class="header-grid">
+            <button class="nav-button" onClick="openMenu('mainnav-wrapper','nav-ico')" type="button"><span hidden>Menu</span><img src="../styles/sidebar_open.svg" id="nav-ico">
+            </button>
+        <div class="header-name">Algebraic structures</div>
+        </div>
+        
+        <div id="mainnav-wrapper">
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li class="divider">Chapters</li>
+                <li><a href="fields_intro.html">Introduction</a></li>
+                <li><a href="fields_monoid.html">Monoids and groups</a></li>
+            </ul>
+        </nav>
+        </div>
+    </header>
+        
+    <div class="main-wrap">
+        <div class="main-content">
+        <article>
+            <section>
+            <h2>Introduction</h2>
+            <p>
+                These few upcoming pages are my attempt to formalize few definitions and theorem from basic abstract algebra. The goal is to start with monoids and work the way up to fields. The catch is that I will be using a theorem prover called <a href="https://lean-lang.org/">LEAN</a> a formalize all the mathematics in this software. You can think about a theorem prover as a software which enables you to write mathematics almost as a computer program. This text will be havily centered around the LEAN theorem prover. This means that if you are here just for the mathematics you might have troubles reading these pages as they will be filled with many code snippets. It takes a considerable amout of time to learn a software for theorem proving. I will try to explain the basic syntax as we go through the definitions and theorem but it is not in my power to teach you how to use LEAN on the spot.If however you find out that you would like to try it personally then the official site mentioned earlier contains the install and setup instructions. After that you might be interested in <a href="https://leanprover-community.github.io/mathematics_in_lean/index.html">Mathematics in LEAN</a> which is a website specially dedicated to teach you how to do mathematics in LEAN.
+            </p>
+
+            <pre class="shiki github-light" style="background-color:#fff;color:#24292e" tabindex="0"><code><span class="line"></span>
+                <span class="line"><span style="color:#D73A49">inductive</span><span style="color:#6F42C1"> Sum</span><span style="color:#24292E"> (α : </span><span style="color:#D73A49">Type</span><span style="color:#24292E"> u) (β : </span><span style="color:#D73A49">Type</span><span style="color:#24292E"> u) : </span><span style="color:#D73A49">Type</span><span style="color:#24292E"> u </span><span style="color:#D73A49">where</span></span>
+                <span class="line"><span style="color:#24292E">  | inl : α → Sum α β</span></span>
+                <span class="line"><span style="color:#24292E">  | inr : β → Sum α β</span></span>
+                <span class="line"></span></code>
+            </pre>
+
+            </section>
+
+            <section>
+                <h2>Introduction</h2>
+                <p>
+                    These few upcoming pages are my attempt to formalize few definitions and theorem from basic abstract algebra. The goal is to start with monoids and work the way up to fields. The catch is that I will be using a theorem prover called <a href="https://lean-lang.org/">LEAN</a> a formalize all the mathematics in this software. You can think about a theorem prover as a software which enables you to write mathematics almost as a computer program. This text will be havily centered around the LEAN theorem prover. This means that if you are here just for the mathematics you might have troubles reading these pages as they will be filled with many code snippets. It takes a considerable amout of time to learn a software for theorem proving. I will try to explain the basic syntax as we go through the definitions and theorem but it is not in my power to teach you how to use LEAN on the spot.If however you find out that you would like to try it personally then the official site mentioned earlier contains the install and setup instructions. After that you might be interested in <a href="https://leanprover-community.github.io/mathematics_in_lean/index.html">Mathematics in LEAN</a> which is a website specially dedicated to teach you how to do mathematics in LEAN.
+                </p>
+    
+                <pre class="shiki github-light" style="background-color:#fff;color:#24292e" tabindex="0"><code><span class="line"></span>
+                    <span class="line"><span style="color:#D73A49">inductive</span><span style="color:#6F42C1"> Sum</span><span style="color:#24292E"> (α : </span><span style="color:#D73A49">Type</span><span style="color:#24292E"> u) (β : </span><span style="color:#D73A49">Type</span><span style="color:#24292E"> u) : </span><span style="color:#D73A49">Type</span><span style="color:#24292E"> u </span><span style="color:#D73A49">where</span></span>
+                    <span class="line"><span style="color:#24292E">  | inl : α → Sum α β</span></span>
+                    <span class="line"><span style="color:#24292E">  | inr : β → Sum α β</span></span>
+                    <span class="line"></span></code>
+                </pre>
+    
+                </section>
+        </article>
+        </div>
+    </div>
+
+
+</body>
