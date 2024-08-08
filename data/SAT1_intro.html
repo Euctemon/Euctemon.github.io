@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <link rel="stylesheet" type="text/css" href="../styles/styles.css">
+    <link rel="icon" href="../styles/favicon.ico">
+    
+
+    <!-- Katex extension -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" integrity="sha384-nB0miv6/jRmo5UMMR1wu3Gz6NLsoTkbqJghGIsx//Rlm+ZU03BU6SQNC66uf4l5+" crossorigin="anonymous">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" integrity="sha384-7zkQWkzuo3B5mTepMUcHkMB5jZaolc2xDwL6VFqjFALcbeS9Ggm/Yr2r3Dy4lfFg" crossorigin="anonymous"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" integrity="sha384-43gviWU0YVjaDtb/GhzOouOXtZMP/7XUzwPTstBeZFe/+rCMvRwr4yROQP43s0Xk" crossorigin="anonymous"
+        onload="renderMathInElement(document.body);"></script>
+    <script type="text/javascript" src="../styles/personal_scripts.js"></script>
+    
+    <title>SAT solvers</title>
+</head>
+
+<body>
+
+    <header>
+        <div class="header-grid">
+            <button class="nav-button" onClick="openMenu('mainnav-wrapper','nav-ico')" type="button"><span hidden>Menu</span><img src="../styles/sidebar_open.svg" id="nav-ico">
+            </button>
+        <div class="header-name">SAT solvers</div>
+        </div>
+        
+        <div id="mainnav-wrapper">
+        <nav>
+            <ul>
+                <li><a href="../index.html">Home</a></li>
+                <li class="divider">Chapters</li>
+                <li><a href="SAT1_intro.html">Introduction</a></li>
+                <li><a href="SAT2_languages.html">Propositional logic</a></li>
+            </ul>
+        </nav>
+        </div>
+    </header>
+        
+    <div class="main-wrap">
+        <div class="main-content">
+        <article>
+            <section>
+
+                <h2>Introduction</h2>
+                <p>
+                The main goal of this topic is to develop a working SAT solver. It is a program which aims to find a solution to a given boolean satisfiability problem. But what is a boolean satisfiability problem? Let's say we are given a formula $$(P \lor Q) \land R$$ and our task is to assign true of false value to all the variables in order to make this formula true. In order for the formula to be true, both parts of the and clause needs to be true. This specially means \(R\) needs to be true. For the or clause we can choose for example \(P\) to be true and \(Q\) to be false. This results in the or clause being true and therefore the whole formula. The goal of a SAT solver is do this process computationally. Before we start to talk about implementing a solver, we need to talk about the language of propositional logic. Next two chapters are devoted to soundness and completeness of classical propositional logic and its implications for using SAT solvers to find out whether a formula is provable from a set of hypotheses. After that we start implementing a naive solver and talk about if we can do better.
+                </p>
+
+            </section>
+        </article>
+        </div>
+    </div>
+
+
+</body>

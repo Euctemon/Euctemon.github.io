@@ -31,25 +31,22 @@
             <ul>
                 <li><a href="../index.html">Home</a></li>
                 <li class="divider">Chapters</li>
-                <li><a href="SAT_intro.html">Introduction</a></li>
+                <li><a href="SAT1_intro.html">Introduction</a></li>
+                <li><a href="SAT2_languages.html">Propositional logic</a></li>
             </ul>
         </nav>
         </div>
     </header>
         
     <div class="main-wrap">
-        <div class="main-content">
+        <div class="main-content with-sidebar">
         <article>
 
-            <section>
-                <h2>Introduction</h2>
-                <p>
-                The main goal of this topic is to develop a working SAT solver. It is a program which aims to find a solution to a given boolean satisfiability problem. But what is a boolean satisfiability problem? Let's say we are given a formula $$(P \lor Q) \land R$$ and our task is to assign true of false value to all the variables in order to make this formula true. In order for the formula to be true, both parts of the and clause needs to be true. This specially means \(R\) needs to be true. For the or clause we can choose for example \(P\) to be true and \(Q\) to be false. This results in the or clause being true and therefore the whole formula. The goal of a SAT solver is do this process computationally. Before we start to talk about implementing a solver, we need to talk about the language of propositional logic. Next two chapters are devoted to soundness and completeness of classical propositional logic and its implications for using SAT solvers to find out whether a formula is provable from a set of hypotheses. After that we start implementing a naive solver and talk about if we can do better.
-                </p>
+            <section id="languages">
 
                 <h2>Languages</h2>
                 <p>
-                We define what is meant by a language and a model in mathematical logic.
+                In order to make sense of expressions such as \((P \lor Q) \land R\), we need to start with the definition of a language.
                 </p>
 
                 <div class="definition">
@@ -61,15 +58,11 @@
                 </div>
 
                 <p>
-                Now is the time to see few examples. Let's say that we have a language with one function symbol \(c\) of zero arity, two binary function symbols \(f,g\) and one binary relation \(r\). This means our language looks like \((\{c,f,g\},\{r\},a)\) where
-                
-                $$a(c) = 0 \\ a(f) = 2 \\ a(g) = 2 \\ a(r) = 2$$
-                
-                We can interpret this language in the structure with the universe (the underlying set) of \(\mathbb{N}\), a constant \(0\) as the zero arity function, two binary functions \(+,\cdot\) and \(\leq\) as the binary relation. This means we can interpret the language as a structure of natural numbers, often written as \( (\mathbb{N},0,+,\cdot,\leq) \). To be more in accordance with the definiton of a model we could write the structure as \( (\mathbb{N},I) \) where
-                
-                $$I(c) = 0 \\ I(f) = + \\ I(g) = \cdot \\ I(r) = \:\leq$$
+                Now is the time to see few examples. Let's say that we have a language with one function symbol \(c\) of zero arity, two binary function symbols \(f,g\) and one binary relation \(r\). This means our language looks like \((\{c,f,g\},\{r\},a)\) where \(a(c) = 0\), \(a(f) = 2\), \(a(g) = 2\) and \(a(r) = 2\). We can interpret this language in the structure with the universe (the underlying set) of \(\mathbb{N}\), a constant \(0\) as the zero arity function, two binary functions \(+,\cdot\) and \(\leq\) as the binary relation. This means we can interpret the language as a structure of natural numbers, often written as \( (\mathbb{N},0,+,\cdot,\leq) \). To be more in accordance with the definiton of a model we should write the structure as \( (\mathbb{N},I) \) where \(I(c) = 0\), \(I(f) = + \), \(I(g) = \cdot \) and \(I(r) = \:\leq \).
 
-                So what about the language of propositional logic? We have one function symbol of zero arity \(\bot\) and three binary function symbols \(\land, \lor, \rightarrow \). We also fix a set of propositional variables \(P_0,P_1,\ldots\). Notice that this language has no relations. This means we cannot speak about the realtion between two objects and for that we need to use first order logic. The set \( (\bot,\land,\lor,\rightarrow) \) is sometimes called the alphabet. We are ready to define the set of propositional formulas.
+                <p>
+                So what about the language of propositional logic? We have one function symbol of zero arity \(\bot\) and three binary function symbols \(\land, \lor, \rightarrow \). We also fix a set of propositional variables \(P_0,P_1,\ldots\). Notice that this language has no relation symbols. This means we cannot speak about the relation between two objects and for that we need to use first order logic. The set \( (\bot,\land,\lor,\rightarrow) \) is sometimes called the alphabet. We are ready to define the set of propositional formulas.
+                </p>
 
                 <div class="definition">
                 The set of propositional formulas is a smallest set of strings over the alphabet \( (\bot,\land,\lor,\rightarrow) \) satisfying
@@ -80,7 +73,7 @@
                 </ul>
                 </div>
 
-                The symbol \(\bot\) is intended to denote the false statement and is called bottom. How do we express a truth statement? Well we can simply say that \(\top\) is an abbreviation for \(\bot \rightarrow \bot\). Negation symbol \(\neg A\) can be though of as an abbreviation for \(A \rightarrow \bot\) and the bidirectional implication \(A \leftrightarrow B\) for \(A \rightarrow B \land B \rightarrow A\). In order to have an easier reasoning about the formulas and to be later able to use boolean evaluation for the formula type, we will work with a slightly different definition. Notice that we can translate one type into the other one as the truth value and negation are just abbreviations. The truth and false values are now bundled in a boolean and variables are indexed by integers. The Haskell data type is defined as follows
+                The symbol \(\bot\) is intended to denote the false statement and is called bottom. How do we express a truth statement? Well we can simply say that \(\top\) is an abbreviation for \(\bot \rightarrow \bot\). Negation symbol \(\neg A\) can be though of as an abbreviation for \(A \rightarrow \bot\). In order to have an easier reasoning about the formulas and to be later able to use boolean evaluation for the formula type, we will work with a slightly different definition. Notice that we can translate one type into the other one as the truth value and negation are just abbreviations. The truth and false values are now bundled in a boolean and variables are indexed by integers. The Haskell data type is defined as follows
                 </p>
 
 <pre class="shiki github-light" style="background-color:#fff;color:#24292e" tabindex="0"><code><span class="line"></span>
@@ -89,9 +82,35 @@
 </pre>       
 
             </section>
+
+
+            <section id="deductive">
+
+                <h2>Deductive systems</h2>
+                <p>
+                    What does it mean to prove something?
+                </p>
+
+
+            </section>
+
+
         </article>
         </div>
+        <div class="sidenav-wrapper">
+            <div class="sidenav-content">
+            <nav>
+            <ul>
+            <li><a href="#languages">Languages</a></li>
+            <li><a href="#deductive">Deductive systems</a></li>
+            </ul>
+            </nav>
+            </div>
+            </div>
+        </div>
+    
     </div>
 
+    
 
 </body>
