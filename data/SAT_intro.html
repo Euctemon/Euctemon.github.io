@@ -40,61 +40,55 @@
     <div class="main-wrap">
         <div class="main-content">
         <article>
+
             <section>
-            <h2>Introduction</h2>
-            <p>
-                I just want to build a SAT solver! I just want to build a SAT solver! I just want to build a SAT solver! I just want to build a SAT solver! I just want to build a SAT solver! I just want to build a SAT solver! I just want to build a SAT solver! I just want to build a SAT solver! I just want to build a SAT solver! I just want to build a SAT solver! I just want to build a SAT solver! I just want to build a SAT solver! I just want to build a SAT solver! I just want to build a SAT solver! I just want to build a SAT solver! I just want to build a SAT solver! I just want to build a SAT solver! I just want to build a SAT solver! I just want to build a SAT solver! I just want to build a SAT solver! I just want to build a SAT solver! I just want to build a SAT solver! I just want to build a SAT solver! 
-            </p>
+                <h2>Introduction</h2>
+                <p>
+                The main goal of this topic is to develop a working SAT solver. It is a program which aims to find a solution to a given boolean satisfiability problem. But what is a boolean satisfiability problem? Let's say we are given a formula $$(P \lor Q) \land R$$ and our task is to assign true of false value to all the variables in order to make this formula true. In order for the formula to be true, both parts of the and clause needs to be true. This specially means \(R\) needs to be true. For the or clause we can choose for example \(P\) to be true and \(Q\) to be false. This results in the or clause being true and therefore the whole formula. The goal of a SAT solver is do this process computationally. Before we start to talk about implementing a solver, we need to talk about the language of propositional logic. Next two chapters are devoted to soundness and completeness of classical propositional logic and its implications for using SAT solvers to find out whether a formula is provable from a set of hypotheses. After that we start implementing a naive solver and talk about if we can do better.
+                </p>
+
+                <h2>Languages</h2>
+                <p>
+                We define what is meant by a language and a model in mathematical logic.
+                </p>
+
+                <div class="definition">
+                A language is a triple \(L = (\Gamma, \Delta, a) \) where \(\Gamma\), the set of function symbols, and \(\Delta\),the set of relation symbols, are disjoint sets of symbols and \(a\) is a function from \(\Gamma \cup \Delta\) to the set of naturals numbers. The function \(a\) assigns every function and relation symbol its arity.
+                </div>
+
+                <div class="definition">
+                Fix a language \(L = (\Gamma,\Delta,a) \). We say that \(\mathfrak{M} = (U,I) \) is a model for such language if \(U\) is a set and \(I\) is a function which assigns to each k-ary function symbol in \(\Gamma\) a k-ary function from \(U\) to \(U\) and to each k-ary relation symbol in \(\Delta\) a k-ary relation on \(U\). We call the set \(U\) a universe.
+                </div>
+
+                <p>
+                Now is the time to see few examples. Let's say that we have a language with one function symbol \(c\) of zero arity, two binary function symbols \(f,g\) and one binary relation \(r\). This means our language looks like \((\{c,f,g\},\{r\},a)\) where
+                
+                $$a(c) = 0 \\ a(f) = 2 \\ a(g) = 2 \\ a(r) = 2$$
+                
+                We can interpret this language in the structure with the universe (the underlying set) of \(\mathbb{N}\), a constant \(0\) as the zero arity function, two binary functions \(+,\cdot\) and \(\leq\) as the binary relation. This means we can interpret the language as a structure of natural numbers, often written as \( (\mathbb{N},0,+,\cdot,\leq) \). To be more in accordance with the definiton of a model we could write the structure as \( (\mathbb{N},I) \) where
+                
+                $$I(c) = 0 \\ I(f) = + \\ I(g) = \cdot \\ I(r) = \:\leq$$
+
+                So what about the language of propositional logic? We have one function symbol of zero arity \(\bot\) and three binary function symbols \(\land, \lor, \rightarrow \). We also fix a set of propositional variables \(P_0,P_1,\ldots\). Notice that this language has no relations. This means we cannot speak about the realtion between two objects and for that we need to use first order logic. The set \( (\bot,\land,\lor,\rightarrow) \) is sometimes called the alphabet. We are ready to define the set of propositional formulas.
+
+                <div class="definition">
+                The set of propositional formulas is a smallest set of strings over the alphabet \( (\bot,\land,\lor,\rightarrow) \) satisfying
+                <ul>
+                    <li>If \(P\) is a propositional variable, then \(P\) is a propositional formula</li>
+                    <li>\(\bot\) is a propositional formula</li>
+                    <li>If \(A\) and \(B\) are propositional formulas, then \(A \land B\), \(A \lor B\) and \(A \rightarrow B\) are propositional formulas.</li>
+                </ul>
+                </div>
+
+                The symbol \(\bot\) is intended to denote the false statement and is called bottom. How do we express a truth statement? Well we can simply say that \(\top\) is an abbreviation for \(\bot \rightarrow \bot\). Negation symbol \(\neg A\) can be though of as an abbreviation for \(A \rightarrow \bot\) and the bidirectional implication \(A \leftrightarrow B\) for \(A \rightarrow B \land B \rightarrow A\). In order to have an easier reasoning about the formulas and to be later able to use boolean evaluation for the formula type, we will work with a slightly different definition. Notice that we can translate one type into the other one as the truth value and negation are just abbreviations. The truth and false values are now bundled in a boolean and variables are indexed by integers. The Haskell data type is defined as follows
+                </p>
 
 <pre class="shiki github-light" style="background-color:#fff;color:#24292e" tabindex="0"><code><span class="line"></span>
-    <span class="line"><span style="color:#D73A49">type</span><span style="color:#6F42C1"> prop</span><span style="color:#005CC5"> =</span></span>
-    <span class="line"><span style="color:#005CC5">  |</span><span style="color:#6F42C1"> Const</span><span style="color:#24292E"> of bool</span></span>
-    <span class="line"><span style="color:#005CC5">  |</span><span style="color:#6F42C1"> Var</span><span style="color:#24292E"> of int</span></span>
-    <span class="line"><span style="color:#005CC5">  |</span><span style="color:#6F42C1"> Not</span><span style="color:#24292E"> of prop</span></span>
-    <span class="line"><span style="color:#005CC5">  |</span><span style="color:#6F42C1"> And</span><span style="color:#24292E"> of prop </span><span style="color:#032F62">*</span><span style="color:#24292E"> prop</span></span>
-    <span class="line"><span style="color:#005CC5">  |</span><span style="color:#6F42C1"> Or</span><span style="color:#24292E"> of prop </span><span style="color:#032F62">*</span><span style="color:#24292E"> prop</span></span>
-    <span class="line"><span style="color:#005CC5">  |</span><span style="color:#6F42C1"> Impl</span><span style="color:#24292E"> of prop </span><span style="color:#032F62">*</span><span style="color:#24292E"> prop</span></span>
-    <span class="line"><span style="color:#005CC5">  |</span><span style="color:#6F42C1"> Equiv</span><span style="color:#24292E"> of prop </span><span style="color:#032F62">*</span><span style="color:#24292E"> prop</span></span>
+    <span class="line"><span style="color:#D73A49">data</span><span style="color:#D73A49"> Prop</span><span style="color:#D73A49"> =</span><span style="color:#005CC5"> Const</span><span style="color:#D73A49"> Bool</span><span style="color:#D73A49"> |</span><span style="color:#005CC5"> Var</span><span style="color:#D73A49"> Int</span><span style="color:#D73A49"> |</span><span style="color:#005CC5"> Neg</span><span style="color:#D73A49"> Prop</span><span style="color:#D73A49"> |</span><span style="color:#005CC5"> And</span><span style="color:#D73A49"> Prop</span><span style="color:#D73A49"> Prop</span><span style="color:#D73A49"> |</span><span style="color:#005CC5"> Or</span><span style="color:#D73A49"> Prop</span><span style="color:#D73A49"> Prop</span><span style="color:#D73A49"> |</span><span style="color:#005CC5"> Imp</span><span style="color:#D73A49"> Prop</span><span style="color:#D73A49"> Prop</span></span>
     <span class="line"></span></code>
-</pre>          
-
-
-<p>
-    Next lines of codes!
-</p>
-
-
-
-<pre class="shiki github-light" style="background-color:#fff;color:#24292e" tabindex="0"><code><span class="line"></span>
-    <span class="line"><span style="color:#D73A49">type</span><span style="color:#6F42C1"> comp_prop</span><span style="color:#005CC5"> =</span></span>
-    <span class="line"><span style="color:#005CC5">  |</span><span style="color:#6F42C1"> Const</span><span style="color:#24292E"> of bool</span></span>
-    <span class="line"><span style="color:#005CC5">  |</span><span style="color:#6F42C1"> Var</span><span style="color:#24292E"> of int</span></span>
-    <span class="line"><span style="color:#005CC5">  |</span><span style="color:#6F42C1"> Not</span><span style="color:#24292E"> of comp_prop</span></span>
-    <span class="line"><span style="color:#005CC5">  |</span><span style="color:#6F42C1"> And</span><span style="color:#24292E"> of comp_prop </span><span style="color:#032F62">*</span><span style="color:#24292E"> comp_prop</span></span>
-    <span class="line"><span style="color:#005CC5">  |</span><span style="color:#6F42C1"> Or</span><span style="color:#24292E"> of comp_prop </span><span style="color:#032F62">*</span><span style="color:#24292E"> comp_prop</span></span>
-    <span class="line"></span></code>
-</pre>
-            
-
-<p>
-    Finally a function!
-</p>
-
-<pre class="shiki github-light" style="background-color:#fff;color:#24292e" tabindex="0"><code><span class="line"></span>
-    <span class="line"><span style="color:#D73A49">let</span><span style="color:#032F62"> rec</span><span style="color:#6F42C1"> to_cnf_type</span><span style="color:#24292E"> (</span><span style="color:#005CC5">e</span><span style="color:#032F62"> :</span><span style="color:#24292E"> prop) </span><span style="color:#032F62">:</span><span style="color:#24292E"> comp_prop </span><span style="color:#005CC5">=</span><span style="color:#D73A49"> match</span><span style="color:#24292E"> e </span><span style="color:#D73A49">with</span></span>
-    <span class="line"><span style="color:#005CC5">  |</span><span style="color:#6F42C1"> Const</span><span> </span><span style="color:#005CC5">a</span><span style="color:#005CC5"> -></span><span style="color:#6F42C1"> Const</span><span style="color:#24292E"> a</span></span>
-    <span class="line"><span style="color:#005CC5">  |</span><span style="color:#6F42C1"> Var</span><span> </span><span style="color:#005CC5">a</span><span style="color:#005CC5"> -></span><span style="color:#6F42C1"> Var</span><span style="color:#24292E"> a</span></span>
-    <span class="line"><span style="color:#005CC5">  |</span><span style="color:#6F42C1"> Not</span><span> </span><span style="color:#005CC5">a</span><span style="color:#005CC5"> -></span><span style="color:#6F42C1"> Not</span><span style="color:#24292E"> (to_cnf_type a)</span></span>
-    <span class="line"><span style="color:#005CC5">  |</span><span style="color:#6F42C1"> And</span><span style="color:#24292E"> (</span><span style="color:#005CC5">a</span><span style="color:#032F62">,</span><span style="color:#005CC5">b</span><span style="color:#24292E">) </span><span style="color:#005CC5">-></span><span style="color:#6F42C1"> And</span><span style="color:#24292E"> (to_cnf_type a</span><span style="color:#032F62">,</span><span style="color:#24292E"> to_cnf_type b)</span></span>
-    <span class="line"><span style="color:#005CC5">  |</span><span style="color:#6F42C1"> Or</span><span style="color:#24292E"> (</span><span style="color:#005CC5">a</span><span style="color:#032F62">,</span><span style="color:#005CC5">b</span><span style="color:#24292E">) </span><span style="color:#005CC5">-></span><span style="color:#6F42C1"> Or</span><span style="color:#24292E"> (to_cnf_type a</span><span style="color:#032F62">,</span><span style="color:#24292E"> to_cnf_type b)</span></span>
-    <span class="line"><span style="color:#005CC5">  |</span><span style="color:#6F42C1"> Impl</span><span style="color:#24292E"> (</span><span style="color:#005CC5">a</span><span style="color:#032F62">,</span><span style="color:#005CC5">b</span><span style="color:#24292E">) </span><span style="color:#005CC5">-></span><span style="color:#6F42C1"> Or</span><span style="color:#24292E"> (</span><span style="color:#6F42C1">Not</span><span style="color:#24292E"> (to_cnf_type a)</span><span style="color:#032F62">,</span><span style="color:#24292E"> to_cnf_type b)</span></span>
-    <span class="line"><span style="color:#005CC5">  |</span><span style="color:#6F42C1"> Equiv</span><span style="color:#24292E"> (</span><span style="color:#005CC5">a</span><span style="color:#032F62">,</span><span style="color:#005CC5">b</span><span style="color:#24292E">) </span><span style="color:#005CC5">-></span><span style="color:#6F42C1"> And</span><span style="color:#24292E"> (to_cnf_type (</span><span style="color:#6F42C1">Impl</span><span style="color:#24292E"> (a</span><span style="color:#032F62">,</span><span style="color:#24292E">b))</span><span style="color:#032F62">,</span><span style="color:#24292E">to_cnf_type (</span><span style="color:#6F42C1">Impl</span><span style="color:#24292E"> (b</span><span style="color:#032F62">,</span><span style="color:#24292E">a)))</span></span></code>
-</pre>
-    
-        
+</pre>       
 
             </section>
-       
         </article>
         </div>
     </div>

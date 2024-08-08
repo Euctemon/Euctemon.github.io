@@ -220,9 +220,9 @@ section {
 /* Mathematics styling */
 
 .definition {
-    border: solid;
+    /* border: solid;
     border-color: gray;
-    background-color: white;
+    background-color: white; */
     border-width: 1px;
     padding: 15px;
     min-width: 500px;
@@ -233,7 +233,7 @@ section {
     content: 'DEFINITION \A';
     white-space: pre-wrap;
     color: gray;
-    font-family: 'Arial';
+    font-weight: 400;
 }
 
 .scrollable-box {
