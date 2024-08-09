@@ -1,5 +1,4 @@
-/* general styling */
-
+/* GENERAL STYLING */
 @font-face {
     font-display: swap;
     font-family: 'Roboto Slab';
@@ -23,7 +22,7 @@ body {
 }
 
 
-/* mainpage classes */
+/* MAINPAGE STYLING */
 .welcome-flex {
     display: flex;
     flex-flow: wrap;
@@ -51,7 +50,53 @@ body {
 
 
 
-/* custom page styling */
+/* CUSTOM PAGE STYLING */
+
+/* menu */
+header {
+    border-bottom: solid 1px;
+    border-color: #efefef;
+    position:sticky;
+    top:0;
+    background-color: white;
+    z-index:1;
+}
+
+section {
+    scroll-margin-top: 4em;
+    margin-top: 4em;
+    margin-top: 4em;
+}
+
+.header-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    padding: 0.7rem;
+}
+
+.header-name {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: larger;
+    font-weight: bolder;
+    margin: 0;
+}
+
+#nav-ico:hover {
+    opacity: 0.4;
+    filter: grayscale(100%);
+    -webkit-filter: grayscale(100%);
+}
+    
+.nav-button {
+    display: flex;
+    align-items: center;
+    justify-content:flex-start;
+    background-color:transparent;
+    border:0;
+    padding:0;
+}
 
 #mainnav-wrapper {
     position:fixed;
@@ -89,140 +134,27 @@ body {
         padding-bottom: 10px;
         font-weight: 500;
     }
-    }
-    
+}
+
 @media (max-width: 640px) {
     #mainnav-wrapper {
     width:100%;
     }
-}
-    
-#nav-ico:hover {
-    opacity: 0.4;
-    filter: grayscale(100%);
-    -webkit-filter: grayscale(100%);
-}
-    
-.nav-button {
-    display: flex;
-    align-items: center;
-    justify-content:flex-start;
-    background-color:transparent;
-    border:0;
-    padding:0;
-}
+} 
 
-header {
-    border-bottom: solid 1px;
-    border-color: #efefef;
-    position:sticky;
-    top:0;
-    background-color: white;
-    z-index:1;
-}
-
-section {
-    scroll-margin-top: 4em;
-    margin-top: 4em;
-    margin-top: 4em;
-}
-
-.header-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    padding: 0.7rem;
-}
-
-.header-name {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: larger;
-    font-weight: bolder;
-    margin: 0;
-}
-
-.main-wrap {
-    display:flex;
-    margin: 0 25%;
-    justify-content: center;
-}
-
-/* divné kouzlo pro overflow ve flex */
-.main-wrap > * {
-    min-width: 0;
-}
-
+/* main content */
 .main-content {
-    line-height: 150%;
+margin: 0 25%
 }
 
-.with-sidebar {
-    margin-right: 100px;
-}
-        
-.sidenav-wrapper {
-    position:relative;
-    min-width: 250px;
-}
-
-
-.sidenav-content::before {
-    content: 'Table of content';
-    font-weight: 500;
-}
-.sidenav-content {
-    position:sticky;
-    align-self:start;
-    top:150px;
-
-    nav ul {
-        margin: 0;
-        padding: 0;
-    }
-
-    nav li {
-        list-style-type:none;
-        padding-top:5px;
-    }
-
-    nav a {
-        border-left: solid 5px white;
-        text-decoration:none;
-        padding-left: 15px;
-        color:black;
-        transition-duration: 0.2s;
-    }
-        
-    nav a:hover {
-        color:grey;
-    }
-
-    .active {
-        border-left: solid 5px blue;
-        color:blue;
-    }
-}
-
-    
 @media (max-width : 1700px) {
-    .sidenav-wrapper {display:none;}
-    .main-wrap {
+    .main-content {
         margin: 0 5%;
     }
-    .with-sidebar {
-        margin-right: 0;
-    }
 }
 
-
-
 /* Mathematics styling */
-
 .definition {
-    /* border: solid;
-    border-color: gray;
-    background-color: white; */
     border-width: 1px;
     padding: 15px;
     min-width: 500px;
@@ -232,7 +164,7 @@ section {
 .definition::before {
     content: 'DEFINITION \A';
     white-space: pre-wrap;
-    color: gray;
+    color: grey;
     font-weight: 400;
 }
 

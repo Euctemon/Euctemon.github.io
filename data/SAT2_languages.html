@@ -12,6 +12,7 @@
     <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" integrity="sha384-7zkQWkzuo3B5mTepMUcHkMB5jZaolc2xDwL6VFqjFALcbeS9Ggm/Yr2r3Dy4lfFg" crossorigin="anonymous"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" integrity="sha384-43gviWU0YVjaDtb/GhzOouOXtZMP/7XUzwPTstBeZFe/+rCMvRwr4yROQP43s0Xk" crossorigin="anonymous"
         onload="renderMathInElement(document.body);"></script>
+
     <script type="text/javascript" src="../styles/personal_scripts.js"></script>
     
     <title>SAT solvers</title>
@@ -21,27 +22,32 @@
 
     <header>
         <div class="header-grid">
-            <button class="nav-button" onClick="openMenu('mainnav-wrapper','nav-ico')" type="button"><span hidden>Menu</span><img src="../styles/sidebar_open.svg" id="nav-ico">
-            </button>
-        <div class="header-name">SAT solvers</div>
+            <button class="nav-button" onClick="openMenu('mainnav-wrapper','nav-ico')" type="button"><span hidden>Menu</span><img src="../styles/sidebar_open.svg" id="nav-ico"></button>
+            <div class="header-name">SAT solvers</div>
         </div>
         
         <div id="mainnav-wrapper">
-        <nav>
-            <ul>
-                <li><a href="../index.html">Home</a></li>
-                <li class="divider">Chapters</li>
-                <li><a href="SAT1_intro.html">Introduction</a></li>
-                <li><a href="SAT2_languages.html">Propositional logic</a></li>
-            </ul>
-        </nav>
+            <nav>
+                <ul>
+                    <li><a href="../index.html">Home</a></li>
+                    <li class="divider">Chapters</li>
+                    <li><a href="SAT1_intro.html">Introduction</a></li>
+                    <li><a href="SAT2_languages.html">Propositional logic</a></li>
+                </ul>
+            
+                <ul class="responsive-ul">
+                    <li class="divider">This chapter</li>
+                    <li><a href="#languages">Languages</a></li>
+                    <li><a href="#deductive">Deductive systems</a></li>
+                </ul>
+            </nav>
         </div>
+    </div>
+
     </header>
         
-    <div class="main-wrap">
-        <div class="main-content with-sidebar">
+    <div class="main-content">
         <article>
-
             <section id="languages">
 
                 <h2>Languages</h2>
@@ -83,34 +89,13 @@
 
             </section>
 
-
             <section id="deductive">
-
                 <h2>Deductive systems</h2>
                 <p>
                     What does it mean to prove something?
                 </p>
 
-
             </section>
-
-
         </article>
-        </div>
-        <div class="sidenav-wrapper">
-            <div class="sidenav-content">
-            <nav>
-            <ul>
-            <li><a href="#languages">Languages</a></li>
-            <li><a href="#deductive">Deductive systems</a></li>
-            </ul>
-            </nav>
-            </div>
-            </div>
-        </div>
-    
     </div>
-
-    
-
 </body>
