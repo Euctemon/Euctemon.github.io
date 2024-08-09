@@ -67,11 +67,11 @@
                 Now is the time to see few examples. Let's say that we have a language with one function symbol \(c\) of zero arity, two binary function symbols \(f,g\) and one binary relation \(r\). This means our language looks like \((\{c,f,g\},\{r\},a)\) where \(a(c) = 0\), \(a(f) = 2\), \(a(g) = 2\) and \(a(r) = 2\). We can interpret this language in the structure with the universe (the underlying set) of \(\mathbb{N}\), a constant \(0\) as the zero arity function, two binary functions \(+,\cdot\) and \(\leq\) as the binary relation. This means we can interpret the language as a structure of natural numbers, often written as \( (\mathbb{N},0,+,\cdot,\leq) \). To be more in accordance with the definiton of a model we should write the structure as \( (\mathbb{N},I) \) where \(I(c) = 0\), \(I(f) = + \), \(I(g) = \cdot \) and \(I(r) = \:\leq \).
 
                 <p>
-                So what about the language of propositional logic? We have one function symbol of zero arity \(\bot\) and three binary function symbols \(\land, \lor, \rightarrow \). We also fix a set of propositional variables \(P_0,P_1,\ldots\). Notice that this language has no relation symbols. This means we cannot speak about the relation between two objects and for that we need to use first order logic. The set \( (\bot,\land,\lor,\rightarrow) \) is sometimes called the alphabet. We are ready to define the set of propositional formulas.
+                So what about the language of propositional logic? We have one function symbol of zero arity \(\bot\) and three binary function symbols \(\land, \lor, \to \). We also fix a set of propositional variables \(P_0,P_1,\ldots\). Notice that this language has no relation symbols. This means we cannot speak about the relation between two objects and for that we need to use first order logic. The set \( (\bot,\land,\lor,\to) \) is sometimes called the alphabet. We are ready to define the set of propositional formulas.
                 </p>
 
                 <div class="definition">
-                The set of propositional formulas is a smallest set of strings over the alphabet \( (\bot,\land,\lor,\rightarrow) \) satisfying
+                The set of propositional formulas is a smallest set of strings over the alphabet \( (\bot,\land,\lor,\to) \) satisfying
                 <ul>
                     <li>If \(P\) is a propositional variable, then \(P\) is a propositional formula</li>
                     <li>\(\bot\) is a propositional formula</li>
@@ -79,7 +79,7 @@
                 </ul>
                 </div>
 
-                The symbol \(\bot\) is intended to denote the false statement and is called bottom. How do we express a truth statement? Well we can simply say that \(\top\) is an abbreviation for \(\bot \rightarrow \bot\). Negation symbol \(\neg A\) can be though of as an abbreviation for \(A \rightarrow \bot\). In order to have an easier reasoning about the formulas and to be later able to use boolean evaluation for the formula type, we will work with a slightly different definition. Notice that we can translate one type into the other one as the truth value and negation are just abbreviations. The truth and false values are now bundled in a boolean and variables are indexed by integers. The Haskell data type is defined as follows
+                The symbol \(\bot\) is intended to denote the false statement and is called bottom. How do we express a truth statement? Well we can simply say that \(\top\) is an abbreviation for \(\bot \to \bot\). Negation symbol \(\neg A\) can be though of as an abbreviation for \(A \to \bot\). In order to have an easier reasoning about the formulas and to be later able to use boolean evaluation for the formula type, we will work with a slightly different definition. Notice that we can translate one type into the other one as the truth value and negation are just abbreviations. The truth and false values are now bundled in a boolean and variables are indexed by integers. The Haskell data type is defined as follows
                 </p>
 
 <pre class="shiki github-light" style="background-color:#fff;color:#24292e" tabindex="0"><code><span class="line"></span>
@@ -91,9 +91,96 @@
 
             <section id="deductive">
                 <h2>Deductive systems</h2>
+                <h3>Axiomatic systems</h3>
                 <p>
-                    What does it mean to prove something?
+                    We now turn to the question of what it means to prove something. There are many deductive systems like axiomatic deductive systems, natural deduction or sequent calculus. We start with an axiomatic system for classical logic. We are given a set of <i>axiom schemas</i> and one rule, the <i>modus ponens</i>.
                 </p>
+                
+                <ol>
+                    <li>\(A \to (B \to A)\)</li>
+                    <li>\( (A \to (B \to C)) \to ((A \to B) \to (A \to C)) \)</li>
+                    <li>\(A \to (B \to A \land B)\)</li>
+                    <li>\(A \land B \to A\)</li>
+                    <li>\(A \land B \to B\)</li>
+                    <li>\(A \to (B \lor A)\)</li>
+                    <li>\(B \to (B \lor A)\)</li>
+                    <li>\( (A \to C) \to (B \to C) \to (A \lor B \to C) \)</li>
+                    <li>\(\lnot \lnot A \to A\)</li>
+                </ol>
+                    
+                <p>
+                    Axiom schema means that the variables \(A,B\) and \(C\) are not fixed but we can instanteniate them with any formula. For example \(A \to ((C \land D) \to A) \) is a valid use of the first axiom. The modus ponens is a rule which says that if we have formulas \(A \to B\) and \(A\), we can derive \(B\). So how can we prove something? Let's start with assuming \(A \land B\) and we want to prove \(B \land A\).
+                <ol>
+                    <li>obtain \(A\) using modus ponens with assumption and axiom 4 </li>
+                    <li>obtain \(B \to (A \land B)\) using modus ponens with \(A\) and axiom 3</li>
+                    <li>obtain \(B\) using modus ponens with assumption and axiom 5 </li>
+                    <li>finally obtain conclusion using modus ponens with \(B \to (A \land B)\) and \(B\)</li>
+                </ol>
+                </p>
+
+                <p>
+                    We will not bother ourselves with a precise definition of what a proof is. Intuitively proof is what we just did. The set of assumptions is called a context \(\Gamma\) and we say \(A\) is provable from \(\Gamma\) if there exists a proof of \(A\) from \(\Gamma\). We denote this fact as \(\Gamma \vdash A\). This means we can write \(\{A \land B\} \vdash B \land A\). How can we characterize the set of formulas which can be derived from \(\Gamma\)? First any element of the set of assumption is provable from \(\Gamma\). We can also use any axiom schema freely and that means a concrete instantatiation of axiom schema is provable from \(\Gamma\). Lastly everything which was created with the modus ponens rule is again provable from \(\Gamma\). We can state it as a little theorem. We wont prove it, but know that it can be rigorously proved. The important thing is that this theorem gives us the induction principle for proving other theorems about provability relation.
+                </p>
+                    
+                <div class="theorem">
+                    Suppose \(\Gamma\) is a set of propositional formulas. The set of formulas (set of consequences) provable from \(\Gamma\) is inductively generated by these rules
+                    <ul>
+                        <li>If \(A \in \Gamma\), then \(\Gamma \vdash A\)</li>
+                        <li>If \(A\) is an axiom schema, then \(\Gamma \vdash A\)</li>
+                        <li>If \(\Gamma \vdash A\) and \(\Gamma \vdash A \to B\), then \(\Gamma \vdash B\)</li>
+                    </ul>
+                </div>
+
+                <p>
+                    We are ready to state and prove a more important theorem called the Deduction theorem.
+                </p>
+                
+                <div class="theorem">
+                If \(\Gamma \cup \{P\} \vdash Q\) then \(\Gamma \vdash P \to Q\).
+                </div>
+                
+                <p>
+                <i>Proof - We fix \(\Gamma\) and \(P\) and use the induction on the set of consequences \(\Gamma \cup \{P\}\). This means that if \(Q\) is in the set of consequences, it has the form of one of the three cases mentioned earlier.
+                <ol>
+                    <li>\(Q \in \Gamma \cup \{P\}\)</li>
+                    <li>\(Q\) as an axiom schema</li>
+                    <li>There is formula \(C\) such that \(\Gamma \cup \{P\} \vdash C\) and also \(\Gamma \cup \{P\} \vdash C \to Q\)</li>
+                </ol>
+                
+                
+                First we deal with the second case. Using the first axiom schema in the form \(Q \to (P \to Q)\) and from modus ponens we obtain \(P \to Q\). Because \(P\) is an axiom schema, we did not need any assumptions. We can write \(\varnothing \vdash P \to Q\) which means we proved it using an empty context. It follows that \(\Gamma \vdash P \to Q\). The first case is tricky. If \(P \in \Gamma\), then we can reuse the prof from the second case. The difference is that \(P\) is an assumption and not an axiom schema. What if \(Q\) is \(P\) itself? We need a rather long proof for this case
+                <ol>
+                    <li>obtain \(P \to (P \to P)\) as instance of axiom 1 </li>
+                    <li>obtain \(P \to ((P \to P) \to P)\) as instance of axiom 1</li>
+                    <li>obtain \((P \to ((P \to P) \to P)) \to ((P \to (P \to P)) \to (P \to P))\) as instance of axiom 2</li>
+                    <li>obtain \(((P \to (P \to P)) \to P \to P) \) using modus ponens with 2 and 3</li>
+                    <li>finally obtain \(P \to P \) using modus ponens with 4 and 1</li>
+                </ol>
+
+                This means again that \(\Gamma \vdash P \to Q\).Now we can tackle the third case. We write a proof by induction and we can finally use the induction step in the form \(\Gamma \vdash P \to C\) and \(\Gamma \vdash P \to (C \to Q)\). We use the second axiom schema in the form \(P \to (C \to Q) \to ((P \to C) \to (B \to Q))\) and modus ponens two times to obtain \(P \to Q\) so again \(\Gamma \vdash P \to Q\).
+                </p></i>
+
+                <h3>Natural deduction</h3>
+                </p>
+                We will be concerned with natural deduction. Let's say we have two term \(P\) and \(Q\) and we want to show that we can somehow build \(P \land Q\). This looks so basic that it should be rule and that is the case! If we want to <i>introduce</i> the term \(P \land Q\), we simply need to assume \(P\) and \(Q\) and use the <i>introduction rule</i> for conjuction. What about the other way? We should be able to say that if we have \(P \land Q\), we can conclude for example \(P\). This is called the <i>left elimination rule</i> for conjunction. These rules can be nicely written as fractions
+                </p>
+
+                $$\frac{P \quad Q}{P \land Q} \land_I \qquad \frac{P \land Q}{P} \land_{E_L} \qquad \frac{P \land Q}{Q} \land_{E_R}$$
+
+
+                <p>The rules for implication and disjunction are little more involved. Let's start with implication</p>
+
+                $$\frac{\begin{matrix}
+                \overset{\text{---}}{P} \\
+                \vdots \\
+                Q
+                \end{matrix}}{P \to Q} \to_I
+                \qquad
+                \frac{P \to Q \quad P}{Q} \to_E
+                $$
+
+                <p>The bar over the formula \(A\) in the introduction rule for implication means that the formula has been cancelled. </p>
+
 
             </section>
         </article>
