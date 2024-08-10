@@ -79,14 +79,7 @@
                 </ul>
                 </div>
 
-                The symbol \(\bot\) is intended to denote the false statement and is called bottom. How do we express a truth statement? Well we can simply say that \(\top\) is an abbreviation for \(\bot \to \bot\). Negation symbol \(\neg A\) can be though of as an abbreviation for \(A \to \bot\). In order to have an easier reasoning about the formulas and to be later able to use boolean evaluation for the formula type, we will work with a slightly different definition. Notice that we can translate one type into the other one as the truth value and negation are just abbreviations. The truth and false values are now bundled in a boolean and variables are indexed by integers. The Haskell data type is defined as follows
-                </p>
-
-<pre class="shiki github-light" style="background-color:#fff;color:#24292e" tabindex="0"><code><span class="line"></span>
-    <span class="line"><span style="color:#D73A49">data</span><span style="color:#D73A49"> Prop</span><span style="color:#D73A49"> =</span><span style="color:#005CC5"> Const</span><span style="color:#D73A49"> Bool</span><span style="color:#D73A49"> |</span><span style="color:#005CC5"> Var</span><span style="color:#D73A49"> Int</span><span style="color:#D73A49"> |</span><span style="color:#005CC5"> Neg</span><span style="color:#D73A49"> Prop</span><span style="color:#D73A49"> |</span><span style="color:#005CC5"> And</span><span style="color:#D73A49"> Prop</span><span style="color:#D73A49"> Prop</span><span style="color:#D73A49"> |</span><span style="color:#005CC5"> Or</span><span style="color:#D73A49"> Prop</span><span style="color:#D73A49"> Prop</span><span style="color:#D73A49"> |</span><span style="color:#005CC5"> Imp</span><span style="color:#D73A49"> Prop</span><span style="color:#D73A49"> Prop</span></span>
-    <span class="line"></span></code>
-</pre>       
-
+                The symbol \(\bot\) is intended to denote the false statement and is called bottom. How do we express a truth statement? Well we can simply say that \(\top\) is an abbreviation for \(\bot \to \bot\). Negation symbol \(\neg A\) can be though of as an abbreviation for \(A \to \bot\).
             </section>
 
             <section id="deductive">
@@ -157,29 +150,59 @@
                     <li>finally obtain \(P \to P \) using modus ponens with 4 and 1</li>
                 </ol>
 
-                This means again that \(\Gamma \vdash P \to Q\).Now we can tackle the third case. We write a proof by induction and we can finally use the induction step in the form \(\Gamma \vdash P \to C\) and \(\Gamma \vdash P \to (C \to Q)\). We use the second axiom schema in the form \(P \to (C \to Q) \to ((P \to C) \to (B \to Q))\) and modus ponens two times to obtain \(P \to Q\) so again \(\Gamma \vdash P \to Q\).
+                This means again that \(\Gamma \vdash P \to Q\). Now we can tackle the third case. We write a proof by induction and we can finally use the induction step in the form \(\Gamma \vdash P \to C\) and \(\Gamma \vdash P \to (C \to Q)\). We use the second axiom schema in the form \(P \to (C \to Q) \to ((P \to C) \to (B \to Q))\) and modus ponens two times to obtain \(P \to Q\) so again \(\Gamma \vdash P \to Q\).
                 </p></i>
 
                 <h3>Natural deduction</h3>
                 </p>
-                We will be concerned with natural deduction. Let's say we have two term \(P\) and \(Q\) and we want to show that we can somehow build \(P \land Q\). This looks so basic that it should be rule and that is the case! If we want to <i>introduce</i> the term \(P \land Q\), we simply need to assume \(P\) and \(Q\) and use the <i>introduction rule</i> for conjuction. What about the other way? We should be able to say that if we have \(P \land Q\), we can conclude for example \(P\). This is called the <i>left elimination rule</i> for conjunction. These rules can be nicely written as fractions
+                    We will now turn our attention to a proof system called natural deduction. It would be nice to have some primitive rules for reasoning instead of these wild axiom schemas. It turns out you can derive few rules from the axiomatic system and proclaim them as the basis for proving. Let's say we fix a context \(\Gamma\) and that we can prove furmulas \(P\) and \(Q\), that is to say \(\Gamma \vdash P\) and \(\Gamma \vdash Q\). We want to show that we can somehow prove \(P \land Q\). This looks so basic that it should be rule and that is indeed the case! If we want to <i>introduce</i> the term \(P \land Q\) and we can prove \(P\) and \(Q\), we simply use the <i>introduction rule</i> for conjuction
                 </p>
 
-                $$\frac{P \quad Q}{P \land Q} \land_I \qquad \frac{P \land Q}{P} \land_{E_L} \qquad \frac{P \land Q}{Q} \land_{E_R}$$
+                $$\frac{\Gamma \vdash P \qquad \Gamma \vdash Q}{\Gamma \vdash P \land Q} \land_I$$
+
+                <p>
+                    The symbol \(\land_I\) says that it is a introduction rule for the conjunction. What about the other way? We have two rules for the <i>elimination</i> of conjunction
+                </p>
+
+                $$\frac{\Gamma \vdash P \land Q}{\Gamma \vdash P} \land_E \qquad \frac{\Gamma \vdash P \land Q}{\Gamma \vdash Q} \land_E$$
+
+                <p>
+                    The introduction rule for implication is really just a differently written deduction theorem and the elimination rule is modus ponens itself! We dont want to pollute the rules with parenthesis so that we will write \(\Gamma \cup \{P\}\) as \(\Gamma, P\).
+                </p>
+
+                $$\frac{\Gamma,P \vdash Q}{\Gamma \vdash P \to Q} \to_I \qquad \frac{\Gamma \vdash P \to Q \qquad \Gamma \vdash P}{\Gamma \vdash Q} \land_E$$
 
 
-                <p>The rules for implication and disjunction are little more involved. Let's start with implication</p>
+                <p>
+                    We also have introduction and elimination rules for disjunction. The introduction rules are straightforward
+                </p>
 
-                $$\frac{\begin{matrix}
-                \overset{\text{---}}{P} \\
-                \vdots \\
-                Q
-                \end{matrix}}{P \to Q} \to_I
-                \qquad
-                \frac{P \to Q \quad P}{Q} \to_E
-                $$
+                $$\frac{\Gamma \vdash P}{\Gamma \vdash P \lor Q} \to_I \qquad \frac{\Gamma \vdash Q}{\Gamma \vdash P \lor Q} \to_I$$
 
-                <p>The bar over the formula \(A\) in the introduction rule for implication means that the formula has been cancelled. </p>
+
+                <p>
+                    The elimination rule is a little more involved as some of the contexts change in a similar way as it was with the introduction rule for implication.
+                </p>
+
+                $$\frac{\Gamma \vdash P \lor Q \qquad \Gamma,P \vdash R \qquad \Gamma,Q \vdash R}{\Gamma \vdash R} \lor_E$$
+
+                <p>
+                    You may wonder why is the rule written in a such way. Remember that we have an instance of the last axiom schema in a form \((P \to R) \to (Q \to R) \to (P \lor Q \to R)\). We start with two contexts \(\Gamma,P \vdash R\) and \(\Gamma,Q \vdash R\). Using the deduction theorem we obtain \(\Gamma \vdash P \to R\) and \(\Gamma \vdash Q \to R\). Now we use the axiom schema and modus ponens two times to obtain \(\Gamma \vdash R\). There are two other rules we will use. The first is called an <i>assumption rule</i>. With empty context it says that if we assume \(P\), then we are allowed to conclude \(P\). The second rule is a special to classical propositional logic called <i>reductio ad absurdum</i>, the elimination rule for the \(\bot\) symbol.
+                </p>
+
+                $$\frac{}{\Gamma,P \vdash P} \qquad \frac{\Gamma,(\lnot P) \vdash \bot}{\Gamma \vdash P} \bot_E$$
+
+                <p>
+                    It is time for a concrete example. We fix a context \(\Gamma\) and want to retreive the first axiom schema \(B \to (A \to B)\). We start by using the assumption rule to get
+                </p>
+
+                $$\frac{}{\Gamma,A,B \vdash B}$$
+
+                <p>
+                    Now we can use the introduction rule for implication two times and that's it. Because we did not need any concrete context \(\Gamma\), this means the rule \(B \to (A \to B)\) is valid for any context so it is true independently of any other assumptions we make.
+                </p>
+
+                $$\cfrac{\cfrac{\cfrac{}{\Gamma,A,B \vdash B}}{\Gamma,B \vdash A \to B} \to_I}{\Gamma \vdash B \to (A \to B)} \to _I$$
 
 
             </section>
