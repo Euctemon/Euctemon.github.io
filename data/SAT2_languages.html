@@ -133,7 +133,9 @@
                 </div>
                 
                 <p>
-                <i>Proof - We fix \(\Gamma\) and \(P\) and use the induction on the set of consequences \(\Gamma \cup \{P\}\). This means that if \(Q\) is in the set of consequences, it has the form of one of the three cases mentioned earlier.
+
+                <div class="proof">
+                We fix \(\Gamma\) and \(P\) and use the induction on the set of consequences \(\Gamma \cup \{P\}\). This means that if \(Q\) is in the set of consequences, it has the form of one of the three cases mentioned earlier.
                 <ol>
                     <li>\(Q \in \Gamma \cup \{P\}\)</li>
                     <li>\(Q\) as an axiom schema</li>
@@ -151,7 +153,9 @@
                 </ol>
 
                 This means again that \(\Gamma \vdash P \to Q\). Now we can tackle the third case. We write a proof by induction and we can finally use the induction step in the form \(\Gamma \vdash P \to C\) and \(\Gamma \vdash P \to (C \to Q)\). We use the second axiom schema in the form \(P \to (C \to Q) \to ((P \to C) \to (B \to Q))\) and modus ponens two times to obtain \(P \to Q\) so again \(\Gamma \vdash P \to Q\).
-                </p></i>
+                </p>
+                \(\blacksquare\)
+                </div>
 
                 <h3>Natural deduction</h3>
                 </p>
@@ -204,6 +208,53 @@
 
                 $$\cfrac{\cfrac{\cfrac{}{\Gamma,A,B \vdash B}}{\Gamma,B \vdash A \to B} \to_I}{\Gamma \vdash B \to (A \to B)} \to _I$$
 
+
+                <p>
+                    What is meant by a proof in a natural deduction? Proof is any sequence of lines, such as the proof of \(B \to (A \to B)\), which is constructed using natural deduction rules. such sequence is called a <i>sequent</i>. We can also define the set of provable propositions using induction as follows; the set of sequents provable in natural deduction is the smallest set of sequents clused under natural deduction rules. This definition gives us an induction principle which we can use for the following lemma.
+                </p>
+
+                <p>
+                The theorem about weakening expresses the idea of monotonicity of entailment relation. Suprisingly there are non-monotonic logics where you cannot prove that monotonicity holds. This statement does not have any rule associated with it as we cannot derive it using the introduction and elimination rules. It is called <i>admissible</i> rule. This means that adding this as a <i>rule</i> does not change the set of provable sequents.
+                </p>
+
+                <div class="theorem">
+                    If \(\Gamma \vdash A\) is provable in natural deduction and \(\Gamma \subset \Delta\), then \(\Delta \vdash A\) is also provable.
+                </div>
+
+                <div class="proof">
+                    We will use induction on the set of provable sequents. But what does that mean? First we deal with the assumption rule. Suppose we have \(\Gamma,A \vdash A\) and want to prove \(\Delta,A \vdash A\). But we know that \(\Delta,A \vdash A\) holds from the assumption rule alone! Now for the other rules. Lets take for example the introduction rule for conjunction.
+
+                    $$\frac{\Gamma \vdash P \qquad \Gamma \vdash Q}{\Gamma \vdash P \land Q} \land_I$$
+
+                In order to know that \(\Gamma \vdash A \land B\), we need to assume \(\Gamma \vdash A\) and \(\Gamma \vdash B\). For these to assumptions we use induction step and obtain \(\Delta \vdash A\) and \(\Delta \vdash A\). But now it suffices to use the introduction rule for conjunction and obtian \(\Gamma \vdash A \land B\). Other rule would be checked similarly. This means we proved this theorem.
+                <p></p>
+                \(\blacksquare\)
+                </div>
+
+                <H3>Proof by contradiction</H3>
+                <p>
+                The proof by contradiction is expressed by the last axiom of the axiomatic system, namely the  \(\lnot \lnot A \to A\). We know that it is just a abbreviation for \(((A \to \bot) \to \bot) \to A\). First we assume that the proposition \(A\) does not hold, \(\lnot A\) and prove nonsense \(\bot\). Then we conclude that \(A\) holds. How do we derive this in natural deduction? First step is to derive \(\bot\). We use the assumption rule two times.
+                </p>
+
+                $$\dfrac{\Gamma, A \vdash A \qquad \Gamma,\lnot A \vdash \lnot A}{\Gamma, A, \lnot A \vdash \bot} \to_E$$
+
+                <p>
+                    Notice that we subtly used the weakening theorem in the implication elimination. We had two different contexts \(\Gamma, A\) and \(\Gamma, \lnot A\) and the context in the conclusion is the union of contexts in assumptions! Now we use the introduction rule for implication twice and we are finished.
+                </p>
+
+                $$\dfrac{\dfrac{\dfrac{\Gamma, A \vdash A \qquad \Gamma,\lnot A \vdash \lnot A}{\Gamma, A, \lnot A \vdash \bot} \to_E}{\Gamma,A \vdash \lnot \lnot A} \to_I}{\Gamma \vdash A \to \lnot \lnot A}\to_I$$
+
+                <p>
+                    Notice that we have not used the elimination rule for \(\bot\). This implication is provable in weaker system of logic, specifically in the so called minimal logic. For the reverse implication we need classical logic as we will use the rule for elimination of \(\bot\). First we again derive nonsense.
+                </p>
+
+                $$\dfrac{\Gamma, \lnot A \vdash \lnot A \qquad \Gamma,\lnot \lnot A \vdash \lnot \lnot A}{\Gamma, \lnot A, \lnot \lnot A \vdash \bot} \to_I$$
+
+                <p>
+                    Now we use the elimination rule for \(\bot\) and then the introduction rule for implication and we are finished. This means we proved \(A \leftrightarrow \lnot \lnot A\).
+                </p>
+
+                $$\dfrac{\dfrac{\dfrac{\Gamma, \lnot A \vdash \lnot A \qquad \Gamma,\lnot \lnot A \vdash \lnot \lnot A}{\Gamma, \lnot A, \lnot \lnot A \vdash \bot} \to_I}{\Gamma, \lnot \lnot A \vdash A} \bot_E}{\Gamma \vdash \lnot \lnot A \to A} \to_I$$
 
             </section>
         </article>

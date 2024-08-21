@@ -182,6 +182,20 @@ margin: 0 25%
     font-weight: 400;
 }
 
+.proof {
+    border-width: 1px;
+    padding: 15px;
+    min-width: 500px;
+    margin: 5px 0px;
+}
+
+.proof::before {
+    content: 'PROOF \A';
+    white-space: pre-wrap;
+    color: grey;
+    font-weight: 400;
+}
+
 .scrollable-box {
     overflow-x: scroll;
 }
