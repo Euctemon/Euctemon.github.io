@@ -52,7 +52,7 @@
 
                 <h2>Languages</h2>
                 <p>
-                In order to make sense of expressions such as \((P \lor Q) \land R\), we need to start with the definition of a language.
+                    Let's take a closer look on the expression \(P \land (Q \lor R)\). We can build this expression from smaller ones. We would say that \(P,Q\) and \(R\) are variables, \(\land\) and \(\lor\) are logical connectives and together they define a <i>proposition</i>. There also have to be some rules what is a valid proposition and what is not. For example \(\land \land P\) is not a proposition. We start with the definition of language and model.
                 </p>
 
                 <div class="definition">
@@ -64,10 +64,13 @@
                 </div>
 
                 <p>
-                Now is the time to see few examples. Let's say that we have a language with one function symbol \(c\) of zero arity, two binary function symbols \(f,g\) and one binary relation \(r\). This means our language looks like \((\{c,f,g\},\{r\},a)\) where \(a(c) = 0\), \(a(f) = 2\), \(a(g) = 2\) and \(a(r) = 2\). We can interpret this language in the structure with the universe (the underlying set) of \(\mathbb{N}\), a constant \(0\) as the zero arity function, two binary functions \(+,\cdot\) and \(\leq\) as the binary relation. This means we can interpret the language as a structure of natural numbers, often written as \( (\mathbb{N},0,+,\cdot,\leq) \). To be more in accordance with the definiton of a model we should write the structure as \( (\mathbb{N},I) \) where \(I(c) = 0\), \(I(f) = + \), \(I(g) = \cdot \) and \(I(r) = \:\leq \).
+                    These definitions are rather abstract so it calls for a concrete example. Suppose we have a language with one function symbol \(c\) of zero arity, often call a constant, two binary function symbols \(f,g\) and one binary relation \(r\). We specified the arity of all symbols and the sets of functional symbols and relational symbols are disjoint. This means we have a language \(L\) written as \((\{c,f,g\},\{r\},a)\) where \(a(c) = 0\), \(a(f) = 2\), \(a(g) = 2\) and \(a(r) = 2\). One such model for this language are the natural numbers. We assign \(0\) to the constant \(c\), the functions \(+\) and \(\times\) for function symbols \(f\) and \(g\) and finally the relation \(\leq\) for relation symbol \(r\). The universe is simply the set of natural numbers. We can write this model \(\mathfrak{M}\) as \( (\mathbb{N},\{0,+, \times, \leq\}) \). Note that the functions and the relation satisfy the the conditions on arity.
+                </p>
+
+                <h3>Propositional logic</h3>
 
                 <p>
-                So what about the language of propositional logic? We have one function symbol of zero arity \(\bot\) and three binary function symbols \(\land, \lor, \to \). We also fix a set of propositional variables \(P_0,P_1,\ldots\). Notice that this language has no relation symbols. This means we cannot speak about the relation between two objects and for that we need to use first order logic. The set \( (\bot,\land,\lor,\to) \) is sometimes called the alphabet. We are ready to define the set of propositional formulas.
+                    It's important to know that propositional logic is a <i>language</i>. This means we need to specify its function and relation symbols and their arities. This logic has one functional symbol of zero arity, namely the symbol for falsity written as \(\bot\). It has three binary functional symbols \(\land,\lor\) and \(\to\) and no relation symbols. We call the set \(\bot,\land,\lor,\to\) an alphabet. We also use a set of <i>propositional variables</i> such as \(P,Q\) or \(R\). Having fixed the alphabet we move to defining the set of propositional formulas.
                 </p>
 
                 <div class="definition">
@@ -79,8 +82,18 @@
                 </ul>
                 </div>
 
-                The symbol \(\bot\) is intended to denote the false statement and is called bottom. How do we express a truth statement? Well we can simply say that \(\top\) is an abbreviation for \(\bot \to \bot\). Negation symbol \(\neg A\) can be though of as an abbreviation for \(A \to \bot\).
+                <p>
+                    You might wonder why we did not include the propositional variables in the alphabet. The ideal is that the language of propositional logic is just fine without any more symbols. We <i>could</i> reason only about formulas without variables such as \(\bot \to (\bot \land (\bot \lor \bot))\). But we want to have more freedom. We want to reason about propositions such as \(\bot \to (\bot \land A)\) and then substitute any proposition for \(A\). One pillar of reasoning in classical propositional logic is that from falsity, everything follows. We express this idea as the proposition \(\bot \to A\) being always true. If we had not propositional variables, we would need to write this rule for every valid string of alphabet such as \(\bot \to (\bot \land \bot)\) or \(\bot \to ((\bot \lor \bot) \land \bot)\) and so on for infinitely many possible strings. That cannot be done with sanity. People who want to be precise or annoing would say that using propositional variable, we work in a <i>meta language</i>, or one level of abstraction higher. The same problem arises when we talk about proofs or even prove theorems about proofs.
+                </p>
+
+                <p>
+                    The alphabet used in the definition of propositional formulas is in some sense complete. But we also use some other symbols as \(\top, \lnot\) or \(\leftrightarrow\) for more clarity. These are just abbreviations. The truth value \(\top\) is an abbreviation of \(\bot \to \bot\), the negation \(\lnot A\) is abbreviation of \(A \to \bot\) and bidirectional implication \(A \leftrightarrow B\) is an abbreviation of ... bidirectional implication \(A \to B \land B \to A\).
+                </p>
+
             </section>
+
+
+            <b>-- zkontrolováno --</b>
 
             <section id="deductive">
                 <h2>Deductive systems</h2>
@@ -162,26 +175,26 @@
                     We will now turn our attention to a proof system called natural deduction. It would be nice to have some primitive rules for reasoning instead of these wild axiom schemas. It turns out you can derive few rules from the axiomatic system and proclaim them as the basis for proving. Let's say we fix a context \(\Gamma\) and that we can prove furmulas \(P\) and \(Q\), that is to say \(\Gamma \vdash P\) and \(\Gamma \vdash Q\). We want to show that we can somehow prove \(P \land Q\). This looks so basic that it should be rule and that is indeed the case! If we want to <i>introduce</i> the term \(P \land Q\) and we can prove \(P\) and \(Q\), we simply use the <i>introduction rule</i> for conjuction
                 </p>
 
-                $$\frac{\Gamma \vdash P \qquad \Gamma \vdash Q}{\Gamma \vdash P \land Q} \land_I$$
+                $$\dfrac{\Gamma \vdash P \qquad \Gamma \vdash Q}{\Gamma \vdash P \land Q} \land_I$$
 
                 <p>
                     The symbol \(\land_I\) says that it is a introduction rule for the conjunction. What about the other way? We have two rules for the <i>elimination</i> of conjunction
                 </p>
 
-                $$\frac{\Gamma \vdash P \land Q}{\Gamma \vdash P} \land_E \qquad \frac{\Gamma \vdash P \land Q}{\Gamma \vdash Q} \land_E$$
+                $$\dfrac{\Gamma \vdash P \land Q}{\Gamma \vdash P} \land_E \qquad \frac{\Gamma \vdash P \land Q}{\Gamma \vdash Q} \land_E$$
 
                 <p>
                     The introduction rule for implication is really just a differently written deduction theorem and the elimination rule is modus ponens itself! We dont want to pollute the rules with parenthesis so that we will write \(\Gamma \cup \{P\}\) as \(\Gamma, P\).
                 </p>
 
-                $$\frac{\Gamma,P \vdash Q}{\Gamma \vdash P \to Q} \to_I \qquad \frac{\Gamma \vdash P \to Q \qquad \Gamma \vdash P}{\Gamma \vdash Q} \land_E$$
+                $$\dfrac{\Gamma,P \vdash Q}{\Gamma \vdash P \to Q} \to_I \qquad \frac{\Gamma \vdash P \to Q \qquad \Gamma \vdash P}{\Gamma \vdash Q} \land_E$$
 
 
                 <p>
                     We also have introduction and elimination rules for disjunction. The introduction rules are straightforward
                 </p>
 
-                $$\frac{\Gamma \vdash P}{\Gamma \vdash P \lor Q} \to_I \qquad \frac{\Gamma \vdash Q}{\Gamma \vdash P \lor Q} \to_I$$
+                $$\dfrac{\Gamma \vdash P}{\Gamma \vdash P \lor Q} \to_I \qquad \frac{\Gamma \vdash Q}{\Gamma \vdash P \lor Q} \to_I$$
 
 
                 <p>
@@ -200,13 +213,13 @@
                     It is time for a concrete example. We fix a context \(\Gamma\) and want to retreive the first axiom schema \(B \to (A \to B)\). We start by using the assumption rule to get
                 </p>
 
-                $$\frac{}{\Gamma,A,B \vdash B}$$
+                $$\dfrac{}{\Gamma,A,B \vdash B}$$
 
                 <p>
                     Now we can use the introduction rule for implication two times and that's it. Because we did not need any concrete context \(\Gamma\), this means the rule \(B \to (A \to B)\) is valid for any context so it is true independently of any other assumptions we make.
                 </p>
 
-                $$\cfrac{\cfrac{\cfrac{}{\Gamma,A,B \vdash B}}{\Gamma,B \vdash A \to B} \to_I}{\Gamma \vdash B \to (A \to B)} \to _I$$
+                $$\dfrac{\dfrac{\dfrac{}{\Gamma,A,B \vdash B}}{\Gamma,B \vdash A \to B} \to_I}{\Gamma \vdash B \to (A \to B)} \to _I$$
 
 
                 <p>
@@ -224,7 +237,7 @@
                 <div class="proof">
                     We will use induction on the set of provable sequents. But what does that mean? First we deal with the assumption rule. Suppose we have \(\Gamma,A \vdash A\) and want to prove \(\Delta,A \vdash A\). But we know that \(\Delta,A \vdash A\) holds from the assumption rule alone! Now for the other rules. Lets take for example the introduction rule for conjunction.
 
-                    $$\frac{\Gamma \vdash P \qquad \Gamma \vdash Q}{\Gamma \vdash P \land Q} \land_I$$
+                    $$\dfrac{\Gamma \vdash P \qquad \Gamma \vdash Q}{\Gamma \vdash P \land Q} \land_I$$
 
                 In order to know that \(\Gamma \vdash A \land B\), we need to assume \(\Gamma \vdash A\) and \(\Gamma \vdash B\). For these to assumptions we use induction step and obtain \(\Delta \vdash A\) and \(\Delta \vdash A\). But now it suffices to use the introduction rule for conjunction and obtian \(\Gamma \vdash A \land B\). Other rule would be checked similarly. This means we proved this theorem.
                 <p></p>
@@ -256,6 +269,38 @@
 
                 $$\dfrac{\dfrac{\dfrac{\Gamma, \lnot A \vdash \lnot A \qquad \Gamma,\lnot \lnot A \vdash \lnot \lnot A}{\Gamma, \lnot A, \lnot \lnot A \vdash \bot} \to_I}{\Gamma, \lnot \lnot A \vdash A} \bot_E}{\Gamma \vdash \lnot \lnot A \to A} \to_I$$
 
+
+                <h3>The law of excluded middle</h3>
+                <p>
+                    We want to prove \(A \lor \lnot A\). The law of excluded middle is a famous assertion, but how should we prove it? We start with the conclusion a build up the sequents. The first step we take is that we will prove in by contradiction. So we write
+                </p>
+
+                $$\frac{\Gamma \vdash \lnot (A \lor \lnot A) \vdash \bot}{\Gamma \vdash A \lor \lnot A} \bot_E$$
+
+                <p>
+                    Modus ponens gets us so far.
+                </p>
+
+                $$\dfrac{\textcolor{red}{\Gamma, \lnot(A \lor \lnot A) \vdash A \lor \lnot A} \qquad \Gamma, \lnot(A \lor \lnot A) \vdash\lnot(A \lor \lnot A)}{\dfrac{\Gamma \vdash \lnot (A \lor \lnot A) \vdash \bot}{\Gamma \vdash A \lor \lnot A} \bot_E} \to_I$$
+
+                <p>
+                    We know that the right part of implication follows from assumption rule. But can we prove the left part? We use the disjuntion introduction to make it simpler. this means we need to prove \(\Gamma, \lnot(A \lor \lnot A) \vdash \lnot A\). We use proof by contrdiction again and get
+                </p>
+                
+                $$\dfrac{\Gamma, \lnot \lnot A, \lnot(A \lor \lnot A) \vdash \bot}{\Gamma, \lnot(A \lor \lnot A) \vdash \lnot A} \bot_E$$
+
+                <p>
+                    The next step is to remember that we know \(\Gamma, \lnot \lnot A \vdash A\) as we proved it in the previous chapter. We use introduction rule for disjuntion to obtain
+                </p>
+
+                $$\dfrac{\Gamma, \lnot \lnot A \vdash A}{\Gamma, \lnot \lnot A \vdash A \lor \lnot A} \lor_I$$
+
+                <p>
+                  This means we know how to prove the red part  
+                </p>
+
+                $$\dfrac{\dfrac{\dfrac{}{\Gamma, \lnot(A \lor \lnot A) \vdash \lnot(A \lor \lnot A)} \qquad \dfrac{\Gamma, \lnot \lnot A \vdash A}{\Gamma, \lnot \lnot A \vdash A \lor \lnot A} \lor_I}{\Gamma, \lnot \lnot A, \lnot(A \lor \lnot A) \vdash \bot} \to_I}{\dfrac{\Gamma, \lnot(A \lor \lnot A) \vdash \lnot A}{\Gamma, \lnot(A \lor \lnot A) \vdash A \lor \lnot A} \lor_I} \bot_E$$
+                
             </section>
         </article>
     </div>
