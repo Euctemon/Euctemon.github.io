@@ -32,7 +32,8 @@
                     <li><a href="../index.html">Home</a></li>
                     <li class="divider">Chapters</li>
                     <li><a href="SAT1_intro.html">Introduction</a></li>
-                    <li><a href="SAT2_languages.html">Propositional logic</a></li>
+                    <li><a href="SAT2_syntax.html">Syntax</a></li>
+                    <li><a href="SAT3_semantics.html">Semantics</a></li>
                 </ul>
             
                 <ul class="responsive-ul">
@@ -92,15 +93,12 @@
 
             </section>
 
-
-            <b>-- zkontrolováno --</b>
-
             <section id="deductive">
                 <h2>Deductive systems</h2>
                 <h3>Axiomatic systems</h3>
 
                 <p>
-                    So far we know what a language is and we know how construct the set of propositions over a given alphabet. In order to give a meaning to the propositions we need rules for manipulating them. One of the earliest logical systems are the axiomatic systems, also called Hilbert style systems. These systems consist of a set of axioms and inference rules. For example the axiomatic system for <i>classical propositional logic</i> consists of nine <i>axiom schemas</i> and one inference rule, namely the <i>modus ponens</i>. The axiom schemas are called schemas because the act as blueprints for the actual rules. We can take the first axiom schema a instantiate it with \(P \to P\) for \(A\) and \(\bot\) for \(B\). The concrete rule is then the proposition \((P \to P) \to (\bot \to (P \to P))\) and we take this proposition to be true.
+                    So far we know what a language is and we know how construct the set of propositions over a given alphabet. In order to give a meaning to the propositions we need rules for manipulating them. Dealing with languages and rules is the syntactic part of logic. One of the earliest logical systems are the axiomatic systems, also called Hilbert style systems. These systems consist of a set of axioms and inference rules. For example the axiomatic system for <i>classical propositional logic</i> consists of nine <i>axiom schemas</i> and one inference rule, namely the <i>modus ponens</i>. The axiom schemas are called schemas because the act as blueprints for the actual rules. We can take the first axiom schema a instantiate it with \(P \to P\) for \(A\) and \(\bot\) for \(B\). The concrete rule is then the proposition \((P \to P) \to (\bot \to (P \to P))\) and we take this proposition to be true.
                 </p>
                 
                 <ol>
@@ -215,13 +213,13 @@
                     The implication has one introductory rule and one elimination rule. The elimination rule is exactly modus ponens. If you had not seen the Deduction theorem, the introduction rule might seem suprising. But when you think about the Deduction theorem, it really <i>is</i> a way to introduce implication. Note how the context is changed from \(\Gamma,P\) to \(\Gamma\).
                 </p>
 
-                $$\dfrac{\Gamma,P \vdash Q}{\Gamma \vdash P \to Q} \to_I \qquad \frac{\Gamma \vdash P \to Q \qquad \Gamma \vdash P}{\Gamma \vdash Q} \land_E$$
+                $$\dfrac{\Gamma,P \vdash Q}{\Gamma \vdash P \to Q} \to_I \qquad \frac{\Gamma \vdash P \to Q \qquad \Gamma \vdash P}{\Gamma \vdash Q} \to_E$$
 
                 <p>
                     Next logical connective is the disjunction. The two introduction rules are modelled according to the sixth and seventh axiom. The elimination rule mirrors the eight axiom and is also a context-changing rule.
                 </p>
 
-                $$\dfrac{\Gamma \vdash P}{\Gamma \vdash P \lor Q} \to_I \qquad \dfrac{\Gamma \vdash Q}{\Gamma \vdash P \lor Q} \to_I \qquad \dfrac{\Gamma \vdash P \lor Q \qquad \Gamma,P \vdash R \qquad \Gamma,Q \vdash R}{\Gamma \vdash R} \lor_E$$
+                $$\dfrac{\Gamma \vdash P}{\Gamma \vdash P \lor Q} \lor_I \qquad \dfrac{\Gamma \vdash Q}{\Gamma \vdash P \lor Q} \lor_I \qquad \dfrac{\Gamma \vdash P \lor Q \qquad \Gamma,P \vdash R \qquad \Gamma,Q \vdash R}{\Gamma \vdash R} \lor_E$$
 
                 <p>
                     The next rule mirrors the ninth axiom schema and is called reductio ad absurdum. after introducing all rules for natural deduction, we will say something more about this rule.
@@ -340,25 +338,24 @@
                     After that we use modus ponens (elimination rule for implication). The right side can be proved by the assumption rule immediately. The problem is with the left side colored in red.
                 </p>
 
-                $$\dfrac{\textcolor{red}{\lnot(A \lor \lnot A) \vdash A \lor \lnot A} \qquad \lnot(A \lor \lnot A) \vdash\lnot(A \lor \lnot A)}{\dfrac{\varnothing \vdash \lnot (A \lor \lnot A) \vdash \bot}{\varnothing \vdash A \lor \lnot A} \bot_E} \to_I$$
+                $$\dfrac{\dfrac{\vdots}{\textcolor{red}{\lnot(A \lor \lnot A) \vdash A \lor \lnot A}} \qquad \dfrac{}{\lnot(A \lor \lnot A) \vdash\lnot(A \lor \lnot A)}}{\dfrac{\varnothing \vdash \lnot (A \lor \lnot A) \vdash \bot}{\varnothing \vdash A \lor \lnot A} \bot_E} \to_E$$
 
                 <p>
-                    We use proof by contradiction again to get
+                    We only need to prove one part of the disjunction thanks to the introduction rule for disjunction. If you try to come up with the proof, you would have to try which part is provable. I will reveal that choosing to prove \(\lnot A\) is the right way. The next step is to use reductio ad absurdum again and modus ponens. The left part follows from the assumption rule.
+                </p>
+
+                $$\dfrac{\dfrac{}{\lnot(A \lor \lnot A) \vdash \lnot(A \lor \lnot A)} \qquad \dfrac{\vdots}{\color{red}{\lnot \lnot A \vdash A \lor \lnot A}}}{\dfrac{\lnot \lnot A,\lnot(A \lor \lnot A) \vdash \bot}{\dfrac{\lnot(A \lor \lnot A) \vdash \lnot A}{\color{red}{\lnot(A \lor \lnot A) \vdash A \lor \lnot A}} \lor_I} \bot_E} \to_E$$
+
+                <p>
+                    The right part seems even worse than what we have to prove but don't worry. Knowing \(\lnot \lnot A \vdash A\) we can use introduction rule for disjunction to quickly finish the proof.
                 </p>
                 
-                $$\dfrac{\lnot \lnot A, \lnot(A \lor \lnot A) \vdash \bot}{\color{red}{\lnot(A \lor \lnot A) \vdash \lnot A}} \bot_E$$
+                $$\dfrac{\dfrac{}{\lnot \lnot A \vdash A} \vdash}{\color{red}{\lnot \lnot A \vdash A \lor \lnot A}} \lor_I$$
 
                 <p>
-                    The next step is to remember that we know \(\Gamma, \lnot \lnot A \vdash A\) as we proved it in the previous chapter. We use introduction rule for disjuntion to obtain
+                    The provability of \(\lnot \lnot A \vdash A\) does not follow from the assumption rule but had to be proved. That is why I added the symbol \(\vdash\) next to the line. It is not an offical rule but it is quite reasonable to write it this way. Remember that the symbol \(\vdash\) stands for provability. It makes sense to have a kind of introduction rule for statements <i>we have already proved</i>. We do this in mathematics all the time. We start by proving small lemmas and then use them to make bigger ones until we end up with rather complex theorems. It resembles the <i>structural rule</i> for weakening as we act on the structure of the proof. Of course we could simply copy the whole proof of \(\lnot \lnot A \vdash A\) here.
                 </p>
 
-                $$\dfrac{\Gamma, \lnot \lnot A \vdash A}{\Gamma, \lnot \lnot A \vdash A \lor \lnot A} \lor_I$$
-
-                <p>
-                  This means we know how to prove the red part  
-                </p>
-
-                $$\dfrac{\dfrac{\dfrac{}{\Gamma, \lnot(A \lor \lnot A) \vdash \lnot(A \lor \lnot A)} \qquad \dfrac{\Gamma, \lnot \lnot A \vdash A}{\Gamma, \lnot \lnot A \vdash A \lor \lnot A} \lor_I}{\Gamma, \lnot \lnot A, \lnot(A \lor \lnot A) \vdash \bot} \to_I}{\dfrac{\Gamma, \lnot(A \lor \lnot A) \vdash \lnot A}{\Gamma, \lnot(A \lor \lnot A) \vdash A \lor \lnot A} \lor_I} \bot_E$$
                 
             </section>
         </article>

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <link rel="stylesheet" type="text/css" href="../styles/styles.css">
+    <link rel="icon" href="../styles/favicon.ico">
+    
+
+    <!-- Katex extension -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" integrity="sha384-nB0miv6/jRmo5UMMR1wu3Gz6NLsoTkbqJghGIsx//Rlm+ZU03BU6SQNC66uf4l5+" crossorigin="anonymous">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" integrity="sha384-7zkQWkzuo3B5mTepMUcHkMB5jZaolc2xDwL6VFqjFALcbeS9Ggm/Yr2r3Dy4lfFg" crossorigin="anonymous"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" integrity="sha384-43gviWU0YVjaDtb/GhzOouOXtZMP/7XUzwPTstBeZFe/+rCMvRwr4yROQP43s0Xk" crossorigin="anonymous"
+        onload="renderMathInElement(document.body);"></script>
+
+    <script type="text/javascript" src="../styles/personal_scripts.js"></script>
+    
+    <title>SAT solvers</title>
+</head>
+
+<body>
+
+    <header>
+        <div class="header-grid">
+            <button class="nav-button" onClick="openMenu('mainnav-wrapper','nav-ico')" type="button"><span hidden>Menu</span><img src="../styles/sidebar_open.svg" id="nav-ico"></button>
+            <div class="header-name">SAT solvers</div>
+        </div>
+        
+        <div id="mainnav-wrapper">
+            <nav>
+                <ul>
+                    <li><a href="../index.html">Home</a></li>
+                    <li class="divider">Chapters</li>
+                    <li><a href="SAT1_intro.html">Introduction</a></li>
+                    <li><a href="SAT2_syntax.html">Syntax</a></li>
+                    <li><a href="SAT2_semantics.html">Semantics</a></li>
+                </ul>
+            
+                <ul class="responsive-ul">
+                    <li class="divider">This chapter</li>
+                    <li><a href="#models">Models</a></li>
+                    <li><a href="#deductive">Deductive systems</a></li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+
+    </header>
+        
+    <div class="main-content">
+        <article>
+            <section id="models">
+
+                <h2>Models</h2>
+
+                <p>
+                    In this chapter we look at semantics of propositional logic. This has a clse connection to the <i>truth tables</i> you surely know. But in order to better understand why are truth tables a valuable tool, we need to talk about these things in more general terms. Semantics deals with models and their interpretations. You might remember that defined a model in the previous chapter. A model is a tuple containing a set called universe and a function \(I\) which assigns a function to a function symbol and relation to a relation symbol. For propositional logic we therefore need to specify the universe and function for every symbol in the alphabet as the alphabet is only made of functional symbols. We will also need a function \(v\) which assigns elements of the universe to propositional variables. This is commonly called <i>truth assignment</i>. For the universe we set \(\mathbb{B} = \{\bot,\top\}\). This has nothing to do with our alphabet. We could have chosen a set \(\{0,1\}\) or any other set of two distict symbols! We are ready to define the function \(I\)
+                </p>
+
+                <div class="definition">
+                    Let \(v\) be a truth assignment. We interpret the function symbols as follows
+
+                    <ul>
+                        <li>\(I(P) = v(P)\) if \(P\) is propositional variable</li>
+                        <li>\(I(\bot) = \bot\)</li>
+                        <li>If \(I(P) = \top\) and \(I(Q) = \top\), then \(I(P \land Q) = \top\), otherwise \(I(P \land Q) = \bot\) </li>
+                        <li>If \(I(P) = \top\) or \(I(Q) = \top\), then \(I(P \lor Q) = \top\), otherwise \(I(P \lor Q) = \bot\) </li>
+                        <li>If \(I(P) = \bot\) or \(I(Q) = \top\), then \(I(P \to Q) = \top\), otherwise \(I(P \to Q) = \bot\) </li>
+                    </ul>
+                </div>
+
+                <p>
+                    The assigning function here is written little differently than the one used in the definition of natural number model. Nevertheless it is correct. For example the interpretation of conjunction, the function \(I(P \land Q)\) has the same arity as the conjunction symbol. Why? We need to supply two values, \(I(P)\) and \(I(Q)\) in order to evaluate this function and we know conjunction has the arity of two.
+                </p>
+
+                <p>
+                    Let's take a look at some example. We fix three variables \(P,Q\) and \(R\) and write a truth assignment \(\langle P = \bot, Q = \top, R = \bot \rangle\). We can take a propositional formula with these variables and evaluate it using the function \(I\). Take for example the proposition \(P \to (Q \lor A)\). We then have \(I(Q \lor R) = \top\) and therefore \(I(P \to (Q \lor R)) = \top\). It is common to write the evaluation of proposition \(A\) using \(I\) given a truth assignment \(v\) as \(\llbracket A\rrbracket^v\). Now comes a crucial definition.
+                </p>
+
+                <div class="definition">
+                    Let \(A\) be a propositional formula and let \(v\) be a truth assignment.
+                    <ul>
+                        <li>We say that \(v\) satisfies \(A\), written as \(v \models A\), if \(\llbracket A\rrbracket^v = \top\). We say that \(A\) is true under \(v\).</li>
+                        <li>If \(\Gamma\) is a set of propositional formulas, we say \(v \models \Gamma\) if \(v \models A\) for every propositional formula \(A \in \Gamma\).</li>
+                        <li>A propositional formula \(A\) is <i>satisfiable</i> if there exists truth assignment \(v\) such that \(v \models A\).</li>
+                        <li>A propositional formula \(A\) is <i>valid</i> if it is true under any truth assignment.</li>
+                        <li>A propositional formula \(A\) is a <i>logical consequence</i> of \(\Gamma\), written as \(\Gamma \models A\), if every truth assignment \(v\) which satisfies \(\Gamma\) also satisfies \(A\).</li>
+                    </ul>
+                </div>
+
+
+
+
+
+            </section>
+        </article>
+    </div>
+</body>
