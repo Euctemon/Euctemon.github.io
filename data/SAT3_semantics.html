@@ -54,7 +54,9 @@
                 <h2>Models</h2>
 
                 <p>
-                    In this chapter we look at semantics of propositional logic. This has a clse connection to the <i>truth tables</i> you surely know. But in order to better understand why are truth tables a valuable tool, we need to talk about these things in more general terms. Semantics deals with models and their interpretations. You might remember that defined a model in the previous chapter. A model is a tuple containing a set called universe and a function \(I\) which assigns a function to a function symbol and relation to a relation symbol. For propositional logic we therefore need to specify the universe and function for every symbol in the alphabet as the alphabet is only made of functional symbols. We will also need a function \(v\) which assigns elements of the universe to propositional variables. This is commonly called <i>truth assignment</i>. For the universe we set \(\mathbb{B} = \{\bot,\top\}\). This has nothing to do with our alphabet. We could have chosen a set \(\{0,1\}\) or any other set of two distict symbols! We are ready to define the function \(I\)
+                    In this chapter we look at semantics of propositional logic. This has a close connection to the <i>truth tables</i> you have probably seen somewhere. But in order to better understand why truth tables are a valuable tool, we need to talk about these things in more general terms. Semantics deals with models and their interpretations. You might remember that defined a model in the previous chapter. A model is a tuple containing a set called universe \(U\) and a function \(I\) which assigns a function to a function symbol and a relation to a relation symbol. Propositional logic has only function symbols. This means we need to specify the universe and how to interpret propositional variables and the alphabet \(\{\bot,\land,\lor,\to\}\). We choose \(\mathbb{B} = \{\bot,\top\}\) as the universe.
+                    The <i>truth assignment</i> is a function responsible for assigning elements of \(\mathbb{B}\) to propositional variables. With the universe fixed and truth assignment, we are ready to define how to interpret the function symbols.
+
                 </p>
 
                 <div class="definition">
@@ -70,27 +72,230 @@
                 </div>
 
                 <p>
-                    The assigning function here is written little differently than the one used in the definition of natural number model. Nevertheless it is correct. For example the interpretation of conjunction, the function \(I(P \land Q)\) has the same arity as the conjunction symbol. Why? We need to supply two values, \(I(P)\) and \(I(Q)\) in order to evaluate this function and we know conjunction has the arity of two.
+                    The assigning function here is written little differently than the one used in the definition of natural number model. Nevertheless it is correct. For example the interpretation of conjunction, the function \(I(P \land Q)\) has the same arity as the conjunction symbol. Why? We need to supply two values, \(I(P)\) and \(I(Q)\) in order to evaluate this function and we know conjunction has the arity of two. The definition also says that the functions should be from \(U\) to \(U\). Is this the case? You can check that for all cases the inputs and outputs of \(I\) are in \(U\).
                 </p>
 
                 <p>
-                    Let's take a look at some example. We fix three variables \(P,Q\) and \(R\) and write a truth assignment \(\langle P = \bot, Q = \top, R = \bot \rangle\). We can take a propositional formula with these variables and evaluate it using the function \(I\). Take for example the proposition \(P \to (Q \lor A)\). We then have \(I(Q \lor R) = \top\) and therefore \(I(P \to (Q \lor R)) = \top\). It is common to write the evaluation of proposition \(A\) using \(I\) given a truth assignment \(v\) as \(\llbracket A\rrbracket^v\). Now comes a crucial definition.
+                    Couple of remarks. The chosen universe \(\{\bot,\to\}\) is not connected to the alphabet in any way. We could have chosen a set \(\{0,1\}\) or any other set of two distict symbols! The truth tables indeed use \(0\) and \(1\). By choosing the set \(\{\bot,\to\}\) we want to emphasize that we are interested in which propositional formulas are true and which are false. This is in contrast with syntax. Using syntax, we could decide what is provable, but had no way of saying what is true or false. This is the job of semantics. Another thing is that we specifically chose the symbol \(\mathbb{B}\) for the universe \(U\). It hints on the fact that classical propositional logic has to do something with <i>boolean algebras</i>. Boolean algebras are interesting on their own, but we will not delve into this topic here. Where are the truth tables? They are hidden in the function \(I\). Let's look at the standard way a truth table for conjunction is presented. For this table we use \(0\) for \(\bot\) and \(1\) for \(\top\). You can see that is describes the same behaviour as the definition of \(I\).
+                </p>
+
+                $$\def\arraystretch{1.5}
+                \begin{array}{c|c|c}
+                P & Q & P \land Q \\ \hline
+                1 & 1 & 1 \\ \hline
+                1 & 0 & 0 \\ \hline
+                0 & 1 & 0 \\ \hline
+                0 & 0 & 0 \\
+                \end{array}$$
+
+                <p>
+                    Let's take a look at some example. We fix three variables \(P,Q\) and \(R\), a propositional formula \(P \to (Q \lor R)\) and choose a truth assignment
+                </p>
+
+                $$\langle P = \bot, Q = \top, R = \bot \rangle$$
+
+                <p>
+                    We can take a propositional formula with these variables and evaluate as \(I(P \to (Q \lor R)) = \top\). We know that \(I(P) = \bot\) because of the truth assignment and using the last case of definition of \(I\), we know that the implication evaluates to true. It is common to write the evaluation of proposition \(A\) using \(I\) given a truth assignment \(v\) as \(\llbracket A\rrbracket^v\). Now comes a crucial definition.
                 </p>
 
                 <div class="definition">
                     Let \(A\) be a propositional formula and let \(v\) be a truth assignment.
                     <ul>
-                        <li>We say that \(v\) satisfies \(A\), written as \(v \models A\), if \(\llbracket A\rrbracket^v = \top\). We say that \(A\) is true under \(v\).</li>
-                        <li>If \(\Gamma\) is a set of propositional formulas, we say \(v \models \Gamma\) if \(v \models A\) for every propositional formula \(A \in \Gamma\).</li>
-                        <li>A propositional formula \(A\) is <i>satisfiable</i> if there exists truth assignment \(v\) such that \(v \models A\).</li>
+                        <li>We say that \(v\) satisfies \(A\), written as \(v \vDash A\), if \(\llbracket A\rrbracket^v = \top\). We say that \(A\) is true under \(v\).</li>
+                        <li>If \(\Gamma\) is a set of propositional formulas, we say \(v \vDash \Gamma\) if \(v \vDash A\) for every propositional formula \(A \in \Gamma\).</li>
+                        <li>A propositional formula \(A\) is <i>satisfiable</i> if there exists truth assignment \(v\) such that \(v \vDash A\).</li>
                         <li>A propositional formula \(A\) is <i>valid</i> if it is true under any truth assignment.</li>
-                        <li>A propositional formula \(A\) is a <i>logical consequence</i> of \(\Gamma\), written as \(\Gamma \models A\), if every truth assignment \(v\) which satisfies \(\Gamma\) also satisfies \(A\).</li>
+                        <li>A propositional formula \(A\) is a <i>logical consequence</i> of \(\Gamma\), written as \(\Gamma \vDash A\), if every truth assignment \(v\) which satisfies \(\Gamma\) also satisfies \(A\).</li>
                     </ul>
                 </div>
 
+                <h2>Soundness</h2>
+                <p>
+                    The main goal of this chapter is to show the connection between \(\vdash\) and \(\vDash\). The soundness theorem expresses what provability says about models.
+                </p>
+
+                <div class="theorem">
+                    For every set \(\Gamma\) of propositional formulas and every propositional formula \(A\), we have that \(\Gamma \vdash A\) implies \(\Gamma \vDash A\).
+                </div>
+                
+                <div class="proof">
+                    <p>
+                        We use the induction on the set of sequents in natural deduction. This means we assume \(\Gamma \vdash A\) is provable and we want to show \(A\) is a logical consequence of \(\Gamma\), written as \(\Gamma \vDash A\). Suppose that \(\Gamma \vdash A\) is an assumption. Then \(A\) is in \(\Gamma\) and from the definition of logical consequence, we immidiately know \(\Gamma \vDash A\). Now we need to prove the theorem for all introduction and elimination rules. We start with the case of conjunction.
+                    </p>
+
+                    <p>
+                        First the introduction rule. Suppose we derive \(\Gamma \vdash A \land B\) from \(\Gamma \vdash A\) and \(\Gamma \vdash B\) using the introduction rule for conjunction. Let \(v\) be any truth assignment which satisfies \(\Gamma\), written as \(v \vDash \Gamma\). By the inductive hypothesis (using the conclusion of the theorem for \(\Gamma \vdash A\) and \(\Gamma \vdash B\) ), we know that \(\Gamma \vDash A\) and \(\Gamma \vDash B\). As \(v\) satisfies \(\Gamma\), we know that \(v\) satisfies \(A\) and \(B\) from the definition of logical consequence. From the definition of what it means \(v\) to satisfy \(A\) and \(B\), we have \(\llbracket A \rrbracket^v = \top\) and \(\llbracket B \rrbracket^v = \top\). Using the definition of \(I\), we compute \(\llbracket A \land B \rrbracket^v = \top\). This means we have \(\Gamma \vDash A \land B\).
+                    </p>
+                    
+                    <p>
+                        Now the elimination rule. Suppose we derive \(\Gamma \vdash A\) from \(\Gamma \vdash A \land B\). let \(v\) by any truth assignment satisfying \(\Gamma\). By the inductive hypothesis, we have that \(v\) satisfies \(A \land B\). We can write this as \(\llbracket A \land B \rrbracket^v = \top\). But from the definition of evaluation of conjunction, we have \(\llbracket A \rrbracket^v = \top\). This means \(\Gamma \vDash A\).
+                    </p>
+
+                    <p>
+                        The proof of the case of implication shows how to deal with a changing context. We again start with the introduction rule. Suppose we derive \(\Gamma \vdash A \to B\) from \(\Gamma,A \vdash B\). Let \(v\) be any truth assignment satisfying \(\Gamma\). As we don't know whether \(\llbracket A \rrbracket^v = \top\) or \(\llbracket A \rrbracket^v = \bot\), we need to assume either can happen. If \(\llbracket A \rrbracket^v = \top\), then \(\llbracket A \to B \rrbracket^v = \top\) immidiately from the definition of evaluating implication. \(\llbracket A \rrbracket^v = \bot\), then by the induction hypothesis, we know \(\llbracket B \rrbracket^v = \top\) and hence again \(\llbracket A \to B \rrbracket^v = \top\) and \(\Gamma \vDash A \to B\).
+                    </p>
+
+                    <p>
+                        The proof for the elimination rule is easier. Suppose we derive \(\Gamma \vdash B\) from \(\Gamma \vdash A\) and \(\Gamma \vdash A \to B\). Let \(v\) be any truth assignment satisfying \(\Gamma\). This means \(\llbracket A \to B \rrbracket^v = \top\) and also \(\llbracket A \rrbracket^v = \top\). using the definition of evaluating implication, we have \(\llbracket B \rrbracket^v = \top\) and \(\Gamma \vDash B\).
+                    </p>
 
 
+                    <p>
+                        The introduction and elimination rule for disjunction would be handled similarly. But the case of reductio ad absurdum is little tricky. The \(\bot\) has only the elimination rule.
+                    </p>
 
+                    $$ \dfrac{\Gamma,\lnot P \vdash \bot}{\Gamma \vdash P} \bot_E$$
+
+                    <p>
+                        We suppose that we derive \(\Gamma \vdash P\) from \(\Gamma, \lnot P \vdash \bot\). Let \(v\) be any truth assignment which satisfies \(\Gamma\). Using the induction hypothesis we should write \(\llbracket \bot \rrbracket^v = \top\). But from the definition of \(I\) there is no truth assignment which would satisfy \(\bot\). This implies there is no truth assignment which would satisfy \(\Gamma\). This means that \(\Gamma \vDash P\), because <i>every</i> assignment which satisfies \(\Gamma\) also satisfies \(P\).
+                    </p>
+                \(\blacksquare\)
+                </div>
+
+                <h2>Completeness</h2>
+                <h3>Consistency</h3>
+                <p>
+                    The completeness deals with the other way, that is, if we know \(\Gamma \vDash P\), can we write \(\Gamma \vdash P\)? Proving soundness was realtively easy. That is not the case with completeness. First we define what it means for a set of propositions to be consistent. The following lemma illustrated the bahaviour of inconsistent set of propositions. It is enough if we prove \(\bot\) or we prove a proposition and its negation, then we can prove anything. Such theory is of no use and is called a trivial theory.
+                </p>
+
+                <div class="definition">
+                    Let \(\Gamma\) be any set of propositional formulas. We say that \(\Gamma\) is <i>inconsistent</i> if it proves \(\bot\) and <i>consistent</i> otherwise.
+                </div>
+
+                <div class="theorem">
+                    Let \(\Gamma\) be any set of propositional formulas. The following are equivalent for classical propositional logic.
+                    <ol>
+                        <li>The set \(\Gamma\) is inconsistent.</li>
+                        <li>For <i>some</i> formula \(A\), \(\Gamma \vdash A\) and also \(\Gamma \vdash \lnot A\).</li>
+                        <li>For every formula \(A\), \(\Gamma \vdash A\).</li>
+                    </ol>
+                </div>
+
+                <div class="proof">
+                    <ul>
+                        <li>\(1 \to 3 \:\) Suppose that the set \(\Gamma\) is inconsistent. This means \(\Gamma \vdash \bot\). Using weakening we can write \(\Gamma, \lnot P \vdash \bot\) and using reductio ad absurdum we conclude \(\Gamma \vdash P\).</li>
+                        <li>\(3 \to 2 \:\) Suppose we can prove any propositional formula \(P\) from the set \(\Gamma\). This means we can prove \(\Gamma \vdash A\) and also \(\Gamma \vdash \lnot A\) which we wanted.</li>
+                        <li>\(2 \to 1 \:\) suppose we can prove \(\Gamma \vdash A\) and also \(\Gamma \vdash \lnot A\). We know that \(\lnot A\) is an abbreviation for \(A \to \bot\) and using elimination rule for implication we conclude \(\Gamma \vdash \bot\). This means \(\Gamma\) is inconsistent.</li>
+                    </ul>
+                \(\blacksquare\)
+                </div>
+
+                <p>
+                    This lemma is the semantic view of inconsistency. The proof is trivial as we only have to carefully write down the definition of satisfiability and remember that \(I(\bot) = \bot\). We used this line of reasoning for the case of reductio ad absurdum in the proof of soundness.
+                </p>
+
+                <div class="theorem">
+                    Let \(\Gamma\) be any set of propositional formulas. The set \(\Gamma\) is unsatisfiable if and only if \(\Gamma \vDash \bot\).
+                </div>
+
+                <p>
+                    What happens when we add a negation of a formula to the set \(\Gamma\) which we could prove from this set? We get inconsistency. This is short but important lemma and we will use it heavily in the next section.
+                </p>
+
+                <div class="theorem">
+                    Let \(\Gamma\) be any set of propositional formulas and let \(A\) be a propositional formula. Then \(\Gamma \vdash A\) if and only if \(\Gamma,\lnot A\) is inconsistent.
+                </div>
+
+                <div class="proof">
+                    <p>
+                        Suppose we can prove \(\Gamma \vdash A\). By weakening we know \(\Gamma, \lnot A \vdash A\) and by the assumption rule we also know \(\Gamma,\lnot A \vdash \lnot A\). Using elimination rule for implication we get \(\Gamma, \lnot A \vdash \bot\). This means that \(\Gamma,\lnot A\) is inconsistent. For the other implication assume that \(\Gamma,\lnot A\) is inconsistent. This means we can prove \(\Gamma, \lnot A \vdash \bot\). Using reductio ad absurdum we immidately get \(\Gamma \vdash A\).
+                    </p>
+                \(\blacksquare\)
+                </div>
+
+                <h3>Maximally consistent sets</h3>
+
+                <p>
+                    In order to proof completeness, we will need to prove that every consistent set of propositions is satisfiable. In order to prove this statement, we will need to introduce maximally consistent sets. These are the set of propositions, which are in some sense <i>saturated</i>, meaning you cannot add another proposition without breaking consistency. Suprisingly it will be easier to prove that maximally consistent sets are satisfiable and from that to prove the statement mentioned earlier.
+                </p>
+
+                <div class="definition">
+                    A set \(\Gamma\) of propositional formulas is <i>maximally consistent</i> if
+                    <ul>
+                        <li>it is consistent, and</li>
+                        <li>for every propositional formula \(B \notin \Gamma\), the set \(\Gamma,B\) is inconsistent.</li>
+                    </ul>
+                </div>
+
+                <p>
+                    First we need to establish that we can extend any consistent set into a maximally consistent one.
+                </p>
+
+                <div class="theorem">
+                    Let \(\Gamma\) be any consistent set of propositional formulas. Then there exists a maximally consistent set \(\Delta\) such that \(\Gamma \subset \Delta\).
+                </div>
+
+                <div class="proof">
+                    We assume that we have countably many propositional variables and therefore countably many propositional formulas. This means we can enumerate these propositions as a sequence \(A_0,A_1,\ldots \:\) using natural numbers. We define a sequence of sets \(\Gamma_i\) inductively. We set \(\Gamma_0 = \Gamma\) and
+
+                    $$\Gamma_i = \begin{cases}
+                    \Gamma_i \cup \{A_i\} &\text{if such set is consistent} \\
+                    \Gamma_i &\text{otherwise }
+                    \end{cases}$$
+                
+                    <p>
+                        We set \(\Delta = \bigcup \Gamma_i\) where the \(i\) ranges over natural numbers. By induction every \(\Gamma_i\) is consistent and thus \(\Delta\) is consistent too. We want to prove that \(\Delta\) is maximally consistent. Suppose that \(A \notin \Delta\). We know that \(A = B_i\) for some \(i\). We also know that \(A \notin \Gamma_{i+1}\) from the inductive construction. This means that \(\Gamma_{i+1} \cup \{A\}\) is inconsistent which implies that \(\Delta \cup \{A\}\) is inconsistent.
+                    </p>
+                \(\blacksquare\)
+                </div>
+
+                <p>
+                    Before we prove that the maximally consistent set is satisfiable, we need one more technical lemma.
+                </p>
+
+                <div class="theorem">
+                    Let \(\Gamma\) be a maximally consistent set of propositional formulas. Then \(\Gamma\) has the following properties
+
+                    <ol>
+                        <li>\(\Gamma\) is closed under deduction, which means if \(\Gamma \vdash A\), then \(A \in \Gamma\).</li>
+                        <li>\(\bot \notin \Gamma\)</li>
+                        <li>\(A \land B \in \Gamma\) if and only if \(A \in \Gamma\) and \(B \in \Gamma\)</li>
+                        <li>\(A \to B \in \Gamma\) if and only if \(A \notin \Gamma\) or \(B \in \Gamma\)</li>
+                        <li>\(A \lor B \in \Gamma\) if and only if \(A \in \Gamma\) or \(B \in \Gamma\)</li>
+                    </ol>
+                </div>
+
+                <div class="proof">
+                    <p>
+                        Suppose that \(\Gamma \vdash A\). We assume that \(\Gamma\) is consistent, which implies that \(\Gamma \cup \{A\}\) is consistent too. If you are not sure why, then think what would it mean if this set wasn't consistent. Inconsistency means we are able to prove \(\Gamma,A \vdash \bot\). Using introduction rule for implication we get \(\Gamma \vdash A \to \bot\) which is the same as \(\Gamma \vdash \lnot A\). From the first lemma in the previous section, this would mean that \(\Gamma\) is inconsistent! The second claim follow from the first one, again using the first lemma in the previous section.
+                    </p>
+                    
+                    <p>
+                        Suppose that \(A \land B \in \Gamma\). Using the first claim we know that \(\Gamma \vdash A \land B\). This is equivalent to saying that \(\Gamma \vdash A\) and \(\Gamma \vdash B\) using the introduction or elimination rules for conjunction. This is in turn equivalent to saying that \(A \in \Gamma\) and \(B \in \Gamma\), again thanks to the first claim.
+                    </p>
+
+                    <p>
+                        Suppose that \(A \to B \in \Gamma\). Using the first claim we get \(\Gamma \vdash A \to B\). If \(A \in \Gamma\), then \(\Gamma \vdash A\) and using elimination rule for implication we have \(\Gamma \vdash B\), or \(B \in \Gamma\) using the first claim. This means either \(A \notin \Gamma\) or \(B \in \Gamma\). Now suppose that \(A \notin \Gamma\) or \(B \in \Gamma\). If \(A \notin \Gamma\), then the set \(\Gamma \cup \{A\}\) is inconsistent because \(\Gamma\) is maximally consistent. Using the first lemma in the previous section and knowing that \(\Gamma,A\) is inconsistent, we have \(\Gamma,A \vdash B\) and using introduction rule for implication we conclude \(\Gamma \vdash A \to B\). If \(B \in \Gamma\), then \(\Gamma \vdash B\) using the first claim and \(\Gamma,A \vdash B\) using weakening and thus again \(\Gamma \vdash A \to B\) using introduction rule for implication.
+                    </p>
+
+                    <p>
+                        The proof of the last case is done similarly using cases on \(A\) and \(B\).
+                    </p>
+                \(\blacksquare\)
+                </div>
+
+                <p>
+                    We are ready to prove the final lemma for the maximally consistent sets.
+                </p>
+
+                <div class="theorem">
+                    Suppose that \(\Gamma\) is maximally consistent set of propositional formulas. Define a truth assignment \(v\) by setting \(v(P) = \top\) if \(P \in \Gamma\). Then for every propositional formula we have \(\llbracket A \rrbracket^v = \top\) if and only if \(A \in \Gamma\).
+                </div>
+
+                <div class="proof">
+                <p>
+                    We use the induction on propositional formulas \(A\). if \(A\) is a propositional variable then we know \(v(A) = \top\) because that is how we defined the truth assignment for variables. The cases for conjunction, disjunction and implication follow from the previous lemma.
+                </p>
+                \(\blacksquare\)
+                </div>
+                
+                <p>
+                    We are ready to prove the completeness theorem. We will prove something slightly different and show that the completeness theorem follows from it.
+                </p>
+
+                <div class="theorem">
+                    For every set \(\Gamma\) of propositional formulas and every propositional formula, if \(\Gamma \vDash A\) then \(\Gamma \vdash A\).
+                </div>
 
             </section>
         </article>
