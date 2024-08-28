@@ -52,6 +52,7 @@
             <section id="languages">
 
                 <h2>Languages</h2>
+                <h3>What is a language</h3>
                 <p>
                     Let's take a closer look on the expression \(P \land (Q \lor R)\). We can build this expression from smaller ones. We would say that \(P,Q\) and \(R\) are variables, \(\land\) and \(\lor\) are logical connectives and together they define a <i>proposition</i>. There also have to be some rules what is a valid proposition and what is not. For example \(\land \land P\) is not a proposition. We start with the definition of language and model.
                 </p>
@@ -137,7 +138,10 @@
                 </p>
 
                 <p>
-                    Couple of remarks about the assumptions. The assumtions we make are called context and we write \(\Gamma \vdash A\) to say that \(A\) is provable in the context of \(\Gamma\). The context is a set of propositions, but for more clarity we often drop the parentheses when the context is made of only few elements. This means we can write the last theorem in the form \(P \land Q \vdash Q \land P\) (instead of the more precise \(\{P \land Q\} \vdash Q \land P\)). Some statemens are provable without any context. For example concrete instances of axiom schemas do not need any context, as they are axioms. Using \(\varnothing\) for an empty set, we can write \(\varnothing \vdash P \land Q \to P\) as an instance of the third axiom schema. Can we obtain anything else then axioms from an empty context? We can. One such example is the proposition \(P \to P\).
+                    Couple of remarks about the assumptions. The assumtions we make is a set called context and we write \(\Gamma \vdash A\) to say that \(A\) is provable in the context of \(\Gamma\). This means we can write the last theorem as \(\{P \land Q\} \vdash Q \land P\).
+                    
+                    
+                    Some statemens are provable without use of any concrete assumption. For example concrete instances of axiom schemas do not need any context, as they are axioms and the corresponding context is the empty set. Commonly used symbol for empty is \(\varnothing\). This means we can write \(\varnothing \vdash P \land Q \to P\) as an instance of the third axiom schema. Can we obtain anything else then axioms from an empty context? We can. One such example is the proposition \(P \to P\).
                 </p>
 
                 <div class="theorem">
@@ -173,16 +177,16 @@
                 </p>
                 
                 <div class="theorem">
-                    Fix a context \(\Gamma\) and a proposition \(P\). If \(\Gamma,P \vdash Q\) then \(\Gamma \vdash P \to Q\).
+                    Fix a context \(\Gamma\) and a proposition \(P\). If \(\Gamma \cup\{P\} \vdash Q\) then \(\Gamma \vdash P \to Q\).
                 </div>
 
                 <div class="proof">
-                    Again we abuse the notation a little. A context is a set, so we should write \(\Gamma \cup \{P\}\) instead of \(\Gamma,P\). We fix \(\Gamma\) and \(P\) and use the induction on the set of consequences of \(\Gamma,P\). This means that if \(Q\) is in the set of consequences, it has the form of one of the three cases mentioned earlier.
+                    We fix \(\Gamma\) and \(P\) and use the induction on the set of consequences of \(\Gamma \cup\{P\}\). This means that if \(Q\) is in the set of consequences, it has the form of one of the three cases mentioned earlier.
 
                 <ol>
                     <li>\(Q \in \Gamma, P\)</li>
                     <li>\(Q\) as an axiom schema</li>
-                    <li>There is proposition \(C\) such that \(\Gamma,P \vdash C\) and also \(\Gamma,P \vdash C \to Q\)</li>
+                    <li>There is proposition \(C\) such that \(\Gamma \cup\{P\} \vdash C\) and also \(\Gamma \cup\{P\} \vdash C \to Q\)</li>
                 </ol>
                 
                 <p>
@@ -190,7 +194,7 @@
                 </p>
 
                 <p>
-                    From the structure of the set of proposition, we know that if \(Q\) is not an axiom schema or is not the element of \(\Gamma,P\), it had to be <i>constructed</i> using modus ponens. We therefore know there has to be a proposition \(C\) satisfying \(\Gamma,P \vdash C\) and also \(\Gamma,P \vdash C \to Q\). Now we finally use the induction. Thi means we can use the conclusion of the theorem for the proposition \(C\). We know that \(\Gamma, P \vdash C\) and thus conclude \(\Gamma \vdash P \to C\). In the same manner we conclude \(\Gamma \vdash P \to (C \to Q)\). We also have the second axiom schema at our disposal in the form \(\Gamma \vdash P \to (C \to Q) \to ((P \to C) \to (P \to Q))\). Again, we know we can prove this as axioms follow from any context. But now it suffices to use modus ponens two times and we are done.
+                    From the structure of the set of proposition, we know that if \(Q\) is not an axiom schema or is not the element of \(\Gamma \cup\{P\}\), it had to be <i>constructed</i> using modus ponens. We therefore know there has to be a proposition \(C\) satisfying \(\Gamma \cup\{P\} \vdash C\) and also \(\Gamma \cup\{P\} \vdash C \to Q\). Now we finally use the induction. Thi means we can use the conclusion of the theorem for the proposition \(C\). We know that \(\Gamma \cup\{P\} \vdash C\) and thus conclude \(\Gamma \vdash P \to C\). In the same manner we conclude \(\Gamma \vdash P \to (C \to Q)\). We also have the second axiom schema at our disposal in the form \(\Gamma \vdash P \to (C \to Q) \to ((P \to C) \to (P \to Q))\). Again, we know we can prove this as axioms follow from any context. But now it suffices to use modus ponens two times and we are done.
                 </p>
                 \(\blacksquare\)
                 </div>
@@ -213,19 +217,19 @@
                     The implication has one introductory rule and one elimination rule. The elimination rule is exactly modus ponens. If you had not seen the Deduction theorem, the introduction rule might seem suprising. But when you think about the Deduction theorem, it really <i>is</i> a way to introduce implication. Note how the context is changed from \(\Gamma,P\) to \(\Gamma\).
                 </p>
 
-                $$\dfrac{\Gamma,P \vdash Q}{\Gamma \vdash P \to Q} \to_I \qquad \frac{\Gamma \vdash P \to Q \qquad \Gamma \vdash P}{\Gamma \vdash Q} \to_E$$
+                $$\dfrac{\Gamma \cup\{P\} \vdash Q}{\Gamma \vdash P \to Q} \to_I \qquad \frac{\Gamma \vdash P \to Q \qquad \Gamma \vdash P}{\Gamma \vdash Q} \to_E$$
 
                 <p>
                     Next logical connective is the disjunction. The two introduction rules are modelled according to the sixth and seventh axiom. The elimination rule mirrors the eight axiom and is also a context-changing rule.
                 </p>
 
-                $$\dfrac{\Gamma \vdash P}{\Gamma \vdash P \lor Q} \lor_I \qquad \dfrac{\Gamma \vdash Q}{\Gamma \vdash P \lor Q} \lor_I \qquad \dfrac{\Gamma \vdash P \lor Q \qquad \Gamma,P \vdash R \qquad \Gamma,Q \vdash R}{\Gamma \vdash R} \lor_E$$
+                $$\dfrac{\Gamma \vdash P}{\Gamma \vdash P \lor Q} \lor_I \qquad \dfrac{\Gamma \vdash Q}{\Gamma \vdash P \lor Q} \lor_I \qquad \dfrac{\Gamma \vdash P \lor Q \qquad \Gamma \cup\{P\} \vdash R \qquad \Gamma \cup\{Q\} \vdash R}{\Gamma \vdash R} \lor_E$$
 
                 <p>
                     The next rule mirrors the ninth axiom schema and is called reductio ad absurdum. after introducing all rules for natural deduction, we will say something more about this rule.
                 </p>
 
-                $$\frac{\Gamma,(\lnot P) \vdash \bot}{\Gamma \vdash P} \bot_E$$
+                $$\frac{\Gamma \cup\{\lnot P\} \vdash \bot}{\Gamma \vdash P} \bot_E$$
 
                 <p>
                     The last rule is called the assumption rule. Remember that we proved \(P \to P\) from the first two axiom schemas. There is nothing above the line which means we do no thave to assume anything to use this rule, <i>this</i> is the rule for introducing assumptions.
@@ -234,19 +238,19 @@
                 $$\frac{}{\Gamma,P \vdash P}$$
 
                 <p>
-                    It seems that we encoded all the axiom schemas into introduction or elimination rules but the first two. Our first task will be to construct a proof of the first axiom in the style of natural deduction. First we use the assumption rule with context \(\Gamma,B\) and proposition \(A\).
+                    It seems that we encoded all the axiom schemas into introduction or elimination rules but the first two. Our first task will be to construct a proof of the first axiom in the style of natural deduction. First we use the assumption rule with context \(\Gamma \cup\{B\}\) and proposition \(A\).
                 </p>
 
-                $$\dfrac{}{\Gamma,A,B \vdash A}$$
+                $$\dfrac{}{\Gamma \cup\{A,B\} \vdash A}$$
 
                 <p>
                     Using the introduction rule for implication twice, we recover the first axiom schema!
                 </p>
 
-                $$\dfrac{\dfrac{\dfrac{}{\Gamma,A,B \vdash A}}{\Gamma,A \vdash B \to A} \to_I}{\Gamma \vdash A \to (B \to A)} \to_I$$
+                $$\dfrac{\dfrac{\dfrac{}{\Gamma \cup\{A,B\} \vdash A}}{\Gamma \cup\{A\} \vdash B \to A} \to_I}{\Gamma \vdash A \to (B \to A)} \to_I$$
 
                 <p>
-                    We just wrote our first proof using in the natural deduction system. We could also recover the second rule. We already know what is meant by a proof in axiomatic system. The notion of proof in natural deduction is not much different. The pair \(\Gamma,A\) is called a <i>sequent</i> where \(\Gamma\) is a finite set of propositions and we write \(\Gamma \vdash A\). A proof is then a sequence of sequents in which every sequent is obtain from the previous using elimination or introduction rule, apart from the assumption rule.
+                    We just wrote our first proof using in the natural deduction system. We could also recover the second rule. We already know what is meant by a proof in axiomatic system. The notion of proof in natural deduction is not much different. The pair \((\Gamma,A)\) is called a <i>sequent</i> where \(\Gamma\) is a finite set of propositions and we write \(\Gamma \vdash A\). A proof is then a sequence of sequents in which every sequent is obtain from the previous using elimination or introduction rule, apart from the assumption rule.
                 </p>
 
                 <p>
@@ -266,7 +270,7 @@
                 </div>
 
                 <div class="proof">
-                    We will use induction on the set of provable sequents. But what does that mean? First we deal with the assumption rule. Suppose we know that \(\Gamma,A \vdash A\) is provable and want to prove \(\Delta,A \vdash A\). But we know that \(\Delta,A \vdash A\) holds from the assumption rule alone. What about the other rules? Let's take for example the introduction rule for conjunction.
+                    We will use induction on the set of provable sequents. But what does that mean? First we deal with the assumption rule. Suppose we know that \(\Gamma \cup\{A\} \vdash A\) is provable and want to prove \(\Delta \cup\{A\} \vdash A\). But we know that \(\Delta \cup\{A\} \vdash A\) holds from the assumption rule alone. What about the other rules? Let's take for example the introduction rule for conjunction.
 
                     $$\dfrac{\Gamma \vdash P \qquad \Gamma \vdash Q}{\Gamma \vdash P \land Q} \land_I$$
 
@@ -282,22 +286,22 @@
                     This is not a rule as the introduction or elimination rules we have seen so far. We cannot derive this rule using other rules. It is called admissible rule which means it does not change the set of provable sequents. We could work without it, but is pleasant to use. For example we can have a more general form of rules we introduced so far
                 </p>
 
-                $$\dfrac{\Gamma \vdash A \qquad \Delta \vdash B}{\Gamma,\Delta \vdash A \land B}$$
+                $$\dfrac{\Gamma \vdash A \qquad \Delta \vdash B}{\Gamma \cup \Delta \vdash A \land B}$$
 
                 <p>
                     You might have been bothered by the form of the elimination rule for disjunction. The axiom schema has the form of explicit implications, \( (A \to C) \to (B \to C) \to (A \lor B \to C) \), but rule is written without implications. The question is, are these two rules equivalent?
                 </p>
 
-                $$\dfrac{\Gamma \vdash P \lor Q \qquad \Gamma,P \vdash R \qquad \Gamma,Q \vdash R}{\Gamma \vdash R} \lor_E$$
+                $$\dfrac{\Gamma \vdash P \lor Q \qquad \Gamma \cup\{P\} \vdash R \qquad \Gamma \cup\{Q\} \vdash R}{\Gamma \vdash R} \lor_E$$
 
                 $$\dfrac{\Gamma \vdash P \lor Q \qquad \color{red}{\Gamma \vdash P \to R \qquad \Gamma \vdash Q \to R}}{\Gamma \vdash R} \lor_E$$
 
 
                 <p>
-                    Let's say we know, that \(\Gamma \vdash P \lor Q\) and \(\Gamma,P \vdash R\) and \(\Gamma,Q \vdash R\) are provable. Using introduction rule for implication we obtain \(\Gamma \vdash P \to R\) and \(\Gamma \vdash Q \to R\). We can use the second form to conclude that \(\Gamma \vdash R\). What about the other way? Assume we know that \(\Gamma \vdash P \lor Q\) and \(\Gamma \vdash P \to R\) and \(\Gamma \vdash Q \to R\) are provable. How can we use the first form of the rule? We use the weakening property to obtain \(\Gamma, P \vdash P \to R\) and \(\Gamma, Q \vdash Q \to R\). From the assumption rule we know that \(\Gamma,P \vdash P\) and \(\Gamma,Q \vdash Q\). Using introduction rule for implication we finally obtain \(\Gamma, P \vdash R\) and \(\Gamma,Q \vdash R\) and we can use the first form of the rule to conclude that \(\Gamma \vdash R\). This means that the weakening theorem tells us these rules are equivalent! One last remark. We could write the weakening as a rule <i>operating on context</i>
+                    Let's say we know, that \(\Gamma \vdash P \lor Q\) and \(\Gamma \cup\{P\} \vdash R\) and \(\Gamma \cup\{Q\} \vdash R\) are provable. Using introduction rule for implication we obtain \(\Gamma \vdash P \to R\) and \(\Gamma \vdash Q \to R\). We can use the second form to conclude that \(\Gamma \vdash R\). What about the other way? Assume we know that \(\Gamma \vdash P \lor Q\) and \(\Gamma \vdash P \to R\) and \(\Gamma \vdash Q \to R\) are provable. How can we use the first form of the rule? We use the weakening property to obtain \(\Gamma \cup\{P\} \vdash P \to R\) and \(\Gamma \cup\{Q\} \vdash Q \to R\). From the assumption rule we know that \(\Gamma \cup\{P\} \vdash P\) and \(\Gamma \cup\{Q\} \vdash Q\). Using introduction rule for implication we finally obtain \(\Gamma \cup\{P\} \vdash R\) and \(\Gamma \cup\{Q\} \vdash R\) and we can use the first form of the rule to conclude that \(\Gamma \vdash R\). This means that the weakening theorem tells us these rules are equivalent! One last remark. We could write the weakening as a rule <i>operating on context</i>
                 </p>
 
-                $$\dfrac{\Gamma \vdash P}{\Gamma,A \vdash P} w_I$$
+                $$\dfrac{\Gamma \vdash P}{\Gamma \cup\{A\} \vdash P} w_I$$
 
                 <H3>Proof by contradiction</H3>
 
@@ -305,25 +309,25 @@
                     It might come as a surprise that <i>propositional logic</i> has few subtypes. The most known is the classical propositional logic. Such logic is described by the nine axiom schemas we saw earlier, or the corresponding natural deduction rules. Taking only the first eight axiom schemas would mean we work in <i>minimal propositional logic</i> and replacing the last axiom schema with \(\bot \to A\) would mean we work in <i>intuitionistic propositional logic</i>. The axiom schema \(\lnot \lnot A \to A\) is called the double negation elimination. First task is to recover the double negation elimination axiom from the elimination rule for \(\bot\). We can happily prove falsity using implication elimination rule from two simple assumptions.
                 </p>
 
-                $$\dfrac{\dfrac{}{\lnot A \vdash \lnot A} \qquad \dfrac{}{\lnot \lnot A \vdash \lnot \lnot A}}{\lnot A, \lnot \lnot A \vdash \bot} \to_I$$
+                $$\dfrac{\dfrac{}{\{\lnot A\} \vdash \lnot A} \qquad \dfrac{}{\{\lnot \lnot A\} \vdash \lnot \lnot A}}{\{\lnot A, \lnot \lnot A\} \vdash \bot} \to_I$$
 
                 <p>
                     Note the lines above the assumptions. This means we needed to use the assumption rule. The second step is to use the elimination rule for \(\bot\) called reduction ad absurdum. After that we use the introduciton rule for implication and we are done.
                 </p>
 
-                $$\dfrac{\dfrac{}{\lnot A \vdash \lnot A} \qquad \dfrac{}{\lnot \lnot A \vdash \lnot \lnot A}}{\dfrac{\lnot A, \lnot \lnot A \vdash \bot}{\dfrac{\lnot \lnot A \vdash A}{\varnothing \vdash \lnot \lnot A \to A} \to_I} \bot_E} \to_E$$
+                $$\dfrac{\dfrac{}{\{\lnot A\} \vdash \lnot A} \qquad \dfrac{}{\{\lnot \lnot A\} \vdash \lnot \lnot A}}{\dfrac{\{\lnot A, \lnot \lnot A\} \vdash \bot}{\dfrac{\{\lnot \lnot A\} \vdash A}{\varnothing \vdash \lnot \lnot A \to A} \to_I} \bot_E} \to_E$$
 
                 <p>
                     The reverse implication is similar, but we do not have to use the elimination rule for \(\bot\). This has the consuquence that the reverse implication is provable in minimal propositional logic. We again start with proving falsity.
                 </p>
 
-                $$\dfrac{\dfrac{}{A \vdash A} \qquad \dfrac{}{\lnot A \vdash \lnot A}}{A, \lnot A \vdash \bot} \to_E$$
+                $$\dfrac{\dfrac{}{\{A\} \vdash A} \qquad \dfrac{}{\{\lnot A\} \vdash \lnot A}}{\{A, \lnot A\} \vdash \bot} \to_E$$
 
                 <p>
                     Two introduction rules for implications are enough to conclude the desired proposition. In classical logic we therefore have the equivalence \(A \leftrightarrow \lnot \lnot A\).
                 </p>
 
-                $$\dfrac{\dfrac{}{A \vdash A} \qquad \dfrac{}{\lnot A \vdash \lnot A}}{\dfrac{A, \lnot A \vdash \bot}{\dfrac{A \vdash \lnot A \to \bot}{\varnothing \vdash A \to \lnot \lnot A} \to_I} \to_I} \to_E$$
+                $$\dfrac{\dfrac{}{\{A\} \vdash A} \qquad \dfrac{}{\{\lnot A\} \vdash \lnot A}}{\dfrac{\{A, \lnot A\} \vdash \bot}{\dfrac{\{A\} \vdash \lnot A \to \bot}{\varnothing \vdash A \to \lnot \lnot A} \to_I} \to_I} \to_E$$
 
 
                 <h3>The law of excluded middle</h3>
@@ -338,22 +342,22 @@
                     After that we use modus ponens (elimination rule for implication). The right side can be proved by the assumption rule immediately. The problem is with the left side colored in red.
                 </p>
 
-                $$\dfrac{\dfrac{\vdots}{\textcolor{red}{\lnot(A \lor \lnot A) \vdash A \lor \lnot A}} \qquad \dfrac{}{\lnot(A \lor \lnot A) \vdash\lnot(A \lor \lnot A)}}{\dfrac{\varnothing \vdash \lnot (A \lor \lnot A) \vdash \bot}{\varnothing \vdash A \lor \lnot A} \bot_E} \to_E$$
+                $$\dfrac{\dfrac{\vdots}{\textcolor{red}{\{\lnot(A \lor \lnot A)\} \vdash A \lor \lnot A}} \qquad \dfrac{}{\{\lnot(A \lor \lnot A)\} \vdash\lnot(A \lor \lnot A)}}{\dfrac{\varnothing \vdash \lnot (A \lor \lnot A) \vdash \bot}{\varnothing \vdash A \lor \lnot A} \bot_E} \to_E$$
 
                 <p>
                     We only need to prove one part of the disjunction thanks to the introduction rule for disjunction. If you try to come up with the proof, you would have to try which part is provable. I will reveal that choosing to prove \(\lnot A\) is the right way. The next step is to use reductio ad absurdum again and modus ponens. The left part follows from the assumption rule.
                 </p>
 
-                $$\dfrac{\dfrac{}{\lnot(A \lor \lnot A) \vdash \lnot(A \lor \lnot A)} \qquad \dfrac{\vdots}{\color{red}{\lnot \lnot A \vdash A \lor \lnot A}}}{\dfrac{\lnot \lnot A,\lnot(A \lor \lnot A) \vdash \bot}{\dfrac{\lnot(A \lor \lnot A) \vdash \lnot A}{\color{red}{\lnot(A \lor \lnot A) \vdash A \lor \lnot A}} \lor_I} \bot_E} \to_E$$
+                $$\dfrac{\dfrac{}{\{\lnot(A \lor \lnot A)\} \vdash \lnot(A \lor \lnot A)} \qquad \dfrac{\vdots}{\color{red}{\{\lnot \lnot A\} \vdash A \lor \lnot A}}}{\dfrac{\{\lnot \lnot A,\lnot(A \lor \lnot A)\} \vdash \bot}{\dfrac{\{\lnot(A \lor \lnot A)\} \vdash \lnot A}{\color{red}{\{\lnot(A \lor \lnot A)\} \vdash A \lor \lnot A}} \lor_I} \bot_E} \to_E$$
 
                 <p>
                     The right part seems even worse than what we have to prove but don't worry. Knowing \(\lnot \lnot A \vdash A\) we can use introduction rule for disjunction to quickly finish the proof.
                 </p>
                 
-                $$\dfrac{\dfrac{}{\lnot \lnot A \vdash A} \vdash}{\color{red}{\lnot \lnot A \vdash A \lor \lnot A}} \lor_I$$
+                $$\dfrac{\dfrac{}{\{\lnot \lnot A\} \vdash A} \vdash}{\color{red}{\{\lnot \lnot A\} \vdash A \lor \lnot A}} \lor_I$$
 
                 <p>
-                    The provability of \(\lnot \lnot A \vdash A\) does not follow from the assumption rule but had to be proved. That is why I added the symbol \(\vdash\) next to the line. It is not an offical rule but it is quite reasonable to write it this way. Remember that the symbol \(\vdash\) stands for provability. It makes sense to have a kind of introduction rule for statements <i>we have already proved</i>. We do this in mathematics all the time. We start by proving small lemmas and then use them to make bigger ones until we end up with rather complex theorems. It resembles the <i>structural rule</i> for weakening as we act on the structure of the proof. Of course we could simply copy the whole proof of \(\lnot \lnot A \vdash A\) here.
+                    The provability of \(\{\lnot \lnot A\} \vdash A\) does not follow from the assumption rule but had to be proved. That is why I added the symbol \(\vdash\) next to the line. It is not an offical rule but it is quite reasonable to write it this way. Remember that the symbol \(\vdash\) stands for provability. It makes sense to have a kind of introduction rule for statements <i>we have already proved</i>. We do this in mathematics all the time. We start by proving small lemmas and then use them to make bigger ones until we end up with rather complex theorems. It resembles the <i>structural rule</i> for weakening as we act on the structure of the proof. Of course we could simply copy the whole proof of \(\{\lnot \lnot A\} \vdash A\) here.
                 </p>
 
                 
