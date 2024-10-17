@@ -3,22 +3,22 @@
     font-display: swap;
     font-family: 'Roboto Slab';
     font-style: normal;
-    font-weight: 200;
-    src: url('../fonts/roboto-slab-200.woff2') format('woff2');
+    font-weight: 400;
+    src: url('../fonts/roboto_slab_reg.woff2') format('woff2');
 }
   
 @font-face {
     font-display: swap;
     font-family: 'Roboto Slab';
     font-style: normal;
-    font-weight: 400;
-    src: url('../fonts/roboto-slab-regular.woff2') format('woff2');
+    font-weight: 500;
+    src: url('../fonts/robot_slab_500.woff2') format('woff2');
 }
 
 body {
     margin: 0;
     font-family: "Roboto Slab";
-    font-weight: 200;
+    font-weight: 500;
     padding-bottom: 100px;
 }
 
@@ -30,7 +30,7 @@ body {
     justify-content: center;
     gap:10%;
     margin: 5% 5%;
-    font-weight: 200;
+    font-weight: 400;
 }
 
 .welcome-text {
