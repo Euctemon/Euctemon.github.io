@@ -77,7 +77,7 @@
                 </p>
 
                 <p>
-                    Couple of remarks. The chosen universe \(\{\bot,\to\}\) is not connected to the alphabet in any way. We could have chosen a set \(\{0,1\}\) or any other set of two distict symbols! The truth tables indeed use \(0\) and \(1\). By choosing the set \(\{\bot,\to\}\) we want to emphasize that we are interested in which propositional formulas are true and which are false. This is in contrast with syntax. Using syntax, we could decide what is provable, but had no way of saying what is true or false. This is the job of semantics. Another thing is that we specifically chose the symbol \(\mathbb{B}\) for the universe \(U\). It hints on the fact that classical propositional logic has to do something with <i>boolean algebras</i>. Boolean algebras are interesting on their own, but we will not delve into this topic here. Where are the truth tables? They are hidden in the function \(I\). Let's look at the standard way a truth table for conjunction is presented. For this table we use \(0\) for \(\bot\) and \(1\) for \(\top\). You can see that is describes the same behaviour as the definition of \(I\).
+                    Couple of remarks. The chosen universe \(\{\bot,\top\}\) is not connected to the alphabet in any way. We could have chosen a set \(\{0,1\}\) or any other set of two distict symbols! The truth tables indeed use \(0\) and \(1\). By choosing the set \(\{\bot,\top\}\) we want to emphasize that we are interested in which propositional formulas are true and which are false. This is in contrast with syntax. Using syntax, we could decide what is provable, but had no way of saying what is true or false. This is the job of semantics. Another thing is that we specifically chose the symbol \(\mathbb{B}\) for the universe \(U\). It hints on the fact that classical propositional logic has to do something with <i>boolean algebras</i>. Boolean algebras are interesting on their own, but we will not delve into this topic here. Where are the truth tables? They are hidden in the function \(I\). Let's look at the standard way a truth table for conjunction is presented. For this table we use \(0\) for \(\bot\) and \(1\) for \(\top\). You can see that is describes the same behaviour as the definition of \(I\).
                 </p>
 
                 $$\def\arraystretch{1.5}
@@ -335,7 +335,10 @@
                 </div>
 
                 <div class="proof">
+                <p>
                     Suppose \(\Gamma\) is consistent. We can extend this set to a maximally consistent set \(\Delta\) using the inductive construction. The previous lemma tells us that we know how to define a truth assignment satisfying \(\Delta\). We know that \(\Gamma \subset \Delta\), which implies that this assignment also satisfies \(\Gamma\). Thus \(\Gamma\) is satisfiable.
+                </p>
+                \(\blacksquare\)
                 </div>
             </section>
         </article>

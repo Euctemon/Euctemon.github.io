@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <link rel="stylesheet" type="text/css" href="../styles/styles.css">
+    <link rel="icon" href="../styles/favicon.ico">
+    
+
+    <!-- Katex extension -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" integrity="sha384-nB0miv6/jRmo5UMMR1wu3Gz6NLsoTkbqJghGIsx//Rlm+ZU03BU6SQNC66uf4l5+" crossorigin="anonymous">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" integrity="sha384-7zkQWkzuo3B5mTepMUcHkMB5jZaolc2xDwL6VFqjFALcbeS9Ggm/Yr2r3Dy4lfFg" crossorigin="anonymous"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" integrity="sha384-43gviWU0YVjaDtb/GhzOouOXtZMP/7XUzwPTstBeZFe/+rCMvRwr4yROQP43s0Xk" crossorigin="anonymous"
+        onload="renderMathInElement(document.body);"></script>
+
+    <script type="text/javascript" src="../styles/personal_scripts.js"></script>
+    
+    <title>SAT solvers</title>
+</head>
+
+<body>
+
+    <header>
+        <div class="header-grid">
+            <button class="nav-button" onClick="openMenu('mainnav-wrapper','nav-ico')" type="button"><span hidden>Menu</span><img src="../styles/sidebar_open.svg" id="nav-ico"></button>
+            <div class="header-name">SAT solvers</div>
+        </div>
+        
+        <div id="mainnav-wrapper">
+            <nav>
+                <ul>
+                    <li><a href="../index.html">Home</a></li>
+                    <li class="divider">Chapters</li>
+                    <li><a href="SAT1_intro.html">Introduction</a></li>
+                    <li><a href="SAT2_syntax.html">Syntax</a></li>
+                    <li><a href="SAT2_semantics.html">Semantics</a></li>
+                </ul>
+            
+                <ul class="responsive-ul">
+                    <li class="divider">This chapter</li>
+                    <li><a href="#models">Models</a></li>
+                    <li><a href="#soundness">Soundness</a></li>
+                    <li><a href="#completeness">Completeness</a></li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+
+    </header>
+        
+    <div class="main-content">
+        <article>
+            <section id="cnf">
+
+                <h2>Conjunctive normal form</h2>
+
+                <p>
+                When we defined the <a href="SAT2_syntax.html#alphabet">alphabet</a> of propositional logic, we used the set \(\bot, \land, \lor, \to\). But modern solvers use different set as the alphabet, namely the set \(\bot, \top, \land, \lor\). You can see the implication was replaced by negation. One might wonder if we can do this. Do these two sets generate the same set of formulas? We need to be sure that we can generate formulas of type \(P \to Q\).
+                </p>
+
+
+
+             </section>
+        </article>
+    </div>
+</body>
