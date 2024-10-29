@@ -72,6 +72,11 @@ div {
     scroll-margin-top: 5em;
 }
 
+pre {
+    font-size: large;
+    
+}
+
 .header-grid {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
