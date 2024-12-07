@@ -1,36 +1,79 @@
 /* GENERAL STYLING */
+:root {
+    --gold: #fbc57e;
+    --charcoal: #1c2429;
+}
+
 @font-face {
     font-display: swap;
-    font-family: 'Roboto Slab';
+    font-family: 'Montserrat';
     font-style: normal;
     font-weight: 400;
-    src: url('../fonts/roboto_slab_reg.woff2') format('woff2');
+    src: url('../fonts/Montserrat-Regular.otf') format('opentype');
 }
-  
+
 @font-face {
     font-display: swap;
-    font-family: 'Roboto Slab';
-    font-style: normal;
-    font-weight: 500;
-    src: url('../fonts/robot_slab_500.woff2') format('woff2');
+    font-family: 'Montserrat';
+    font-style: italic;
+    font-weight: 400;
+    src: url('../fonts/Montserrat-Italic.otf') format('opentype');
 }
 
 body {
     margin: 0;
-    font-family: "Roboto Slab";
+    font-family: "Montserrat";
     font-weight: 400;
-    padding-bottom: 100px;
 }
 
 
+
+
+
+
 /* MAINPAGE STYLING */
+
+.welcome-body {
+    color: var(--gold);
+    background-color: var(--charcoal);
+}
+
+.main-nav {
+    display: flex;
+    justify-content: center;
+    font-size: large;
+    
+    & ul {
+        list-style-type: none;
+        padding: 0;
+    }
+
+    & li {
+        display: inline;
+        margin: 5px 5px 0;
+    }
+
+    & a {
+        text-decoration: underline;
+        text-decoration-color: transparent;
+        text-decoration-thickness: 2px;
+        text-underline-offset: 0.2em;
+        transition: text-decoration-color 0.3s, text-underline-offset 0.3s;
+        color: var(--gold);
+    }
+
+    & a:hover {
+        text-decoration-color: var(--gold);
+        text-underline-offset: 0.4em;}
+}
+
+
 .welcome-flex {
     display: flex;
     flex-flow: wrap;
     justify-content: center;
     gap:10%;
     margin: 5% 5%;
-    font-weight: 400;
 }
 
 .welcome-text {
@@ -39,7 +82,7 @@ body {
 }
 
 .welcome-text > h1 {
-    font-size: 5rem;
+    font-size: 4rem;
     margin: 0;
 }
 
@@ -47,6 +90,19 @@ body {
     width: 300px;
     font-size:0.6rem;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
