@@ -38,8 +38,6 @@ body {
 
 
 
-
-
 /* HOMEPAGE & ABOUT STYLING */
 
 .welcome-body {
@@ -76,24 +74,23 @@ body {
         text-underline-offset: 0.4em;}
 }
 
-
 .welcome-flex {
     display: flex;
     flex-flow: wrap;
     justify-content: center;
     gap:10%;
-    margin: 5% 5%;
+    margin: 0 10% 0 10%;
 }
 
 .welcome-text {
-    width: max(300px,45%);
-    margin: 3% 0 10%;
+    width: min(500px,90%);
     text-align: justify;
 }
 
 .welcome-text > h1 {
     font-size: 4rem;
     margin: 0;
+    font-weight: 200;
 }
 
 .welcome-svg {
@@ -113,15 +110,14 @@ body {
     & h1 {
         margin-top: 2em;
         font-weight: 200;
-        padding-bottom: 5px;
-        border-bottom: 2px solid var(--gold);
-    }
-
-    & h2 {
-        font-weight: 200;
     }
 }
 
+.verse-style {
+    display: flex;
+    justify-content: center;
+    padding-bottom: 2em;
+}
 
 
 
