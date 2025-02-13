@@ -14,7 +14,7 @@
         onload="renderMathInElement(document.body);"></script>
     <script type="text/javascript" src="../styles/personal_scripts.js"></script>
     
-    <title>SAT solvers</title>
+    <title>Logic</title>
 </head>
 
 <body>
@@ -23,7 +23,7 @@
         <div class="header-grid">
             <button class="nav-button" onClick="openMenu('mainnav-wrapper','nav-ico')" type="button"><span hidden>Menu</span><img src="../styles/sidebar_open.svg" id="nav-ico">
             </button>
-        <div class="header-name">SAT solvers</div>
+        <div class="header-name">Mathematical logic</div>
         </div>
         
         <div id="mainnav-wrapper">
@@ -46,16 +46,17 @@
             <section>
 
                 <h2>Introduction</h2>
+
                 <p>
-                    This topic is about the so called SAT solvers. A SAT solver is a program which aims to solve the <i>Boolean satisfiability problem</i>. Let's say we have a formula \(P \land (Q \lor R)\) and we want to assign 1 or 0 to the variables such that the whole expression evaluates to 1. Those who know something about logic will easily guess some solution. For example \(P \to 1, Q \to 1\) and \(R \to 0\) is a valid solution to this problem. This is because \(1 \lor 0\) evaluates to \(1\) and \(1 \land 1\) evaluates to \(1\) too.
-                </p>
-                
-                <p>
-                    Why do we know that these logical connectives are evaluated in such a way? In order to be able to evaluate a proposition, we need some ground rules for the evaluation process. And for that we need to know what a proposition is. The first chapter deals with the classical propositional logic, its rules and structure. I also explore few interesting things like the proof of contradiction of the law of excluded middle. The second chapter is concerned with soundness and completeness of propositional logic.  This sheds a light on why would we want to desing a SAT solver at all as it deals with the connection between evaluation a provability. After these chapters we will be ready to actually start programming a SAT solver.
+                    I never though I would be interested in logic in slightest. Do you need logic for ordinary life? Do you get in touch with logic at all? The interesting thing is that the word logical is used by people quite often. Some people might say they are <i>logical thinkers</i>, possibly as opposed to erratic or chaotic. People might say that something is <i>illogical</i>. If you look at synonyms, you might find words like inconsistent, absurd, false, implausible, unreasonable or even <i>unwise</i>. In a book <i>Being logical</i> the author says that logical people are those who are attentive, get facts straight, ensure their ideas are clear, are mindful of the origins of ideas, match ideas to facts and words to ideas. They also communicate effectively and avoid vague or ambiguous language.
                 </p>
 
                 <p>
-                    <i>The part about logic is heavily guided by the awesome book called Mathematical logic and computation by Jeremy Avigad. The book discussed many topics in logic and also computation but we will only delve into the realm of propositional logic.</i>
+                    When studying pure mathematics you come across <i>mathematical logic</i>. This branch of mathematics is concerned about the use of logic in mathematics. Mathematics is not the only place where one can use logic. For example philosphers use logic and it could be argued that for them logic is even more important. It might come as a surprise that a lot of mathematicians do not know about logic as much as you would think. Personally during my undergraduate studies I had two courses on logic. One was an introductory course and the other one was on the computational aspects of logic, or in others words, how can we do logic on a computer. Apart from that, we were taught how to deal with quantifiers, how to structure a proof by contradiction and were taught few other tools applicable in mathematics. Mathematical logic is a vast subject so the thought of mastering logic before doing mathematics at all is rather unfeasible.
+                </p>
+
+                <p>
+                    The purpose of these notes is to organize my notes I collected throughout my studies and maybe get a little farther in understanding logic. Apart from lecture notes, this text is heavily influenced by an awesome book called <i>Mathematical logic and computation</i> by Jeremy Avigad.
                 </p>
             </section>
         </article>
