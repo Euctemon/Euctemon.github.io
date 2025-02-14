@@ -54,19 +54,61 @@
             <section id="languages">
 
                 <h2>Languages</h2>
+
                 <h3>What is a language</h3>
                 <p>
-                    Let's take a closer look on the expression \(P \land (Q \lor R)\). We can build this expression from smaller ones. We would say that \(P,Q\) and \(R\) are variables, \(\land\) and \(\lor\) are logical connectives and together they define a <i>proposition</i>. There also have to be some rules what is a valid proposition and what is not. For example \(\land \land P\) is not a proposition. We start with the definition of language and model.
+                    In the introduction we said that a <i>logical person</i> should for avoid a vague or ambiguous language. Informal logic deals with critical thinking, unraveling fallacies and constructing sound arguments in <i>natural language</i>. As mathematicians we are not brave enough to tackle this problem and leave it to philosophers and linguists. We are interested in <i>formal logic</i> and <i>formal languages</i>. The term formal indicates we specify a rule for everything form what is the alphabet, how do we <i>unambiguously</i> create new words and infer new piece of information.
+                </p>
+                
+
+                <p>
+                    Mathematicians use logic to express ideas in other branches of mathematics like algebra or analysis. But mathematicians also want to study logic itself. They ask questions like how should a proof look like or what are the properties of axioms specifying partial orders. when studying mathematical logic, people are concerned with <i>set theory</i>, <i>model theory</i> or <i>proof theory</i>. Mathematicians love two things - to produce new things from old things and to relate one thing to another. We simulate the first process by means of functions and the second process by means of relations. When dealing with mathematical logic systems we thus have the following definition of a language.
                 </p>
 
                 <div class="definition">
-                A language is a triple \(L = (\Gamma, \Delta, a) \) where \(\Gamma\), the set of function symbols, and \(\Delta\),the set of relation symbols, are disjoint sets of symbols and \(a\) is a function from \(\Gamma \cup \Delta\) to the set of naturals numbers. The function \(a\) assigns every function and relation symbol its arity.
+                    A language is a triple \(L = (\Gamma, \Delta, a) \) where \(\Gamma\), the set of function symbols, and \(\Delta\),the set of relation symbols, are disjoint sets of symbols and \(a\) is a function from \(\Gamma \cup \Delta\) to the set of naturals numbers. The function \(a\) assigns every function and relation symbol its arity.
+                </div>
+
+                <p>
+                    Wait, this doesn't look like a language at all. If you ask a linguist then he or she would shake their head over this definition of a language. Perhaps mathematicians should have consulted linguists about what a language should be. Nevertheless we are stuck with this point of view. We also have words, but we call them term and formulas. Only now we need the notion of an alphabet \(\Sigma\), which is just a finite set of distinct symbols called variables, left and right parenthesis and a comma. When enumerating an alphabet, we will always write only the variables.
+                </p>
+
+                <div class="definition">
+                    Let \(L = (\Gamma, \Delta, a)\) be a language. The set of <b>terms</b> of \(L\) is the smallest set of strings over the alphabet \(\Sigma\) satisfying the following
+                    <ul>
+                        <li>If \(x\) is a variable, then \(x\) is a term</li>
+                        <li>If \(c\) is a constant function symbol, then \(c\) is a term</li>
+                        <li>If \(f\) is a function symbol of arity \(n\) and \(t_1,\ldots,t_n\) are all terms, then \(f(t_1,\ldots,t_n)\) is a term</li>
+                    </ul>
                 </div>
 
                 <div class="definition">
-                Fix a language \(L = (\Gamma,\Delta,a) \). We say that \(\mathfrak{M} = (U,I) \) is a model for such language if \(U\) is a set and \(I\) is a function which assigns to each k-ary function symbol in \(\Gamma\) a k-ary function from \(U\) to \(U\) and to each k-ary relation symbol in \(\Delta\) a k-ary relation on \(U\). We call the set \(U\) a universe.
+                    Let \(L = (\Gamma, \Delta, a)\) be a language. The set of <b>atomic formulas</b> of \(L\) is the smallest set of strings over the alphabet \(\Sigma\) satisfying the following
+                    <ul>
+                        <li>If \(r\) is a relation symbol of arity \(n\) and \(t_1,\ldots,t_n\) are all terms, then \(f(t_1,\ldots,t_n)\) is an atomic formula</li>
+                    </ul>
                 </div>
 
+                <p>
+                    Let's say we have a language \(L = (\Gamma, \Delta,a)\) where \(\Gamma = \{f\}\), \(\Delta = \{r\}\) and \(a(f) = 1\) and \(a(r)=3\). Fix an alphabet \(\Sigma = \{\alpha\}\). Then \(\alpha\) or \(f(f(\alpha))\) are terms of this language. If we denote \(f^n(\alpha)\) where \(f^0(\alpha)\) means \(\alpha\), then the set of all terms can be written as \(\{f^n(\alpha), n \in \mathbb{N}\}\). The atomic formulas of this language are then of the form \(r(f^n(\alpha))\).
+                </p>
+                
+                <p>
+                    For every function and relation symbols we can define concrete function and relation and work with these.
+                </p>
+
+                <div class="definition">
+                Fix a language \(L = (\Gamma,\Delta,a) \). We say that \(\mathcal{M} = (U,I) \) is a model for such language if \(U\) is a set and \(I\) is a function which assigns to each k-ary function symbol in \(\Gamma\) a k-ary function from \(U\) to \(U\) and to each k-ary relation symbol in \(\Delta\) a k-ary relation on \(U\). We call the set \(U\) a universe.
+                </div>
+
+                <p>
+                    It's time to think about relations. Mathematicians view relations as subsets of cartesian products of sets. If we take a set \(\{\bullet, \circ\}\), then a relation of arity two is a subset of the set \(\mathcal{X} = \{\{\bullet,\bullet\},\{\bullet,\circ\},\{\circ,\bullet\},\{\circ,\circ\}\}\). For example the set \(\mathcal{R} = \{\{\bullet,\circ\},\{\circ,\bullet\},\}\) is a valid relation. We can turn a relation into a function as follows - for every set \(x\) in the set \(\mathcal{X}\) we write \(f_r(x) = \bold{1}\) if \(x\) is in the set \(\mathcal{R}\) and \(\bold{0}\) otherwise. We will see later that we want to distiguish between functions and relations when we say what it means for a formula to be <i>true</i>.
+                </p>
+
+                <p>
+                    Let's take the universe \(U = \{\bullet, \circ\} \) and the assignment function \(\mathcal{I}\) where \(f^\mathcal{I} (\bullet) \to \circ\), \(f^\mathcal{I} (\circ) \to \bullet\) and \(g^\mathcal{I} (\bullet) \to \circ\)
+                </p>
+                
                 <p>
                     These definitions are rather abstract so it calls for a concrete example. Suppose we have a language with one function symbol \(c\) of zero arity, often call a constant, two binary function symbols \(f,g\) and one binary relation \(r\). We specified the arity of all symbols and the sets of functional symbols and relational symbols are disjoint. This means we have a language \(L\) written as \((\{c,f,g\},\{r\},a)\) where \(a(c) = 0\), \(a(f) = 2\), \(a(g) = 2\) and \(a(r) = 2\). One such model for this language are the natural numbers. We assign \(0\) to the constant \(c\), the functions \(+\) and \(\times\) for function symbols \(f\) and \(g\) and finally the relation \(\leq\) for relation symbol \(r\). The universe is simply the set of natural numbers. We can write this model \(\mathfrak{M}\) as \( (\mathbb{N},\{0,+, \times, \leq\}) \). Note that the functions and the relation satisfy the the conditions on arity.
                 </p>
