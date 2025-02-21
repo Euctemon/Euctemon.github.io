@@ -90,7 +90,7 @@
                 </div>
 
                 <p>
-                    Let's say we have a language \(L = (\Gamma, \Delta,a)\) where \(\Gamma = \{f\}\), \(\Delta = \{r\}\) and \(a(f) = 1\) and \(a(r)=3\). Fix an alphabet \(\Sigma = \{\alpha\}\). Then \(\alpha\) or \(f(f(\alpha))\) are terms of this language. If we denote \(f^n(\alpha)\) where \(f^0(\alpha)\) means \(\alpha\), then the set of all terms can be written as \(\{f^n(\alpha), n \in \mathbb{N}\}\). The atomic formulas of this language are then of the form \(r(f^n(\alpha))\).
+                    Let's say we have a language \(\mathcal{L} = (\Gamma, \Delta,a)\) where \(\Gamma = \{f\}\), \(\Delta = \{r\}\) and \(a(f) = 1\) and \(a(r)=2\). Fix an alphabet \(\Sigma = \{\alpha\}\). Then \(\alpha\) or \(f(f(\alpha))\) are terms of this language. If we denote \(f^n(\alpha)\) where \(f^0(\alpha)\) means \(\alpha\), then the set of all terms can be written as \(\{f^n(\alpha), n \in \mathbb{N}\}\). The atomic formulas of this language are then of the form \(r(f^n(\alpha))\).
                 </p>
                 
                 <p>
@@ -98,7 +98,7 @@
                 </p>
 
                 <div class="definition">
-                Fix a language \(L = (\Gamma,\Delta,a) \). We say that \(\mathcal{M} = (U,I) \) is a model for such language if \(U\) is a set and \(I\) is a function which assigns to each k-ary function symbol in \(\Gamma\) a k-ary function from \(U\) to \(U\) and to each k-ary relation symbol in \(\Delta\) a k-ary relation on \(U\). We call the set \(U\) a universe.
+                Fix a language \(L = (\Gamma,\Delta,a) \). We say that \(\mathcal{M} = (U,I) \) is a model for such language if \(U\) is a nonempty set and \(I\) is a function which assigns to each k-ary function symbol in \(\Gamma\) a k-ary function from \(U\) to \(U\) and to each k-ary relation symbol in \(\Delta\) a k-ary relation on \(U\). We call the set \(U\) a universe.
                 </div>
 
                 <p>
@@ -106,9 +106,18 @@
                 </p>
 
                 <p>
-                    Let's take the universe \(U = \{\bullet, \circ\} \) and the assignment function \(\mathcal{I}\) where \(f^\mathcal{I} (\bullet) \to \circ\), \(f^\mathcal{I} (\circ) \to \bullet\) and \(g^\mathcal{I} (\bullet) \to \circ\)
+                    Let's take the universe \(U = \{\bullet, \circ\} \) and the assignment function \(\mathcal{I}\) where \(f^\mathcal{I} (\bullet) \to \circ\), \(f^\mathcal{I} (\circ) \to \bullet\) and \(g^\mathcal{I}\) is given by \(\mathcal{R}\) from the previous paragraph. We constructed our first model \(\mathcal{M} = (U,\mathcal{I})\).
+                    
+                    
+                    How many models the language \(L\) admit for the universe \(U\)? The function \(f\) has the arity of one, which means we want to count the number of bijections \(U \to U\). This is 2. The relation has the arity of two meaning we want to count the number of subsets of \(U \times U\). That is 4.  We can combines the interpretations of function \(f\) and relation \(r\) freely, which means \(L\) has 8 different models on \(U\).
                 </p>
                 
+                <div class="definition">
+                    If a formula \(\varphi\) is true in all models of the language \(L\), we say that \(\varphi\) is tautology.
+                </div>
+
+
+                --- no no no ---
                 <p>
                     These definitions are rather abstract so it calls for a concrete example. Suppose we have a language with one function symbol \(c\) of zero arity, often call a constant, two binary function symbols \(f,g\) and one binary relation \(r\). We specified the arity of all symbols and the sets of functional symbols and relational symbols are disjoint. This means we have a language \(L\) written as \((\{c,f,g\},\{r\},a)\) where \(a(c) = 0\), \(a(f) = 2\), \(a(g) = 2\) and \(a(r) = 2\). One such model for this language are the natural numbers. We assign \(0\) to the constant \(c\), the functions \(+\) and \(\times\) for function symbols \(f\) and \(g\) and finally the relation \(\leq\) for relation symbol \(r\). The universe is simply the set of natural numbers. We can write this model \(\mathfrak{M}\) as \( (\mathbb{N},\{0,+, \times, \leq\}) \). Note that the functions and the relation satisfy the the conditions on arity.
                 </p>
