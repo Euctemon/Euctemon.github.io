@@ -23,7 +23,7 @@
     <header>
         <div class="header-grid">
             <button class="nav-button" onClick="openMenu('mainnav-wrapper','nav-ico')" type="button"><span hidden>Menu</span><img src="../styles/sidebar_open.svg" id="nav-ico"></button>
-            <div class="header-name">SAT solvers</div>
+            <div class="header-name">Logic</div>
         </div>
         
         <div id="mainnav-wrapper">
@@ -52,29 +52,32 @@
     <div class="main-content">
         <article>
             <section id="languages">
-
                 <h2>Languages</h2>
 
-                <h3>What is a language</h3>
                 <p>
-                    In the introduction we said that a <i>logical person</i> should for avoid a vague or ambiguous language. Informal logic deals with critical thinking, unraveling fallacies and constructing sound arguments in <i>natural language</i>. As mathematicians we are not brave enough to tackle this problem and leave it to philosophers and linguists. We are interested in <i>formal logic</i> and <i>formal languages</i>. The term formal indicates we specify a rule for everything form what is the alphabet, how do we <i>unambiguously</i> create new words and infer new piece of information.
+                    In the introduction, we noted that logic is concerned with the problem of correct ways of reasoning. Informal logic deals with critical thinking, unravelling fallacies, and constructing sound arguments in natural language. Mathematicians are not brave enough to tackle this problem in its full generality and leave it to philosophers and linguists. They turn their attention to formal logic and formal languages. Such languages have strict rules, which enable unambiguous interpretation. Let's take the law of excluded middle as an example. Philosophers debate whether it should or should not be a law. Mathematicians either involve such a statement in the formal system or not.
                 </p>
-                
 
                 <p>
-                    Mathematicians use logic to express ideas in other branches of mathematics like algebra or analysis. But mathematicians also want to study logic itself. They ask questions like how should a proof look like or what are the properties of axioms specifying partial orders. when studying mathematical logic, people are concerned with <i>set theory</i>, <i>model theory</i> or <i>proof theory</i>. Mathematicians love two things - to produce new things from old things and to relate one thing to another. We simulate the first process by means of functions and the second process by means of relations. When dealing with mathematical logic systems we thus have the following definition of a language.
+                    One way mathematicians use logic is to express ideas in other mathematical branches such as analysis or algebra. Almost every statement in mathematics involves quantifiers or logical connectives, and mathematicians need to be able to work with such statements. But they also use logic to study the structure of mathematics. For example, one can study the structure, length, or complexity of proofs. In this way mathematicians use logic to study logic. In a broad sense, we are concerned with two things in mathematical logic. The first one is building new things out of old ones. We do this using the concept of a function. The second one is describing connections between chosen things. We do this using the concept of a relation. We start the journey of exploring logic with a definition of a language.
                 </p>
 
                 <div class="definition">
-                    A language is a triple \(L = (\Gamma, \Delta, a) \) where \(\Gamma\), the set of function symbols, and \(\Delta\),the set of relation symbols, are disjoint sets of symbols and \(a\) is a function from \(\Gamma \cup \Delta\) to the set of naturals numbers. The function \(a\) assigns every function and relation symbol its arity.
+                    A <b>language</b> is a triple \(\mathcal{L} = (\Gamma, \Delta, \Alpha) \) where 
+                    
+                    <ul>
+                        <li>\(\Gamma\) is a set of function symbols</li>
+                        <li>\(\Delta\) is a set of relation symbols</li>
+                        <li>\(\Alpha\) is a function assigning a natural number to every function and relation symbol</li>
+                    </ul>
                 </div>
 
                 <p>
-                    Wait, this doesn't look like a language at all. If you ask a linguist then he or she would shake their head over this definition of a language. Perhaps mathematicians should have consulted linguists about what a language should be. Nevertheless we are stuck with this point of view. We also have words, but we call them term and formulas. Only now we need the notion of an alphabet \(\Sigma\), which is just a finite set of distinct symbols called variables, left and right parenthesis and a comma. When enumerating an alphabet, we will always write only the variables.
+                    This doesn't look like a language at all. If you ask a linguist, they will shake their head over this definition. The triple \((\Gamma, \Delta, \Alpha)\) contains the so-called non-logical symbols, which we want to include in our theory. It also includes a function \(\Alpha\) called the arity function. Its domain is the set \(\Gamma \cup \Delta\) and its codomain is the set \(\mathbb{N}\). The arity function simply describes the number of symbols the function or relation works with. In this sense, it is a form of a language that we use to describe mathematical structures. Another common name for this triple is a signature, which is perhaps more fitting. For alphabet \(\Sigma\) we use distinct symbols called variables, parentheses, and a comma. This means that given variables \(\alpha,\beta\) and a function symbol \(f\) of arity two, we can construct a word \(f(\alpha,\beta)\). What is the general way of constructing words, or as a mathematician would say, terms?
                 </p>
 
                 <div class="definition">
-                    Let \(L = (\Gamma, \Delta, a)\) be a language. The set of <b>terms</b> of \(L\) is the smallest set of strings over the alphabet \(\Sigma\) satisfying the following
+                    Let \(\mathcal{L} = (\Gamma, \Delta, \Alpha)\) be a language. The set of <b>terms</b> of \(\mathcal{L}\) is the smallest set of strings over the alphabet \(\Sigma\) satisfying the following
                     <ul>
                         <li>If \(x\) is a variable, then \(x\) is a term</li>
                         <li>If \(c\) is a constant function symbol, then \(c\) is a term</li>
@@ -82,26 +85,41 @@
                     </ul>
                 </div>
 
+                <p>
+                    What are some simple languages? The simplest language has no function or relation symbols at all. We can write such language as \(\mathcal{L}_\varnothing = (\varnothing, \varnothing, \Alpha)\) where \(\varnothing\) is the empty set. If you wonder whether the function \(\Alpha\) is well defined, then don't worry. It's perfectly fine to have a function with the empty set as its domain. This means that the language, or signature, makes sense. What are the terms of \(\mathcal{L}_\varnothing\)? The only way to build terms in this language is from variables. This means that terms of \(\mathcal{L}_\varnothing\) over a given alphabet \(\Sigma\) are exactly the variables of \(\Sigma\). If the alphabet does not contain any variables, then there are no terms.
+                </p>
+
+                <p>
+                    Let's make the language a little more interesting. We will write \(\mathcal{L}_1\) for a language where the only function symbol is \(f\) with arity one and the only relation symbol is \(r\) with arity two. In this language the arity function is defined as \(\Alpha(f) = 1\) and \(\Alpha(r) = 2\). To talk about terms, we need to specify the alphabet. For example, the alphabet \(\Sigma_1\) containing only one variable \(\alpha\) is a nice alphabet. Having specified language and alphabet, we can start writing terms. For example, \(\alpha\) or \(f(f(\alpha))\) are both terms of this language. If we abbreviate \(f ( \cdots f(\alpha))\) where we applied \(f\) exactly \(n\) times as \(f^n(\alpha)\), then it is not hard to see that every term has the form \(f^n(\alpha)\) for some natural number \(n\). In the case of zero, we say that \(f^0(\alpha)\) means \(\alpha\).
+                    
+                <h2>Model theory</h2>
+                    We now get to relations. These are trickier than functions. A function can be thought of as a recipe for modifying old things or creating new things out of old ones. For example squaring a number is a function. Another example might be a cooking recipe, where the input are the ingredients and the output is a sweet pie of your choosing. On the other hand relations express a connection between things. For example two people might be cousing are colleagues. In both examples the two people are in some kind of relation(ship). In logic we use relations 
+                </p>
+
                 <div class="definition">
-                    Let \(L = (\Gamma, \Delta, a)\) be a language. The set of <b>atomic formulas</b> of \(L\) is the smallest set of strings over the alphabet \(\Sigma\) satisfying the following
+                    Let \(\mathcal{L} = (\Gamma, \Delta, \Alpha)\) be a language. The set of <b>atomic formulas</b> of \(\mathcal{L}\) is the smallest set of strings over the alphabet \(\Sigma\) satisfying the following
                     <ul>
                         <li>If \(r\) is a relation symbol of arity \(n\) and \(t_1,\ldots,t_n\) are all terms, then \(f(t_1,\ldots,t_n)\) is an atomic formula</li>
                     </ul>
                 </div>
 
                 <p>
-                    Let's say we have a language \(\mathcal{L} = (\Gamma, \Delta,a)\) where \(\Gamma = \{f\}\), \(\Delta = \{r\}\) and \(a(f) = 1\) and \(a(r)=2\). Fix an alphabet \(\Sigma = \{\alpha\}\). Then \(\alpha\) or \(f(f(\alpha))\) are terms of this language. If we denote \(f^n(\alpha)\) where \(f^0(\alpha)\) means \(\alpha\), then the set of all terms can be written as \(\{f^n(\alpha), n \in \mathbb{N}\}\). The atomic formulas of this language are then of the form \(r(f^n(\alpha))\).
+                    The full definition of a formula with logical symbols will come later on when we learn more about Model theory. But even this simple definition offers a great deal of discussion. First we get aquainted with formulas in our language \(\mathcal{L}_1\). The alphabet is still the same, namely \(\Sigma_1\). We already know that terms in \(\mathcal{L}_1\) look like \(f^n(\alpha)\). We also know that the relation symbol \(r\) has the arity of two. Putting it all together, we see that all formulas have the form \(r(f^n(\alpha),f^m(\alpha))\). Note that if we change the alphabet, we can get a very different set of terms and atomic formulas.
                 </p>
+
                 
                 <p>
-                    For every function and relation symbols we can define concrete function and relation and work with these.
+                    In the introduction, we said that relations should model the connections between things we are interested in. All we have now are just some abstract symbols. In other words, we need to interpret the function and relation symbols to something more concrete and tangible. Dealing with interpreting signatures is the business of Model theory.
                 </p>
 
                 <div class="definition">
-                Fix a language \(L = (\Gamma,\Delta,a) \). We say that \(\mathcal{M} = (U,I) \) is a model for such language if \(U\) is a nonempty set and \(I\) is a function which assigns to each k-ary function symbol in \(\Gamma\) a k-ary function from \(U\) to \(U\) and to each k-ary relation symbol in \(\Delta\) a k-ary relation on \(U\). We call the set \(U\) a universe.
+                Fix a language \(\mathcal{L} = (\Gamma,\Delta,\Alpha)\). We say that \(\mathcal{M} = (U,I)\) is a <b>model</b> for language \(\mathcal{L}\) if \(U\) is a nonempty set and \(I\) is a function which assigns to each k-ary function symbol in \(\Gamma\) a k-ary function from \(U\) to \(U\) and to each k-ary relation symbol in \(\Delta\) a k-ary relation on \(U\). We call the set \(U\) a universe.
                 </div>
 
                 <p>
+                    So how do relations represent connections between things? Imagine you have 
+                    
+                    
                     It's time to think about relations. Mathematicians view relations as subsets of cartesian products of sets. If we take a set \(\{\bullet, \circ\}\), then a relation of arity two is a subset of the set \(\mathcal{X} = \{\{\bullet,\bullet\},\{\bullet,\circ\},\{\circ,\bullet\},\{\circ,\circ\}\}\). For example the set \(\mathcal{R} = \{\{\bullet,\circ\},\{\circ,\bullet\},\}\) is a valid relation. We can turn a relation into a function as follows - for every set \(x\) in the set \(\mathcal{X}\) we write \(f_r(x) = \bold{1}\) if \(x\) is in the set \(\mathcal{R}\) and \(\bold{0}\) otherwise. We will see later that we want to distiguish between functions and relations when we say what it means for a formula to be <i>true</i>.
                 </p>
 
@@ -115,6 +133,20 @@
                 <div class="definition">
                     If a formula \(\varphi\) is true in all models of the language \(L\), we say that \(\varphi\) is tautology.
                 </div>
+
+
+
+                Afirst-order theory or simply a theory T consists of a first-order language L(T)
+                or simply L andasetof L-formulas,calledtheaxiomsof T.Foracardinalκ ≥ℵ0, T
+                is called a κ-theory if |L(T)|≤κ. ℵ0-theories are simply called countable theories.
+                Amodel of T is an L-structure M in which each axiom of T is true. If M is a model
+                of T,weshallwriteM |= T.Aformulaϕ is called a theorem of T, written T |= ϕ,
+                if it is true in all models of T.
+
+
+
+
+
 
 
                 --- no no no ---

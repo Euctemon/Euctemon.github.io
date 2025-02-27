@@ -33,16 +33,16 @@ body {
     font-family: "Montserrat";
     font-weight: 400;
     line-height: 1.5;
+    background-image: url(/styles/IMG_9409.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+
 }
-
-
-
-
 /* HOMEPAGE & ABOUT STYLING */
 
 .welcome-body {
-    color: var(--gold);
-    background-color: var(--charcoal);
+    color: black;
+    /* background-color: var(--charcoal); */
 }
 
 .main-nav {
@@ -65,13 +65,30 @@ body {
         text-decoration-color: transparent;
         text-decoration-thickness: 2px;
         text-underline-offset: 0.2em;
+        font-size: 1.4em;
         transition: text-decoration-color 0.3s, text-underline-offset 0.3s;
-        color: var(--gold);
+        color: black;
     }
 
     & a:hover {
-        text-decoration-color: var(--gold);
+        text-decoration-color: black;
         text-underline-offset: 0.4em;}
+}
+
+.foo {
+    margin: 15%;
+    color: black;
+    position: relative;
+    display: flex;
+    justify-content: center;
+}
+
+.center-text {
+    position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-weight: bold;
 }
 
 .welcome-flex {
