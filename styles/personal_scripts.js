@@ -11,32 +11,3 @@ else {
   svg_img.src="../styles/sidebar_open.svg";
   }
 }
-
-
-
-
-
-const sections = document.querySelectorAll("section");
-window.addEventListener("scroll",navHighlight);
-
-function navHighlight () {
-sections.forEach(current => {
-var currentID = '#' + current.getAttribute("id");
-const currentNAV = document.querySelector(`a[href=${CSS.escape(currentID)}]`);
-let scrollY = window.scrollY;
-
-const sectionHeight = current.offsetHeight;
-const sectionTop = current.offsetTop-200;
-
- if (
-      scrollY > sectionTop &&
-      scrollY <= sectionTop + sectionHeight
-    ){
-      currentNAV.classList.add("active");
-    } else {
-      currentNAV.classList.remove("active");
-    }
-
-  }
-)
-}
