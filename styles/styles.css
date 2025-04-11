@@ -36,8 +36,39 @@ body {
     line-height: 1.5;
 }
 
+.main-nav {
+    display: flex;
+    justify-content: center;
+    font-size: large;
+    margin-bottom: 3em;
+    
+    & ul {
+        list-style-type: none;
+        padding: 0;
+    }
 
-/* LANDING, HOME AND ABOUT PAGE */
+    & li {
+        display: inline;
+        margin: 5px 5px 0;
+    }
+
+    & a {
+        text-decoration: underline;
+        text-decoration-color: transparent;
+        text-decoration-thickness: 2px;
+        text-underline-offset: 0.2em;
+        font-size: 1.4em;
+        transition: text-decoration-color 0.3s, text-underline-offset 0.3s;
+        color: black;
+    }
+
+    & a:hover {
+        text-decoration-color: black;
+        text-underline-offset: 0.4em;
+    }
+}
+
+/* LANDING, HOME, ABOUT and BLOG pages */
 
 #landing-body {
     background-image: url(/styles/IMG_9824.jpg);
@@ -70,11 +101,10 @@ body {
 }
 
 #landing-button > a:hover {
-    color: brown;
-    
+    color: brown;   
 }
 
-#home-flex {
+.content-flex {
     display: flex;
     flex-flow: wrap;
     justify-content: center;
@@ -82,13 +112,13 @@ body {
     margin: 0 5% 0 5%;
 }
 
-#home-text {
-    max-width: 300px;
+.content-body {
+    max-width: 600px;
     text-align: justify;
 }
 
-#home-text > h1 {
-    font-size: 3rem;
+.content-body > h1 {
+    font-size: 2rem;
     margin: 0;
     font-weight: 200;
 }
@@ -98,24 +128,17 @@ body {
     font-size:0.6rem;
 }
 
-
-
-.about-text {
-    width: min(500px,100%);
-    margin: 5% 20% 5% 10%;
-    text-align: justify;
+.verse-style {
+    display: flex;
+    justify-content: center;
+    padding-bottom: 2em;
 }
 
-
-.about-text > h1 {
-    margin-top: 2em;
-    font-weight: 200;
+#blog-nav {
+    position: fixed;
+    bottom: 15%;
+    right: 5%;
 }
-
-
-
-
-
 
 #blog-button {
     position: fixed;
@@ -130,64 +153,23 @@ body {
     transition: background-color 500ms ease, background-color 500ms ease;
 }
 
-
 #blog-button:hover {
     background-color: var(--gold);
   }
 
-#myDIV {
-    background-color: rgb(255, 255, 255);
-    width: 200px;
-    position: fixed;
-    bottom: 25%;
-    right:5%;
-    color: #fbc57e;
-    border: solid 1pt black;
-    border-radius: 10pt;
+
+/* BLOG Pages*/
+
+.blogpage {
+    margin: 5% 20% 0 20%;
+    text-align: justify;
 }
 
-
-
-
-
-
-.main-nav {
-    display: flex;
-    justify-content: center;
-    font-size: large;
-    
-    & ul {
-        list-style-type: none;
-        padding: 0;
+@media (max-width: 640px) {
+    .blogpage {
+        margin: 5% 5% 0 5%;
     }
-
-    & li {
-        display: inline;
-        margin: 5px 5px 0;
-    }
-
-    & a {
-        text-decoration: underline;
-        text-decoration-color: transparent;
-        text-decoration-thickness: 2px;
-        text-underline-offset: 0.2em;
-        font-size: 1.4em;
-        transition: text-decoration-color 0.3s, text-underline-offset 0.3s;
-        color: black;
-    }
-
-    & a:hover {
-        text-decoration-color: black;
-        text-underline-offset: 0.4em;
-    }
-}
-
-.verse-style {
-    display: flex;
-    justify-content: center;
-    padding-bottom: 2em;
-}
-
+} 
 
 
 
@@ -202,7 +184,7 @@ body {
 
 /* CUSTOM PAGE STYLING */
 
-/* menu */
+/* 
 header {
     border-bottom: solid 1px;
     border-color: #efefef;
@@ -300,10 +282,6 @@ pre {
     }
 } 
 
-/* main content */
-.main-content {
-margin: 0 25%
-}
 
 @media (max-width : 1700px) {
     .main-content {
@@ -311,7 +289,6 @@ margin: 0 25%
     }
 }
 
-/* Mathematics styling */
 .definition {
     border-width: 1px;
     padding: 15px;
@@ -357,6 +334,4 @@ margin: 0 25%
 .scrollable-box {
     overflow-x: scroll;
 }
-
-
-/* code styling */
+*/
