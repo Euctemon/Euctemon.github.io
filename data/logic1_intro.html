@@ -18,15 +18,35 @@
 </head>
 
 <body>
-
+    <button onclick="myFunction()" id="blog-button">
+        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30">
+            <circle r="1.2" cx="6" cy="10" stroke="black"/>
+            <circle r="1.2" cx="6" cy="16" stroke="black"/>
+            <circle r="1.2" cx="6" cy="22" stroke="black"/>
+            <line x1="12" y1="10" x2="25" y2="10" stroke="black" stroke-width="2" stroke-linecap="round"/>
+            <line x1="12" y1="16" x2="25" y2="16" stroke="black" stroke-width="2" stroke-linecap="round"/>
+            <line x1="12" y1="22" x2="25" y2="22" stroke="black" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+    </button>
     <header>
-        <div class="header-grid">
+    
+
+    <div id="myDIV">
+        <ul>
+            <li><a href="../index.html">Home</a></li>
+            <li><a href="SAT1_intro.html">Introduction</a></li>
+            <li><a href="SAT2_syntax.html">Syntax</a></li>
+            <li><a href="SAT3_semantics.html">Semantics</a></li>
+            <li><a href="SAT4_basicsolver.html">Basic solver</a></li>
+        </ul>
+    </div>
+        <!-- <div class="header-grid">
             <button class="nav-button" onClick="openMenu('mainnav-wrapper','nav-ico')" type="button"><span hidden>Menu</span><img src="../styles/sidebar_open.svg" id="nav-ico">
             </button>
         <div class="header-name">Mathematical logic</div>
-        </div>
+        </div> -->
         
-        <div id="mainnav-wrapper">
+        <!-- <div id="mainnav-wrapper">
         <nav>
             <ul>
                 <li><a href="../index.html">Home</a></li>
@@ -37,7 +57,7 @@
                 <li><a href="SAT4_basicsolver.html">Basic solver</a></li>
             </ul>
         </nav>
-        </div>
+        </div> -->
     </header>
         
     <div class="main-wrap">

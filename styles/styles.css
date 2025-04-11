@@ -40,22 +40,38 @@ body {
 /* LANDING, HOME AND ABOUT PAGE */
 
 #landing-body {
-    background-image: url(/styles/IMG_9409.jpg);
+    background-image: url(/styles/IMG_9824.jpg);
     background-size: cover;
     background-position: center center;
     background-repeat: no-repeat;
     height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items:center;
 }
 
 #landing-button {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
     font-size:x-large;
+    width: auto;
     padding: 1em;
-    border: 5px solid black;
-    border-radius: 20px;
+    transform: translateY(-100%);
+    background-color: rgba(0, 0, 0, 0.75);
+    text-align: center;
+    border-radius: 1em;
+
+}
+
+#landing-button > a {
+    text-decoration: none;
+    color: var(--gold);
+    font-weight: bolder;
+    font-size:1.6em;
+    transition: color 500ms ease, color 500ms ease;
+}
+
+#landing-button > a:hover {
+    color: brown;
+    
 }
 
 #home-flex {
@@ -84,7 +100,6 @@ body {
 
 
 
-
 .about-text {
     width: min(500px,100%);
     margin: 5% 20% 5% 10%;
@@ -96,6 +111,43 @@ body {
     margin-top: 2em;
     font-weight: 200;
 }
+
+
+
+
+
+
+#blog-button {
+    position: fixed;
+    bottom:10%;
+    right:5%;
+    width: 30pt;
+    height: 30pt;
+    background-color: rgb(226, 226, 226);
+    border-radius: 50%;
+    border: 0;
+    padding: 0;
+    transition: background-color 500ms ease, background-color 500ms ease;
+}
+
+
+#blog-button:hover {
+    background-color: var(--gold);
+  }
+
+#myDIV {
+    background-color: rgb(255, 255, 255);
+    width: 200px;
+    position: fixed;
+    bottom: 25%;
+    right:5%;
+    color: #fbc57e;
+    border: solid 1pt black;
+    border-radius: 10pt;
+}
+
+
+
 
 
 
