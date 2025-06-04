@@ -23,3 +23,12 @@ An <b>alphabet</b> is any set \(\Sigma\) of with elements called letters. A <b>w
 <p>
     \(a \xRightarrow{\star} b c\)
 </p>
+
+
+
+
+---------------
+
+<span class="popover">this
+    <span>This language has one function symbol \(f\) and one relation symbol \(r\), where \(\Alpha(f) = 1\) and \(\Alpha(r) = 2\).</span>
+</span>

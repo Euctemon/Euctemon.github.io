@@ -149,6 +149,30 @@ body {
     position: fixed;
     bottom: 15%;
     right: 5%;
+
+    & ul {
+        list-style-type: none;
+        padding: 0;
+    }
+
+    & li {
+        margin: 2px 8px;
+    }
+
+    & a {
+        color: black;
+        text-decoration: none;
+        font-size: 0.9em;
+        transition: color 0.5s
+    }
+
+    & a:hover {
+        color: teal;
+    }
+
+    border: 0.1em solid rgb(226, 226, 226);
+    border-radius: 1em;
+
 }
 
 #blog-button {
@@ -165,7 +189,7 @@ body {
 }
 
 #blog-button:hover {
-    background-color: var(--gold);
+    background-color: rgba(0, 128, 128, 0.539);
 }
 
 .blog-nav {
@@ -200,7 +224,11 @@ body {
     .blogpage {
         margin: 5% 5% 0 5%;
     }
-} 
+}
+
+h2 {
+    padding-top: 3em;
+}
 
 
 
@@ -217,7 +245,7 @@ body {
 .definition::before {
     content: 'DEFINITION \A';
     white-space: pre-wrap;
-    color: grey;
+    color:chocolate;
     font-weight: 400;
 }
 
@@ -231,7 +259,7 @@ body {
 .theorem::before {
     content: 'THEOREM \A';
     white-space: pre-wrap;
-    color: grey;
+    color: chocolate;
     font-weight: 400;
 }
 
