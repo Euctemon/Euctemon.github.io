@@ -1,8 +1,7 @@
 /* GENERAL */
 
 :root {
-    --gold: #fbc57e;
-    --charcoal: #1c2429;
+    --swamp: indianred;
 }
 
 @font-face {
@@ -60,7 +59,7 @@ body {
     }
 
     & a:hover {
-        color: teal;
+        color: var(--swamp);
     }
 
 
@@ -70,7 +69,7 @@ body {
     }
 
     & svg:hover {
-        color: teal;
+        color: var(--swamp);
     }
 }
 
@@ -100,7 +99,7 @@ body {
 
 #landing-button > a {
     text-decoration: none;
-    color: var(--gold);
+    color: chocolate;
     font-weight: bolder;
     font-size:1.6em;
     transition: color 500ms ease, color 500ms ease;
@@ -141,18 +140,21 @@ body {
 }
 
 .ref-style {
-    color: teal;
+    color: var(--swamp);
     text-decoration: none;
 }
 
 #blog-nav {
+    z-index: 1;
+    background-color: white;
     position: fixed;
-    bottom: 15%;
+    bottom: 17%;
     right: 5%;
 
     & ul {
         list-style-type: none;
         padding: 0;
+        margin: 20px;
     }
 
     & li {
@@ -167,7 +169,7 @@ body {
     }
 
     & a:hover {
-        color: teal;
+        color: var(--swamp);
     }
 
     border: 0.1em solid rgb(226, 226, 226);
@@ -177,6 +179,7 @@ body {
 
 #blog-button {
     position: fixed;
+    z-index: 1;
     bottom:10%;
     right:5%;
     width: 30pt;
@@ -189,11 +192,10 @@ body {
 }
 
 #blog-button:hover {
-    background-color: rgba(0, 128, 128, 0.539);
+    background-color: rgba(205, 92, 92, 0.591);
 }
 
-.blog-nav {
-    
+.site-nav {
     & ul {
 
         padding: 0;
@@ -207,7 +209,7 @@ body {
     }
 
     & a:hover {
-        color: teal;
+        color: var(--swamp);
     }
 }
 
@@ -218,6 +220,7 @@ body {
 .blogpage {
     margin: 5% 20% 0 20%;
     text-align: justify;
+    contain: content;
 }
 
 @media (max-width: 640px) {
@@ -238,7 +241,6 @@ h2 {
 .definition {
     border-width: 1px;
     padding: 15px;
-    min-width: 500px;
     margin: 5px 0px;
 }
 
@@ -252,7 +254,6 @@ h2 {
 .theorem {
     border-width: 1px;
     padding: 15px;
-    min-width: 500px;
     margin: 5px 0px;
 }
 
@@ -266,31 +267,15 @@ h2 {
 .proof {
     border-width: 1px;
     padding: 15px;
-    min-width: 500px;
     margin: 5px 0px;
 }
 
 .proof::before {
     content: 'PROOF \A';
     white-space: pre-wrap;
-    color: rgb(227, 227, 227);
+    color: chocolate;
     font-weight: 400;
 }
-
-.note {
-    border-width: 1px;
-    padding: 15px;
-    min-width: 500px;
-    margin: 5px 0px;
-}
-
-.note::before {
-    content: 'NOTE \A';
-    white-space: pre-wrap;
-    color: teal;
-    font-weight: 400;
-}
-
 
 /* .popover-content */
 
@@ -314,123 +299,9 @@ h2 {
     margin-left: -100px; /* Center the popover, dependent on width */
     opacity: 0;
     transition: opacity 0.3s;
-  }
+ }
 
-  .popover:hover > span {
+.popover:hover > span {
     visibility: visible;
     opacity: 1;
-  }
-
-/* CUSTOM PAGE STYLING */
-
-/* 
-header {
-    border-bottom: solid 1px;
-    border-color: #efefef;
-    position:sticky;
-    top:0;
-    background-color: white;
-    z-index:1;
-}
-
-section {
-    scroll-margin-top: 5em;
-    margin-top: 4em;
-}
-
-div {
-    scroll-margin-top: 5em;
-}
-
-pre {
-    font-size: large;
-    
-}
-
-.header-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    padding: 0.7rem;
-}
-
-.header-name {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: larger;
-    font-weight: bolder;
-    margin: 0;
-}
-
-#nav-ico:hover {
-    opacity: 0.4;
-    filter: grayscale(100%);
-    -webkit-filter: grayscale(100%);
-}
-    
-.nav-button {
-    display: flex;
-    align-items: center;
-    justify-content:flex-start;
-    background-color:transparent;
-    border:0;
-    padding:0;
-}
-
-#mainnav-wrapper {
-    position:fixed;
-    left:-200%;
-    border-right: solid 1px;
-    border-top: solid 1px;
-    border-color:#efefef;
-    background-color: white;
-    padding: 50px;
-    height:100%;
-
-    nav ul {
-        margin: 0;
-        padding: 0;
-    }
-
-    nav li {
-        list-style-type:none;
-        padding-top:5px;
-        border-left: solid 5px white;
-    }
-
-    nav a {
-        text-decoration:none;
-        color:black;
-        transition-duration: 0.2s;
-    }
-        
-    nav a:hover {
-        color:grey;
-    }
-
-    .divider {
-        padding-top: 40px;
-        padding-bottom: 10px;
-        font-weight: 500;
-    }
-}
-
-@media (max-width: 640px) {
-    #mainnav-wrapper {
-    width:100%;
-    }
-} 
-
-
-@media (max-width : 1700px) {
-    .main-content {
-        margin: 0 5%;
-    }
-}
-
-
-
-.scrollable-box {
-    overflow-x: scroll;
-}
-*/
+ }
