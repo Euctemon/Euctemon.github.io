@@ -1,0 +1,608 @@
+
+           
+
+ <section id="languages">
+                <h2>Proof systems</h2>
+
+                <p>
+                    In this chapter we look at semantics of propositional logic. This has a close connection to the <i>truth tables</i> you have probably seen somewhere. But in order to better understand why truth tables are a valuable tool, we need to talk about these things in more general terms. Semantics deals with models and their interpretations. You might remember that defined a model in the previous chapter. A model is a tuple containing a set called universe \(U\) and a function \(I\) which assigns a function to a function symbol and a relation to a relation symbol. Propositional logic has only function symbols. This means we need to specify the universe and how to interpret propositional variables and the alphabet \(\{\bot,\land,\lor,\to\}\). We choose \(\mathbb{B} = \{\bot,\top\}\) as the universe.
+                    The <i>truth assignment</i> is a function responsible for assigning elements of \(\mathbb{B}\) to propositional variables. With the universe fixed and truth assignment, we are ready to define how to interpret the function symbols.
+
+                </p>
+
+                <div class="definition">
+                    Let \(v\) be a truth assignment. We interpret the function symbols as follows
+
+                    <ul>
+                        <li>\(I(P) = v(P)\) if \(P\) is propositional variable</li>
+                        <li>\(I(\bot) = \bot\)</li>
+                        <li>If \(I(P) = \top\) and \(I(Q) = \top\), then \(I(P \land Q) = \top\), otherwise \(I(P \land Q) = \bot\) </li>
+                        <li>If \(I(P) = \top\) or \(I(Q) = \top\), then \(I(P \lor Q) = \top\), otherwise \(I(P \lor Q) = \bot\) </li>
+                        <li>If \(I(P) = \bot\) or \(I(Q) = \top\), then \(I(P \to Q) = \top\), otherwise \(I(P \to Q) = \bot\) </li>
+                    </ul>
+                </div>
+
+                <p>
+                    The assigning function here is written little differently than the one used in the definition of natural number model. Nevertheless it is correct. For example the interpretation of conjunction, the function \(I(P \land Q)\) has the same arity as the conjunction symbol. Why? We need to supply two values, \(I(P)\) and \(I(Q)\) in order to evaluate this function and we know conjunction has the arity of two. The definition also says that the functions should be from \(U\) to \(U\). Is this the case? You can check that for all cases the inputs and outputs of \(I\) are in \(U\).
+                </p>
+
+                <p>
+                    Couple of remarks. The chosen universe \(\{\bot,\top\}\) is not connected to the alphabet in any way. We could have chosen a set \(\{0,1\}\) or any other set of two distict symbols! The truth tables indeed use \(0\) and \(1\). By choosing the set \(\{\bot,\top\}\) we want to emphasize that we are interested in which propositional formulas are true and which are false. This is in contrast with syntax. Using syntax, we could decide what is provable, but had no way of saying what is true or false. This is the job of semantics. Another thing is that we specifically chose the symbol \(\mathbb{B}\) for the universe \(U\). It hints on the fact that classical propositional logic has to do something with <i>boolean algebras</i>. Boolean algebras are interesting on their own, but we will not delve into this topic here. Where are the truth tables? They are hidden in the function \(I\). Let's look at the standard way a truth table for conjunction is presented. For this table we use \(0\) for \(\bot\) and \(1\) for \(\top\). You can see that is describes the same behaviour as the definition of \(I\).
+                </p>
+
+                $$\def\arraystretch{1.5}
+                \begin{array}{c|c|c}
+                P & Q & P \land Q \\ \hline
+                1 & 1 & 1 \\ \hline
+                1 & 0 & 0 \\ \hline
+                0 & 1 & 0 \\ \hline
+                0 & 0 & 0 \\
+                \end{array}$$
+
+                <p>
+                    Let's take a look at some example. We fix three variables \(P,Q\) and \(R\), a propositional formula \(P \to (Q \lor R)\) and choose a truth assignment
+                </p>
+
+                $$\langle P = \bot, Q = \top, R = \bot \rangle$$
+
+                <p>
+                    We can take a propositional formula with these variables and evaluate as \(I(P \to (Q \lor R)) = \top\). We know that \(I(P) = \bot\) because of the truth assignment and using the last case of definition of \(I\), we know that the implication evaluates to true. It is common to write the evaluation of proposition \(A\) using \(I\) given a truth assignment \(v\) as \(\llbracket A\rrbracket^v\). Now comes a crucial definition.
+                </p>
+
+                <div class="definition">
+                    Let \(A\) be a propositional formula and let \(v\) be a truth assignment.
+                    <ul>
+                        <li>We say that \(v\) satisfies \(A\), written as \(v \vDash A\), if \(\llbracket A\rrbracket^v = \top\). We say that \(A\) is true under \(v\).</li>
+                        <li>If \(\Gamma\) is a set of propositional formulas, we say \(v \vDash \Gamma\) if \(v \vDash A\) for every propositional formula \(A \in \Gamma\).</li>
+                        <li>A propositional formula \(A\) is <i>satisfiable</i> if there exists truth assignment \(v\) such that \(v \vDash A\).</li>
+                        <li>A propositional formula \(A\) is <i>valid</i> if it is true under any truth assignment.</li>
+                        <li>A propositional formula \(A\) is a <i>logical consequence</i> of \(\Gamma\), written as \(\Gamma \vDash A\), if every truth assignment \(v\) which satisfies \(\Gamma\) also satisfies \(A\).</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section id="soundness">
+                <h2>Soundness</h2>
+                <p>
+                    The main goal of the next two chapters is to show the connection between \(\vdash\) and \(\vDash\). The soundness theorem expresses what provability says about models and logical consequnces.
+                </p>
+
+                <div class="theorem">
+                    For every set \(\Gamma\) of propositional formulas and every propositional formula \(A\), we have that \(\Gamma \vdash A\) implies \(\Gamma \vDash A\).
+                </div>
+                
+                <div class="proof">
+                    <p>
+                        We use the induction on the set of sequents in natural deduction. This means we assume \(\Gamma \vdash A\) is provable and we want to show that \(A\) is a logical consequence of \(\Gamma\), written as \(\Gamma \vDash A\). Suppose that \(\Gamma \vdash A\) is an assumption. Then \(A\) is in \(\Gamma\) and from the definition of logical consequence, we immidiately know \(\Gamma \vDash A\). Now we need to prove the theorem for all introduction and elimination rules.
+                    </p>
+
+                    <b>Conjunction</b>
+
+                    <p>
+                        First the introduction rule. Suppose we derive \(\Gamma \vdash A \land B\) from \(\Gamma \vdash A\) and \(\Gamma \vdash B\) using the introduction rule. Let \(v\) be any truth assignment which satisfies \(\Gamma\), written as \(v \vDash \Gamma\). By the inductive hypothesis (using the conclusion of the theorem for \(\Gamma \vdash A\) and \(\Gamma \vdash B\) ), we know that \(\Gamma \vDash A\) and \(\Gamma \vDash B\). As \(v\) satisfies \(\Gamma\), we know that \(v\) satisfies \(A\) and \(B\) from the definition of logical consequence and we write this as \(\llbracket A \rrbracket^v = \top\) and \(\llbracket B \rrbracket^v = \top\). Using the definition of \(I\), we compute \(\llbracket A \land B \rrbracket^v = \top\). This means we proved \(\Gamma \vDash A \land B\).
+                    </p>
+                    
+                    <p>
+                        Now the elimination rule. Suppose we derive \(\Gamma \vdash A\) from \(\Gamma \vdash A \land B\). let \(v\) by any truth assignment satisfying \(\Gamma\). By the inductive hypothesis, we have that \(v\) satisfies \(A \land B\). We can write this as \(\llbracket A \land B \rrbracket^v = \top\). But from the definition of evaluation of conjunction, we have \(\llbracket A \rrbracket^v = \top\). This means \(\Gamma \vDash A\).
+                    </p>
+
+                    <b>Implication</b>
+
+                    <p>
+                        The proof of the case of implication shows how to deal with a changing context. We again start with the introduction rule. Suppose we derive \(\Gamma \vdash A \to B\) from \(\Gamma \cup \{A\} \vdash B\). Let \(v\) be any truth assignment satisfying \(\Gamma\). As we don't know whether \(\llbracket A \rrbracket^v = \top\) or \(\llbracket A \rrbracket^v = \bot\), we need to assume either can happen. If \(\llbracket A \rrbracket^v = \top\), then \(\llbracket A \to B \rrbracket^v = \top\) immidiately from the definition of evaluating implication. If \(\llbracket A \rrbracket^v = \bot\), then by the induction hypothesis, we know \(\llbracket B \rrbracket^v = \top\) and hence again \(\llbracket A \to B \rrbracket^v = \top\) and \(\Gamma \vDash A \to B\).
+                    </p>
+
+                    <p>
+                        The proof for the elimination rule is easier. Suppose we derive \(\Gamma \vdash B\) from \(\Gamma \vdash A\) and \(\Gamma \vdash A \to B\). Let \(v\) be any truth assignment satisfying \(\Gamma\). This means \(\llbracket A \to B \rrbracket^v = \top\) and also \(\llbracket A \rrbracket^v = \top\). Using the definition of evaluating implication, we have \(\llbracket B \rrbracket^v = \top\) and \(\Gamma \vDash B\).
+                    </p>
+
+                    <b>Reductio ad absurdum</b>
+
+                    <p>
+                        The introduction and elimination rule for disjunction would be handled similarly. But the case of reductio ad absurdum is little tricky. The \(\bot\) has only the elimination rule.
+                    </p>
+
+                    $$ \dfrac{\Gamma \cup \{\lnot P\} \vdash \bot}{\Gamma \vdash P} \bot_E$$
+
+                    <p>
+                        We suppose that we derive \(\Gamma \vdash P\) from \(\Gamma \cup \{\lnot P\} \vdash \bot\). Let \(v\) be any truth assignment which satisfies \(\Gamma\). Using the induction hypothesis we should write \(\llbracket \bot \rrbracket^v = \top\). But from the definition of \(I\) there is no truth assignment which would satisfy \(\bot\). This implies there is no truth assignment which would satisfy \(\Gamma\). This means that \(\Gamma \vDash P\), because <i>every</i> assignment which satisfies \(\Gamma\) also satisfies \(P\).
+                    </p>
+                \(\blacksquare\)
+                </div>
+            </section>
+
+            <section id="completeness">
+                <h2>Completeness</h2>
+                <h3>Consistency</h3>
+                <p>
+                    The completeness deals with the other way, that is, if we know \(\Gamma \vDash P\), can we conclude that \(\Gamma \vdash P \:\)? Proving soundness was relatively easy. We used introduction and elimination rules in natural deduction to show the provability relation preserves the truth assignment. Now we know \(\Gamma \vDash A\) which means that every truth assignment satisfying \(\Gamma\) also satisfies \(A\) and want to say that there <i>exists</i> a proof of \(A\) from \(\Gamma\) without actually <i>constructing</i> the proof. That is not trivial at all! We start with the statement of the theorem.
+                </p>
+
+                <div class="theorem">
+                    For every set \(\Gamma\) of propositional formulas and every propositional formula \(A\), we have that \(\Gamma \vDash A\) implies \(\Gamma \vdash A\).
+                </div>
+
+                <p>
+                    First thing we do is to introduce the notion of consistency. With few simple lemmas, we will show that proving completeness is equivalent to showing that if the set \(\Gamma\) is consistent, then is satisfiable. The first lemma shows what happens if the set \(\Gamma\) is inconsistent.
+                </p>
+
+                <div class="definition">
+                    Let \(\Gamma\) be any set of propositional formulas. We say that \(\Gamma\) is <i>inconsistent</i> if it proves \(\bot\) and <i>consistent</i> otherwise.
+                </div>
+
+                <div class="theorem">
+                    Let \(\Gamma\) be any set of propositional formulas. The following are equivalent for classical propositional logic.
+                    <ol>
+                        <li>The set \(\Gamma\) is inconsistent.</li>
+                        <li>For <i>some</i> formula \(A\), we have that \(\Gamma \vdash A\) and \(\Gamma \vdash \lnot A\) are provable.</li>
+                        <li>For every formula \(A\), we know that \(\Gamma \vdash A\) is provable.</li>
+                    </ol>
+                </div>
+
+                <div class="proof">
+                    <ul>
+                        <li>\(1 \to 3 \:\) Suppose that the set \(\Gamma\) is inconsistent. This means \(\Gamma \vdash \bot\). Using weakening we can write \(\Gamma \cup \{\lnot P\} \vdash \bot\) and using reductio ad absurdum we conclude \(\Gamma \vdash P\).</li>
+                        <li>\(3 \to 2 \:\) Suppose we can prove any propositional formula \(P\) from the set \(\Gamma\). This means we can prove \(\Gamma \vdash A\) and also \(\Gamma \vdash \lnot A\) which we wanted.</li>
+                        <li>\(2 \to 1 \:\) suppose we can prove \(\Gamma \vdash A\) and also \(\Gamma \vdash \lnot A\). We know that \(\lnot A\) is an abbreviation for \(A \to \bot\) and using elimination rule for implication we conclude \(\Gamma \vdash \bot\). This means \(\Gamma\) is inconsistent.</li>
+                    </ul>
+                \(\blacksquare\)
+                </div>
+
+                <p>
+                    We see that if \(\Gamma\) is inconsistent, then we can prove everything. This is called the <i>principle of explosion</i>. Being able to prove everything means that we lose the ability to speak about truth. If there are no false statements this means the proof of any statement carries no value at all. The next lemma is a simple observation that we cannot find a truth assignment which satisfies \(\bot\). The proof is trivial as we only have to carefully write down the definition of satisfiability and remember that \(I(\bot) = \bot\). We used this line of reasoning for the case of reductio ad absurdum in the proof of soundness.
+                </p>
+
+                <div class="theorem">
+                    Let \(\Gamma\) be any set of propositional formulas. The set \(\Gamma\) is unsatisfiable if and only if \(\Gamma \vDash \bot\).
+                </div>
+
+                <p>
+                    What happens when we add a negation of a formula \(A\) to the set \(\Gamma\) from which we could prove \(A \:\)? We get inconsistency. This innocently looking lemma will be of much importance later on for using SAT solvers for proving. It is also important for the completeness theorem.
+                </p>
+
+                <div class="theorem">
+                    Let \(\Gamma\) be any set of propositional formulas and let \(A\) be a propositional formula. Then \(\Gamma \vdash A\) if and only if \(\{\Gamma,\lnot A\}\) is inconsistent.
+                </div>
+
+                <div class="proof">
+                    <p>
+                        Suppose we can prove \(\Gamma \vdash A\). By weakening we know \(\Gamma \cup \{\lnot\} A \vdash A\) and by the assumption rule we also know \(\Gamma \cup \{\lnot A\} \vdash \lnot A\). Using elimination rule for implication we get \(\Gamma \cup \{\lnot A\} \vdash \bot\). This means that \(\Gamma \cup \{\lnot A\}\) is inconsistent. For the other implication assume that \(\Gamma \cup \{\lnot A\}\) is inconsistent. This means we can prove \(\Gamma \cup \{\lnot A\} \vdash \bot\). Using reductio ad absurdum we immidately get \(\Gamma \vdash A\).
+                    </p>
+                \(\blacksquare\)
+                </div>
+
+                <p>
+                    We are getting closer to the proof of completeness. The next theorem does not have a name, but we will call it <b>Consistency theorem</b>. We prove that Consistency theorem is in classical propositional logic equivalent to the Completeness theorem. This means we can prove Completeness theorem using Consistency theorem and vice versa.
+                </p>
+
+                <div class="theorem">
+                    Every consistent set \(\Gamma\) of propositional formulas is satisfiable.
+                </div>
+
+                <div class="proof">
+                    <b>Of equivalence</b>
+                    <p>
+                        First assume that Consistency theorem holds. Suppose that \(\Gamma \nvdash A\). From the previous lemma we know \(\Gamma \cup \{\lnot A\}\) is consistent. By the Consistency theorem we know that \(\Gamma \cup \{\lnot A\}\) is satisfiable. Let \(v\) be a truth assignment which satisfies \(\Gamma \cup \{\lnot A\}\). Such \(v\) must satisfy \(\lnot A\), in other words \(\llbracket A \to \bot\rrbracket^v = \top\). This is possible only if \(\llbracket A \rrbracket^v = \bot\) from the definition of evaluating implication. Thus \(\Gamma \nvDash A\).
+                    </p>
+
+                    <p>
+                        Now assume that the Completeness theorem holds. Suppose that \(\Gamma\) is consistent. From definition of consistency we have \(\Gamma \nvdash \bot\). From the Completeness theorem we have \(\Gamma \nvDash \bot\). Using the first lemma in this section we conclude that \(\Gamma\) is satifiable.
+                    </p>
+                </div>
+
+                <h3>Maximally consistent sets</h3>
+
+                <p>
+                    We are left with proving the Consistency theorem. In order to prove this statement, we will need to introduce maximally consistent sets. These are the set of propositions, which are in some sense <i>saturated</i>, meaning you cannot add another proposition without breaking consistency. Suprisingly, it will be easier to prove that maximally consistent sets are satisfiable and from that prove the Consistency theorem.
+                </p>
+
+                <div class="definition">
+                    A set \(\Gamma\) of propositional formulas is <i>maximally consistent</i> if
+                    <ul>
+                        <li>it is consistent, and</li>
+                        <li>for every propositional formula \(B \notin \Gamma\), the set \(\Gamma,B\) is inconsistent.</li>
+                    </ul>
+                </div>
+
+                <p>
+                    First we need to establish that we can extend any consistent set into a maximally consistent one.
+                </p>
+
+                <div class="theorem">
+                    Let \(\Gamma\) be any consistent set of propositional formulas. Then there exists a maximally consistent set \(\Delta\) such that \(\Gamma \subset \Delta\).
+                </div>
+
+                <div class="proof">
+                    We assume that we have countably many propositional variables and therefore countably many propositional formulas. This means we can enumerate these propositions as a sequence \(A_0,A_1,\ldots \:\) using natural numbers. We define a sequence of sets \(\Gamma_i\) inductively. We set \(\Gamma_0 = \Gamma\) and
+
+                    $$\Gamma_i = \begin{cases}
+                    \Gamma_i \cup \{A_i\} &\text{if such set is consistent} \\
+                    \Gamma_i &\text{otherwise }
+                    \end{cases}$$
+                
+                    <p>
+                        We set \(\Delta = \bigcup \Gamma_i\) where the \(i\) ranges over natural numbers. By induction every \(\Gamma_i\) is consistent and thus \(\Delta\) is consistent too. We want to prove that \(\Delta\) is maximally consistent. Suppose that \(A \notin \Delta\). We know that \(A = B_i\) for some \(i\). We also know that \(A \notin \Gamma_{i+1}\) from the inductive construction. This means that \(\Gamma_{i+1} \cup \{A\}\) is inconsistent which implies that \(\Delta \cup \{A\}\) is inconsistent.
+                    </p>
+                \(\blacksquare\)
+                </div>
+
+                <p>
+                    Before we prove that the maximally consistent set is satisfiable, we need one more technical lemma. It tells us something about the <i>structure</i> of propositions one can find in a maximally consistent set. 
+                </p>
+
+                <div class="theorem">
+                    Let \(\Gamma\) be a maximally consistent set of propositional formulas. Then \(\Gamma\) has the following properties
+
+                    <ol>
+                        <li>\(\Gamma\) is closed under deduction, which means if \(\Gamma \vdash A\), then \(A \in \Gamma\).</li>
+                        <li>\(\bot \notin \Gamma\)</li>
+                        <li>\(A \land B \in \Gamma\) if and only if \(A \in \Gamma\) and \(B \in \Gamma\)</li>
+                        <li>\(A \to B \in \Gamma\) if and only if \(A \notin \Gamma\) or \(B \in \Gamma\)</li>
+                        <li>\(A \lor B \in \Gamma\) if and only if \(A \in \Gamma\) or \(B \in \Gamma\)</li>
+                    </ol>
+                </div>
+
+                <div class="proof">
+                    <p>
+                        Suppose that \(\Gamma \vdash A\). We assume that \(\Gamma\) is consistent, which implies that \(\Gamma \cup \{A\}\) is consistent too. If you are not sure why, then think what would it mean if this set wasn't consistent. Inconsistency means we are able to prove \(\Gamma,A \vdash \bot\). Using introduction rule for implication we get \(\Gamma \vdash A \to \bot\) which is the same as \(\Gamma \vdash \lnot A\). From the first lemma in the previous section, this would mean that \(\Gamma\) is inconsistent! The second claim follow from the first one, again using the first lemma in the previous section.
+                    </p>
+                    
+                    <p>
+                        Suppose that \(A \land B \in \Gamma\). Using the first claim we know that \(\Gamma \vdash A \land B\). This is equivalent to saying that \(\Gamma \vdash A\) and \(\Gamma \vdash B\) using the introduction or elimination rules for conjunction. This is in turn equivalent to saying that \(A \in \Gamma\) and \(B \in \Gamma\), again thanks to the first claim.
+                    </p>
+
+                    <p>
+                        Suppose that \(A \to B \in \Gamma\). Using the first claim we get \(\Gamma \vdash A \to B\). If \(A \in \Gamma\), then \(\Gamma \vdash A\) and using elimination rule for implication we have \(\Gamma \vdash B\), or \(B \in \Gamma\) using the first claim. This means either \(A \notin \Gamma\) or \(B \in \Gamma\). Now suppose that \(A \notin \Gamma\) or \(B \in \Gamma\). If \(A \notin \Gamma\), then the set \(\Gamma \cup \{A\}\) is inconsistent because \(\Gamma\) is maximally consistent. Using the first lemma in the previous section and knowing that \(\Gamma,A\) is inconsistent, we have \(\Gamma,A \vdash B\) and using introduction rule for implication we conclude \(\Gamma \vdash A \to B\). If \(B \in \Gamma\), then \(\Gamma \vdash B\) using the first claim and \(\Gamma,A \vdash B\) using weakening and thus again \(\Gamma \vdash A \to B\) using introduction rule for implication.
+                    </p>
+
+                    <p>
+                        The proof of the last case is done similarly using cases on \(A\) and \(B\).
+                    </p>
+                \(\blacksquare\)
+                </div>
+
+                <p>
+                    We use the previous lemma to define a rather funny truth assignment. We start with assigning truth to propositional variables which belong to \(\Gamma\). We then conclude that the propositional formulas which evaluate to true are exactly the ones one can find in the set \(\Gamma\).
+                </p>
+
+                <div class="theorem">
+                    Suppose that \(\Gamma\) is maximally consistent set of propositional formulas. Define a truth assignment \(v\) by setting \(v(P) = \top\) if \(P \in \Gamma\). Then for every propositional formula we have \(\llbracket A \rrbracket^v = \top\) if and only if \(A \in \Gamma\).
+                </div>
+
+                <div class="proof">
+                <p>
+                    We use the induction on propositional formulas \(A\). if \(A\) is a propositional variable then we know \(v(A) = \top\) because that is how we defined the truth assignment for variables. The cases for conjunction, disjunction and implication follow from the previous lemma.
+                </p>
+                \(\blacksquare\)
+                </div>
+                
+                <p>
+                    We can finally prove the consistency theorem. We repeat its statement and then prove it.
+                </p>
+
+                <div class="theorem">
+                    Every consistent set \(\Gamma\) of propositional formulas is satisfiable.
+                </div>
+
+                <div class="proof">
+                <p>
+                    Suppose \(\Gamma\) is consistent. We can extend this set to a maximally consistent set \(\Delta\) using the inductive construction. The previous lemma tells us that we know how to define a truth assignment satisfying \(\Delta\). We know that \(\Gamma \subset \Delta\), which implies that this assignment also satisfies \(\Gamma\). Thus \(\Gamma\) is satisfiable.
+                </p>
+                \(\blacksquare\)
+                </div>
+        </section>
+    </div>
+    
+
+-------------------------------------------------------------------------------------------------
+
+            Afirst-order theory or simply a theory T consists of a first-order language L(T)
+            or simply L andasetof L-formulas,calledtheaxiomsof T.Foracardinalκ ≥ℵ0, T
+            is called a κ-theory if |L(T)|≤κ. ℵ0-theories are simply called countable theories.
+            Amodel of T is an L-structure M in which each axiom of T is true. If M is a model
+            of T,weshallwriteM |= T.Aformulaϕ is called a theorem of T, written T |= ϕ,
+            if it is true in all models of T.
+
+
+
+
+
+
+
+            --- no no no ---
+            <p>
+                These definitions are rather abstract so it calls for a concrete example. Suppose we have a language with one function symbol \(c\) of zero arity, often call a constant, two binary function symbols \(f,g\) and one binary relation \(r\). We specified the arity of all symbols and the sets of functional symbols and relational symbols are disjoint. This means we have a language \(L\) written as \((\{c,f,g\},\{r\},a)\) where \(a(c) = 0\), \(a(f) = 2\), \(a(g) = 2\) and \(a(r) = 2\). One such model for this language are the natural numbers. We assign \(0\) to the constant \(c\), the functions \(+\) and \(\times\) for function symbols \(f\) and \(g\) and finally the relation \(\leq\) for relation symbol \(r\). The universe is simply the set of natural numbers. We can write this model \(\mathfrak{M}\) as \( (\mathbb{N},\{0,+, \times, \leq\}) \). Note that the functions and the relation satisfy the the conditions on arity.
+            </p>
+
+            <h3>Propositional logic</h3>
+
+            <p>
+                It's important to know that propositional logic is a <i>language</i>. This means we need to specify its function and relation symbols and their arities. This logic has one functional symbol of zero arity, namely the symbol for falsity written as \(\bot\). It has three binary functional symbols \(\land,\lor\) and \(\to\) and no relation symbols. We call the set \(\bot,\land,\lor,\to\) an alphabet. We also use a set of <i>propositional variables</i> such as \(P,Q\) or \(R\). Having fixed the alphabet we move to defining the set of propositional formulas.
+            </p>
+
+            <div class="definition" id="alphabet">
+            The set of propositional formulas is a smallest set of strings over the alphabet \( (\bot,\land,\lor,\to) \) satisfying
+            <ul>
+                <li>If \(P\) is a propositional variable, then \(P\) is a propositional formula</li>
+                <li>\(\bot\) is a propositional formula</li>
+                <li>If \(A\) and \(B\) are propositional formulas, then \(A \land B\), \(A \lor B\) and \(A \rightarrow B\) are propositional formulas.</li>
+            </ul>
+            </div>
+
+            <p>
+                You might wonder why we did not include the propositional variables in the alphabet. The ideal is that the language of propositional logic is just fine without any more symbols. We <i>could</i> reason only about formulas without variables such as \(\bot \to (\bot \land (\bot \lor \bot))\). But we want to have more freedom. We want to reason about propositions such as \(\bot \to (\bot \land A)\) and then substitute any proposition for \(A\). One pillar of reasoning in classical propositional logic is that from falsity, everything follows. We express this idea as the proposition \(\bot \to A\) being always true. If we had not propositional variables, we would need to write this rule for every valid string of alphabet such as \(\bot \to (\bot \land \bot)\) or \(\bot \to ((\bot \lor \bot) \land \bot)\) and so on for infinitely many possible strings. That cannot be done with sanity. People who want to be precise or annoing would say that using propositional variable, we work in a <i>meta language</i>, or one level of abstraction higher. The same problem arises when we talk about proofs or even prove theorems about proofs.
+            </p>
+
+            <p>
+                The alphabet used in the definition of propositional formulas is in some sense complete. But we also use some other symbols as \(\top, \lnot\) or \(\leftrightarrow\) for more clarity. These are just abbreviations. The truth value \(\top\) is an abbreviation of \(\bot \to \bot\), the negation \(\lnot A\) is abbreviation of \(A \to \bot\) and bidirectional implication \(A \leftrightarrow B\) is an abbreviation of \(A \to B \land B \to A\).
+            </p>
+
+        </section>
+
+        <section id="deductive">
+            <h2>Deductive systems</h2>
+            <h3>Axiomatic systems</h3>
+
+            <p>
+                So far we know what a language is and we know how construct the set of propositions over a given alphabet. In order to give a meaning to the propositions we need rules for manipulating them. Dealing with languages and rules is the syntactic part of logic. One of the earliest logical systems are the axiomatic systems, also called Hilbert style systems. These systems consist of a set of axioms and inference rules. For example the axiomatic system for <i>classical propositional logic</i> consists of nine <i>axiom schemas</i> and one inference rule, namely the <i>modus ponens</i>. The axiom schemas are called schemas because the act as blueprints for the actual rules. We can take the first axiom schema a instantiate it with \(P \to P\) for \(A\) and \(\bot\) for \(B\). The concrete rule is then the proposition \((P \to P) \to (\bot \to (P \to P))\) and we take this proposition to be true.
+            </p>
+            
+            <ol>
+                <li>\(A \to (B \to A)\)</li>
+                <li>\( (A \to (B \to C)) \to ((A \to B) \to (A \to C)) \)</li>
+                <li>\(A \to (B \to A \land B)\)</li>
+                <li>\(A \land B \to A\)</li>
+                <li>\(A \land B \to B\)</li>
+                <li>\(A \to (B \lor A)\)</li>
+                <li>\(B \to (B \lor A)\)</li>
+                <li>\( (A \to C) \to (B \to C) \to (A \lor B \to C) \)</li>
+                <li>\(\lnot \lnot A \to A\)</li>
+            </ol>
+            
+            <p>
+                The modus ponens is the only rule with which we can build new propositions out of old ones. This rule acts on implication. Let's say we can prove \(A\) and \(A \to B\). Using modus ponens we can conclude that also \(B\) holds. It's time for a proof of the commutativity of conjunction.
+            </p>
+
+            <div class="theorem">
+                If \(P \land Q\) holds, then \(Q \land P\) holds.
+            </div>
+
+            <div class="proof">
+                <ol>
+                    <li>Assume that \(P \land Q\) holds.</li>
+                    <li>Obtain \(P\) by modus ponens using assumption and fourth axiom schema.</li>
+                    <li>Obtain \(Q\) by modus ponens using assumption and fifth axiom schema.</li>
+                    <li>Obtain \(P \to (Q \land P)\) by modus ponens using \(Q\) and third axiom schema.</li>
+                    <li>Obtain \(Q \land P\) by modus ponens using \(P \to (Q \land P)\) and \(P\).</li>
+                </ol>
+                \(\blacksquare\)
+            </div>
+
+            <p>
+                How can we describe what a proof is? Informally a proof is what we just did. More formally, it is a sequence \(\Psi_0,\ldots,\Psi_n\) of propositions such that for every \(k < n + 1\), either \(\Psi_k\) is a proposition in context \(\Gamma\), or it is an axiom schema or there are indices \(i< k\) and \(j < k\) such that \(\Psi_k\) follow from \(\Psi_i\) and \(\Psi_j\) by modus ponens. We then say that \(\Psi_n\) is the conclusion and the sequence \(\Psi_0,\ldots,\Psi_n\) with hypotheses in \(\Gamma\) is a proof of \(\Psi_n\).
+            </p>
+
+            <p>
+                Couple of remarks about the assumptions. The assumtions we make is a set called context and we write \(\Gamma \vdash A\) to say that \(A\) is provable in the context of \(\Gamma\). This means we can write the last theorem as \(\{P \land Q\} \vdash Q \land P\).
+                
+                
+                Some statemens are provable without use of any concrete assumption. For example concrete instances of axiom schemas do not need any context, as they are axioms and the corresponding context is the empty set. Commonly used symbol for empty is \(\varnothing\). This means we can write \(\varnothing \vdash P \land Q \to P\) as an instance of the third axiom schema. Can we obtain anything else then axioms from an empty context? We can. One such example is the proposition \(P \to P\).
+            </p>
+
+            <div class="theorem">
+                We have \(\varnothing \vdash P \to P\).
+            </div>
+
+            <div class="proof">
+                <ol>
+                    <li>Obtain \(P \to (P \to P)\) as an instance of the first axiom schema.</li>
+                    <li>Obtain \(P \to ((P \to P) \to P)\) as an instance of the first axiom schema.</li>
+                    <li>Obtain \((P \to ((P \to P) \to P)) \to ((P \to (P \to P)) \to (P \to P))\) as an instance of the second axiom schema.</li>
+                    <li>Obtain \(((P \to (P \to P)) \to P \to P) \) by modus ponens using 2 and 3.</li>
+                    <li>Obtain \(P \to P \) by modus ponens using 4 and 1.</li>
+                </ol>
+                \(\blacksquare\)
+            </div>
+
+            <p>
+                Why isn't this an axiom? It seems useful to know it from the start. We <i>could</i> add \(P \to P\) to the axiom schema and nothing would break. But we strive to have a set of axioms such that this set is in some sense minimal. This means that no axiom in the set is provable using the other axioms. The next theorem is useful for proving properties of the set of propositions. It can be rigorously proved but we will not bother with it. It follows from the definition of a proof.
+            </p>
+                
+            <div class="theorem">
+                Suppose \(\Gamma\) is a set of propositional formulas. The set of formulas (set of consequences) provable from \(\Gamma\) is inductively generated by these rules
+                <ul>
+                    <li>If \(A \in \Gamma\), then \(\Gamma \vdash A\)</li>
+                    <li>If \(A\) is an axiom schema, then \(\Gamma \vdash A\)</li>
+                    <li>If \(\Gamma \vdash A\) and \(\Gamma \vdash A \to B\), then \(\Gamma \vdash B\)</li>
+                </ul>
+            </div>
+
+            <p>
+                It is much more important to understand that this theorem subtly hints on the fact that we can use a <i>induction principle</i> for proving theorems about the set of propositions. We will se the induction principle in action when we prove the next theorem. it is called the <b>Deduction theorem</b> and it says something about the interplay of context \(\Gamma\) and implication.
+            </p>
+            
+            <div class="theorem">
+                Fix a context \(\Gamma\) and a proposition \(P\). If \(\Gamma \cup\{P\} \vdash Q\) then \(\Gamma \vdash P \to Q\).
+            </div>
+
+            <div class="proof">
+                We fix \(\Gamma\) and \(P\) and use the induction on the set of consequences of \(\Gamma \cup\{P\}\). This means that if \(Q\) is in the set of consequences, it has the form of one of the three cases mentioned earlier.
+
+            <ol>
+                <li>\(Q \in \Gamma, P\)</li>
+                <li>\(Q\) as an axiom schema</li>
+                <li>There is proposition \(C\) such that \(\Gamma \cup\{P\} \vdash C\) and also \(\Gamma \cup\{P\} \vdash C \to Q\)</li>
+            </ol>
+            
+            <p>
+                We start with the first case. This is a tricky one. If \(P \in \Gamma\), we know that \(\Gamma \vdash P\). Using the first axiom schema we also know that \(\Gamma \vdash Q \to (P \to Q)\) as axioms follow from any context! The conclusion \(\Gamma \vdash Q \to P\) is obtained by modus ponens. What if \(Q\) is \(P\) itself? We need to prove that \(\Gamma \vdash P \to P\). Luckily we proved this already. The second case is easier. If \(Q\) is an axiom schema, we know that \(\Gamma \vdash Q\). We again use the first axiom schema to conclude \(\Gamma \vdash Q \to (P \to Q)\) and modus ponens to obtain the conclusion \(\Gamma \vdash P \to Q\).
+            </p>
+
+            <p>
+                From the structure of the set of proposition, we know that if \(Q\) is not an axiom schema or is not the element of \(\Gamma \cup\{P\}\), it had to be <i>constructed</i> using modus ponens. We therefore know there has to be a proposition \(C\) satisfying \(\Gamma \cup\{P\} \vdash C\) and also \(\Gamma \cup\{P\} \vdash C \to Q\). Now we finally use the induction. Thi means we can use the conclusion of the theorem for the proposition \(C\). We know that \(\Gamma \cup\{P\} \vdash C\) and thus conclude \(\Gamma \vdash P \to C\). In the same manner we conclude \(\Gamma \vdash P \to (C \to Q)\). We also have the second axiom schema at our disposal in the form \(\Gamma \vdash P \to (C \to Q) \to ((P \to C) \to (P \to Q))\). Again, we know we can prove this as axioms follow from any context. But now it suffices to use modus ponens two times and we are done.
+            </p>
+            \(\blacksquare\)
+            </div>
+
+            <h3>Natural deduction</h3>
+
+            <p>
+                The Hilbert style is not the only way to set up a logic system. The axiomatic systems have mainly axioms and only one rule. What if we had only one axiom and many rules? It turns out that such a system exists. The idea is to reason about the alphabet and not about whole propositions. Let's look at the conjunction. The Hilbert system had an axiom which <i>introduces</i> the proposition involving conjunction, namely the third axiom \(A \to (B \to (A \land B))\). If, for some context \(\Gamma\), we know that \(\Gamma \vdash A\) and \(\Gamma \vdash B\), we can use modus ponens two times to obtain \(\Gamma \vdash A \land B\). It would be nice to have some kind of rule which would build the conjunction out of its parts, something like
+            </p>
+
+            $$\dfrac{\Gamma \vdash A \qquad \Gamma \vdash B}{\Gamma \vdash A \land B}$$
+
+            <p>
+                The part above the line describes what we assume and the lower part describes what we can build out of the assumptions. This is in agreement with the axiom schema where the modus ponens is build into the introduction rule itself. We can also break apart the conjuction. This is what the fourth and fifth axiom schemas tell us. In order to completely describe the behaviour of conjunction, we need one introduction rule and two elimination rules.
+            </p>
+
+            $$\dfrac{\Gamma \vdash P \qquad \Gamma \vdash Q}{\Gamma \vdash P \land Q} \land_I \qquad \dfrac{\Gamma \vdash P \land Q}{\Gamma \vdash P} \land_E \qquad \frac{\Gamma \vdash P \land Q}{\Gamma \vdash Q} \land_E$$
+
+            <p>
+                The implication has one introductory rule and one elimination rule. The elimination rule is exactly modus ponens. If you had not seen the Deduction theorem, the introduction rule might seem suprising. But when you think about the Deduction theorem, it really <i>is</i> a way to introduce implication. Note how the context is changed from \(\Gamma,P\) to \(\Gamma\).
+            </p>
+
+            $$\dfrac{\Gamma \cup\{P\} \vdash Q}{\Gamma \vdash P \to Q} \to_I \qquad \frac{\Gamma \vdash P \to Q \qquad \Gamma \vdash P}{\Gamma \vdash Q} \to_E$$
+
+            <p>
+                Next logical connective is the disjunction. The two introduction rules are modelled according to the sixth and seventh axiom. The elimination rule mirrors the eight axiom and is also a context-changing rule.
+            </p>
+
+            $$\dfrac{\Gamma \vdash P}{\Gamma \vdash P \lor Q} \lor_I \qquad \dfrac{\Gamma \vdash Q}{\Gamma \vdash P \lor Q} \lor_I \qquad \dfrac{\Gamma \vdash P \lor Q \qquad \Gamma \cup\{P\} \vdash R \qquad \Gamma \cup\{Q\} \vdash R}{\Gamma \vdash R} \lor_E$$
+
+            <p>
+                The next rule mirrors the ninth axiom schema and is called reductio ad absurdum. after introducing all rules for natural deduction, we will say something more about this rule.
+            </p>
+
+            $$\frac{\Gamma \cup\{\lnot P\} \vdash \bot}{\Gamma \vdash P} \bot_E$$
+
+            <p>
+                The last rule is called the assumption rule. Remember that we proved \(P \to P\) from the first two axiom schemas. There is nothing above the line which means we do no thave to assume anything to use this rule, <i>this</i> is the rule for introducing assumptions.
+            </p>
+
+            $$\frac{}{\Gamma,P \vdash P}$$
+
+            <p>
+                It seems that we encoded all the axiom schemas into introduction or elimination rules but the first two. Our first task will be to construct a proof of the first axiom in the style of natural deduction. First we use the assumption rule with context \(\Gamma \cup\{B\}\) and proposition \(A\).
+            </p>
+
+            $$\dfrac{}{\Gamma \cup\{A,B\} \vdash A}$$
+
+            <p>
+                Using the introduction rule for implication twice, we recover the first axiom schema!
+            </p>
+
+            $$\dfrac{\dfrac{\dfrac{}{\Gamma \cup\{A,B\} \vdash A}}{\Gamma \cup\{A\} \vdash B \to A} \to_I}{\Gamma \vdash A \to (B \to A)} \to_I$$
+
+            <p>
+                We just wrote our first proof using in the natural deduction system. We could also recover the second rule. We already know what is meant by a proof in axiomatic system. The notion of proof in natural deduction is not much different. The pair \((\Gamma,A)\) is called a <i>sequent</i> where \(\Gamma\) is a finite set of propositions and we write \(\Gamma \vdash A\). A proof is then a sequence of sequents in which every sequent is obtain from the previous using elimination or introduction rule, apart from the assumption rule.
+            </p>
+
+            <p>
+                For the axiomatic system we had a theorem about the nature of provable proposition from the context \(\Gamma\). The next definition describes a similar thing for natural deduction. Thanks to this definition we again obtain the power of induction.
+            </p>
+            
+            <div class="definition">
+                The set of sequents provable in natural deduction is defined as a smallest set of sequents closed under the natural deduction rules.
+            </div>
+
+            <p>
+                One such use of induction in natural deduction system is the following lemma called <b>Weakening</b>. It expresses that the natural deduction is a monotonne system. In other words, adding a hypothesis does not destroy proposition which were earlier provable.
+            </p>
+
+            <div class="theorem">
+                If \(\Gamma \vdash A\) is provable in natural deduction and \(\Gamma \subset \Delta\), then \(\Delta \vdash A\) is provable in natural deduction.
+            </div>
+
+            <div class="proof">
+                We will use induction on the set of provable sequents. But what does that mean? First we deal with the assumption rule. Suppose we know that \(\Gamma \cup\{A\} \vdash A\) is provable and want to prove \(\Delta \cup\{A\} \vdash A\). But we know that \(\Delta \cup\{A\} \vdash A\) holds from the assumption rule alone. What about the other rules? Let's take for example the introduction rule for conjunction.
+
+                $$\dfrac{\Gamma \vdash P \qquad \Gamma \vdash Q}{\Gamma \vdash P \land Q} \land_I$$
+
+            <p>
+            Let's say that \(\Gamma \vdash A \land B\) is provable. This requires that \(\Gamma \vdash A\) and \(\Gamma \vdash B\) are provable too. The induction principle tells us that we can use the theorem statement for the upper part of the introduciton or elimination rule. For the case of introduction rule for conjunction, this means we assume that \(\Delta \vdash A\) and \(\Delta \vdash B\) are provable. using the introduction rule we conclude that also \(\Delta \vdash A \land B\) is provable. Other rules would be checked in the same manner and we would find that all of them respect the provability relation. This means we proved the theorem.
+            if \(\Gamma \vdash A\), then \(\Delta \vdash A\).
+            </p>
+        
+            \(\blacksquare\)
+            </div>
+
+            <p>
+                This is not a rule as the introduction or elimination rules we have seen so far. We cannot derive this rule using other rules. It is called admissible rule which means it does not change the set of provable sequents. We could work without it, but is pleasant to use. For example we can have a more general form of rules we introduced so far
+            </p>
+
+            $$\dfrac{\Gamma \vdash A \qquad \Delta \vdash B}{\Gamma \cup \Delta \vdash A \land B}$$
+
+            <p>
+                You might have been bothered by the form of the elimination rule for disjunction. The axiom schema has the form of explicit implications, \( (A \to C) \to (B \to C) \to (A \lor B \to C) \), but rule is written without implications. The question is, are these two rules equivalent?
+            </p>
+
+            $$\dfrac{\Gamma \vdash P \lor Q \qquad \Gamma \cup\{P\} \vdash R \qquad \Gamma \cup\{Q\} \vdash R}{\Gamma \vdash R} \lor_E$$
+
+            $$\dfrac{\Gamma \vdash P \lor Q \qquad \color{red}{\Gamma \vdash P \to R \qquad \Gamma \vdash Q \to R}}{\Gamma \vdash R} \lor_E$$
+
+
+            <p>
+                Let's say we know, that \(\Gamma \vdash P \lor Q\) and \(\Gamma \cup\{P\} \vdash R\) and \(\Gamma \cup\{Q\} \vdash R\) are provable. Using introduction rule for implication we obtain \(\Gamma \vdash P \to R\) and \(\Gamma \vdash Q \to R\). We can use the second form to conclude that \(\Gamma \vdash R\). What about the other way? Assume we know that \(\Gamma \vdash P \lor Q\) and \(\Gamma \vdash P \to R\) and \(\Gamma \vdash Q \to R\) are provable. How can we use the first form of the rule? We use the weakening property to obtain \(\Gamma \cup\{P\} \vdash P \to R\) and \(\Gamma \cup\{Q\} \vdash Q \to R\). From the assumption rule we know that \(\Gamma \cup\{P\} \vdash P\) and \(\Gamma \cup\{Q\} \vdash Q\). Using introduction rule for implication we finally obtain \(\Gamma \cup\{P\} \vdash R\) and \(\Gamma \cup\{Q\} \vdash R\) and we can use the first form of the rule to conclude that \(\Gamma \vdash R\). This means that the weakening theorem tells us these rules are equivalent! One last remark. We could write the weakening as a rule <i>operating on context</i>
+            </p>
+
+            $$\dfrac{\Gamma \vdash P}{\Gamma \cup\{A\} \vdash P} w_I$$
+
+            <H3>Proof by contradiction</H3>
+
+            <p>
+                It might come as a surprise that <i>propositional logic</i> has few subtypes. The most known is the classical propositional logic. Such logic is described by the nine axiom schemas we saw earlier, or the corresponding natural deduction rules. Taking only the first eight axiom schemas would mean we work in <i>minimal propositional logic</i> and replacing the last axiom schema with \(\bot \to A\) would mean we work in <i>intuitionistic propositional logic</i>. The axiom schema \(\lnot \lnot A \to A\) is called the double negation elimination. First task is to recover the double negation elimination axiom from the elimination rule for \(\bot\). We can happily prove falsity using implication elimination rule from two simple assumptions.
+            </p>
+
+            $$\dfrac{\dfrac{}{\{\lnot A\} \vdash \lnot A} \qquad \dfrac{}{\{\lnot \lnot A\} \vdash \lnot \lnot A}}{\{\lnot A, \lnot \lnot A\} \vdash \bot} \to_I$$
+
+            <p>
+                Note the lines above the assumptions. This means we needed to use the assumption rule. The second step is to use the elimination rule for \(\bot\) called reduction ad absurdum. After that we use the introduciton rule for implication and we are done.
+            </p>
+
+            $$\dfrac{\dfrac{}{\{\lnot A\} \vdash \lnot A} \qquad \dfrac{}{\{\lnot \lnot A\} \vdash \lnot \lnot A}}{\dfrac{\{\lnot A, \lnot \lnot A\} \vdash \bot}{\dfrac{\{\lnot \lnot A\} \vdash A}{\varnothing \vdash \lnot \lnot A \to A} \to_I} \bot_E} \to_E$$
+
+            <p>
+                The reverse implication is similar, but we do not have to use the elimination rule for \(\bot\). This has the consuquence that the reverse implication is provable in minimal propositional logic. We again start with proving falsity.
+            </p>
+
+            $$\dfrac{\dfrac{}{\{A\} \vdash A} \qquad \dfrac{}{\{\lnot A\} \vdash \lnot A}}{\{A, \lnot A\} \vdash \bot} \to_E$$
+
+            <p>
+                Two introduction rules for implications are enough to conclude the desired proposition. In classical logic we therefore have the equivalence \(A \leftrightarrow \lnot \lnot A\).
+            </p>
+
+            $$\dfrac{\dfrac{}{\{A\} \vdash A} \qquad \dfrac{}{\{\lnot A\} \vdash \lnot A}}{\dfrac{\{A, \lnot A\} \vdash \bot}{\dfrac{\{A\} \vdash \lnot A \to \bot}{\varnothing \vdash A \to \lnot \lnot A} \to_I} \to_I} \to_E$$
+
+
+            <h3>The law of excluded middle</h3>
+
+            <p>
+                Another famous thing in logic is the law of excluded middle. It says that the proposition \(P \lor \lnot P\) is true without any further assumptions. The proof is tricky and not intuitive at all. Let's start at the end. In order to prove \(P \lor \lnot P\) we use reductio ad absurdum.
+            </p>
+
+            $$\frac{\varnothing\vdash \lnot (A \lor \lnot A) \vdash \bot}{\varnothing \vdash A \lor \lnot A} \bot_E$$
+
+            <p>
+                After that we use modus ponens (elimination rule for implication). The right side can be proved by the assumption rule immediately. The problem is with the left side colored in red.
+            </p>
+
+            $$\dfrac{\dfrac{\vdots}{\textcolor{red}{\{\lnot(A \lor \lnot A)\} \vdash A \lor \lnot A}} \qquad \dfrac{}{\{\lnot(A \lor \lnot A)\} \vdash\lnot(A \lor \lnot A)}}{\dfrac{\varnothing \vdash \lnot (A \lor \lnot A) \vdash \bot}{\varnothing \vdash A \lor \lnot A} \bot_E} \to_E$$
+
+            <p>
+                We only need to prove one part of the disjunction thanks to the introduction rule for disjunction. If you try to come up with the proof, you would have to try which part is provable. I will reveal that choosing to prove \(\lnot A\) is the right way. The next step is to use reductio ad absurdum again and modus ponens. The left part follows from the assumption rule.
+            </p>
+
+            $$\dfrac{\dfrac{}{\{\lnot(A \lor \lnot A)\} \vdash \lnot(A \lor \lnot A)} \qquad \dfrac{\vdots}{\color{red}{\{\lnot \lnot A\} \vdash A \lor \lnot A}}}{\dfrac{\{\lnot \lnot A,\lnot(A \lor \lnot A)\} \vdash \bot}{\dfrac{\{\lnot(A \lor \lnot A)\} \vdash \lnot A}{\color{red}{\{\lnot(A \lor \lnot A)\} \vdash A \lor \lnot A}} \lor_I} \bot_E} \to_E$$
+
+            <p>
+                The right part seems even worse than what we have to prove but don't worry. Knowing \(\lnot \lnot A \vdash A\) we can use introduction rule for disjunction to quickly finish the proof.
+            </p>
+            
+            $$\dfrac{\dfrac{}{\{\lnot \lnot A\} \vdash A} \vdash}{\color{red}{\{\lnot \lnot A\} \vdash A \lor \lnot A}} \lor_I$$
+
+            <p>
+                The provability of \(\{\lnot \lnot A\} \vdash A\) does not follow from the assumption rule but had to be proved. That is why I added the symbol \(\vdash\) next to the line. It is not an offical rule but it is quite reasonable to write it this way. Remember that the symbol \(\vdash\) stands for provability. It makes sense to have a kind of introduction rule for statements <i>we have already proved</i>. We do this in mathematics all the time. We start by proving small lemmas and then use them to make bigger ones until we end up with rather complex theorems. It resembles the <i>structural rule</i> for weakening as we act on the structure of the proof. Of course we could simply copy the whole proof of \(\{\lnot \lnot A\} \vdash A\) here.
+            </p>
+
+            
