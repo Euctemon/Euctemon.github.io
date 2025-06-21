@@ -43,10 +43,122 @@
 
     <div class="blogpage">
         <h2>Proof systems</h2>
-
         <h3>What it means to prove something</h3>
 
+        <p>
+            So far we know, at least theoretically, how to check whether a formula is satisfiable, true or even tautology. In reality the underlying model for a language might have a universe of an infinite size. This means we would need to check an infinite number of different assignment functions and you surely understand that such a process takes a while. Either we come up with some clever way of working with the model or we have to declare a defeat.
+        </p>
+
+        <p>
+            Now there is something interesting we can do. We can turn the formula checking upside down and instead <i>look for a finite model</i> in which a given formula is satisfiable. Finite models are models with finite universes  which means we can simply try all possible assignment functions and interpretations to find out whether the formula is satisfiable. If there is no suitable interpretation and assignment, we use a larger universe. The nice things is that we can write a program which does this for us. The <i>finite model theory</i> deals with things like this and it is very useful for computer scientists.
+        </p>
+        
         <h3>Axiomatic systems</h3>
+
+        <p>
+            Checking manually the validity of formulas by writing down truth tables for all assignment function is not what mathematicians commonly do. But what do they do? Instead of throwing assingment functions at formulas one by one, mathematicians write <i>proofs</i>. A proof is essentially a sequence of formulas. We start with the so called axioms and then use rules for constructing new formulas out of old ones, hoping that at the end we derive the formula we want to prove. The rules are commonly know as inference rules and together with set of axioms constitute an axiomatic system.
+        </p>
+
+        <p>
+            Logic has a long history. Using set of axioms and inference rules dates back to Euclid and his elements. Euclid called the axioms of geometry as postulates. The study of axiomatic systems can be said to begin with Frege and Hilbert. They were not only using logic for mathematics, but they were interested in the axiomatic systems itself. People started to wonder whether all mathematics can be reduced to symbol manipulation or whether we can find the perfect set of axioms for everything. These are a very challenging questions and Gödel gave a partial answer with his incompleteness theorem.
+        </p>
+
+        <p>
+            In this chapter we will be mainly concerned with the propositional logic \(\mathcal{L}_p\). This is a logic with no function and relation symbols, an alphabet with infinite number of variables \(P_0, P_1, \ldots\) and standard set of logical symbols. This is an almost empty language, yet it is very important one. Thanks to logical connectives and many variables we can still form complex formulas like \((P_1 \lor P_3) \to (P_2 \land (P_1 \to (P_4 \to P_2)))\). What follows is a version of an axiomatic system for propositional logic Hilbert was using.
+        </p>
+
+        <ol><div class="list-descript">Axioms</div>
+            <li>\(\mathfrak{a} \to (\mathfrak{b} \to \mathfrak{a})\)</li>
+            <li>\( (\mathfrak{a} \to (\mathfrak{b} \to \mathfrak{c})) \to ((\mathfrak{a} \to \mathfrak{b}) \to (\mathfrak{a} \to \mathfrak{c})) \)</li>
+            <li>\(\mathfrak{a} \to (\mathfrak{b} \to \mathfrak{a} \land \mathfrak{b})\)</li>
+            <li>\(\mathfrak{a} \land \mathfrak{b} \to \mathfrak{a}\)</li>
+            <li>\(\mathfrak{a} \land \mathfrak{b} \to \mathfrak{b}\)</li>
+            <li>\(\mathfrak{a} \to (\mathfrak{b} \lor \mathfrak{a})\)</li>
+            <li>\(\mathfrak{b} \to (\mathfrak{b} \lor \mathfrak{a})\)</li>
+            <li>\( (\mathfrak{a} \to \mathfrak{c}) \to (\mathfrak{b} \to \mathfrak{c}) \to (\mathfrak{a} \lor \mathfrak{b} \to \mathfrak{c}) \)</li>
+            <li>\(\lnot \lnot \mathfrak{a} \to \mathfrak{a}\)</li>
+        </ol>
+
+        <ol><div class="list-descript">Rules</div>
+            <li>If we can prove \(\mathfrak{a}\) and \(\mathfrak{a} \to \mathfrak{b}\), we can prove \(\mathfrak{b}\).</li>
+        </ol>
+
+        <p>
+            We see that Hilbert's axiomatic system has only one rule called <i>Modus ponens</i>. Philosophers use this implication rule not only in propositional logic and they call it <i>Modul ponendo ponens</i>. This can be translated as <i>method that by affirming, affirms</i>. The rules we use for producing new formulas out of the proven ones are called inference rules, because we <i>infer</i> new things from old ones. The axioms are often called <i>axiom schemas</i>. This is because \(\mathfrak{a}, \mathfrak{b}\) and \(\mathfrak{c}\) are not concrete formulas, but rather formula symbols. Formula symbol is not an official name as people just say formula, but it is good to note the distinction between formulas in axiomatic systems and concrete formulas in \(\mathcal{L}_p\) like \(P_1 \to P_2\). How do we use such system? First we need a definition of what a proof is.
+        </p>
+
+        <div class="definition">
+            <b>Proof</b> is a sequence \(\Psi_0,\ldots,\Psi_n\) of formulas such that for every \(k < n + 1\), either \(\Psi_k\) is a formula (symbol) in context \(\Gamma\), an axiom schema or there are indices \(i< k\) and \(j < k\) such that \(\Psi_k\) follow from \(\Psi_i\) and \(\Psi_j\) by modus ponens. We say that \(\Psi_n\) is the conclusion and the sequence \(\Psi_0,\ldots,\Psi_n\) with hypotheses in \(\Gamma\) is a proof of \(\Psi_n\). We write \(\Gamma \vdash \mathfrak{f}\) if we can prove \(\mathfrak{f}\) given the context \(\Gamma\).
+        </div>
+
+        <p>
+            We notice that the definition features something called <i>context</i>. This is a set of formulas which we suppose are true in the context of a given proof. It is not always true that when it rains, we get wet. Maybe we are smart and bring our umbrella when it rains. But let's say we assume the first implication is true. Then if we go out and it rains, we can conclude that we get wet. It's all about the context. We are ready for our first proof.
+        </p>
+
+        <div class="theorem">
+            \(\large \varnothing \normalsize \vdash P_0 \to (P_1 \to P_0)\).
+        </div>
+
+        <div class="proof">
+            <ol>
+                <li>Instance of the first schema where the formulas \(\mathfrak{a}\) nad \(\mathfrak{b}\) are variables \(P_0\) and \(P_1\)</li>
+            </ol>
+            \(\blacksquare\)
+        </div>
+
+        <p>
+            This it is just a reminder that we can use any formula with our axioms. Variables \(P_0, P_1, \ldots\) are by definition formulas in a given language so everything is fine. We shall prove something little bit more difficult called conjugation commutativity.
+        </p>
+
+
+        <div class="theorem">
+            \(\{\mathfrak{a} \land \mathfrak{b}\} \vdash \mathfrak{b} \land \mathfrak{a}\).
+        </div>
+
+        <div class="proof">
+            <ol>
+                <li>Obtain \(\mathfrak{a}\) by modus ponens using the context and the fourth axiom schema.</li>
+                <li>Obtain \(\mathfrak{b}\) by modus ponens using context and the fifth axiom schema.</li>
+                <li>Obtain \(\mathfrak{a} \to (\mathfrak{b} \land \mathfrak{a})\) by modus ponens using \(\mathfrak{b}\) and the third axiom schema.</li>
+                <li>Obtain \(\mathfrak{b} \land \mathfrak{b}\) by modus ponens using \(\mathfrak{a} \to (\mathfrak{b} \land \mathfrak{a})\) and \(\mathfrak{a}\).</li>
+            </ol>
+            \(\blacksquare\)
+        </div>
+
+        <p>
+            <span style="color: red">work in progress</span>
+        </p>
+        <p>
+            Now this proof uses formula symbols. We could use concrete formulas and prove \(\{P_0 \land P_1\} \vdash P_1 \land P_0\). But the proof is also true for different formulas like \((\{P_1 \to P_3) \land P_1\} \vdash P_1 \land (P_1 \to P_3)\). This is why we prove the statement without concrete formulas. Can we obtain anything else then axioms from an empty context? We can. One such example is the proposition \(P \to P\).
+        </p>
+     
+        <div class="theorem">
+            \(\varnothing \vdash P \to P\).
+        </div>
+
+        <div class="proof">
+            <ol>
+                <li>Obtain \(P \to (P \to P)\) as an instance of the first axiom schema.</li>
+                <li>Obtain \(P \to ((P \to P) \to P)\) as an instance of the first axiom schema.</li>
+                <li>Obtain \((P \to ((P \to P) \to P)) \to ((P \to (P \to P)) \to (P \to P))\) as an instance of the second axiom schema.</li>
+                <li>Obtain \(((P \to (P \to P)) \to P \to P) \) by modus ponens using 2 and 3.</li>
+                <li>Obtain \(P \to P \) by modus ponens using 4 and 1.</li>
+            </ol>
+            \(\blacksquare\)
+        </div>
+
+        <p>
+            Why isn't this an axiom? It seems useful to know it from the start. We <i>could</i> add \(P \to P\) to the axiom schema and nothing would break. But we strive to have a set of axioms such that this set is in some sense minimal. This means that no axiom in the set is provable using the other axioms. The next theorem is useful for proving properties of the set of propositions. It can be rigorously proved but we will not bother with it. It follows from the definition of a proof.
+        </p>
+            
+        <div class="theorem">
+            Suppose \(\Gamma\) is a set of formulas. The set of formulas (set of consequences) provable from \(\Gamma\) is inductively generated by these rules
+            <ul>
+                <li>If \(A \in \Gamma\), then \(\Gamma \vdash A\)</li>
+                <li>If \(A\) is an axiom schema, then \(\Gamma \vdash A\)</li>
+                <li>If \(\Gamma \vdash A\) and \(\Gamma \vdash A \to B\), then \(\Gamma \vdash B\)</li>
+            </ul>
+        </div>
 
         <h3>Theories</h3>
     </div>
