@@ -84,15 +84,15 @@
         </ol>
 
         <p>
-            We see that Hilbert's axiomatic system has only one rule called <i>Modus ponens</i>. Philosophers use this implication rule not only in propositional logic and they call it <i>Modul ponendo ponens</i>. This can be translated as <i>method that by affirming, affirms</i>. The rules we use for producing new formulas out of the proven ones are called inference rules, because we <i>infer</i> new things from old ones. The axioms are often called <i>axiom schemas</i>. This is because \(\mathfrak{a}, \mathfrak{b}\) and \(\mathfrak{c}\) are not concrete formulas, but rather formula symbols. Formula symbol is not an official name as people just say formula, but it is good to note the distinction between formulas in axiomatic systems and concrete formulas in \(\mathcal{L}_p\) like \(P_1 \to P_2\). How do we use such system? First we need a definition of what a proof is.
+            We see that Hilbert's axiomatic system has only one rule called <i>Modus ponens</i>. Philosophers use this implication rule not only in propositional logic and they call it <i>Modul ponendo ponens</i>. This can be translated as <i>method that by affirming, affirms</i>. The rules we use for producing new formulas out of the proven ones are called inference rules, because we <i>infer</i> new things from old ones. The axioms are often called <i>axiom schemas</i>. This is because \(\mathfrak{a}, \mathfrak{b}\) and \(\mathfrak{c}\) are not concrete formulas, but rather formula symbols. Formula symbol is not an official name as people just say formula, but it is good to note the distinction between formulas in axiomatic systems and concrete formulas in languages like \(P_1 \to P_2\). So how do we use such system? First we need a definition of what a proof is.
         </p>
 
         <div class="definition">
-            <b>Proof</b> is a sequence \(\Psi_0,\ldots,\Psi_n\) of formulas such that for every \(k < n + 1\), either \(\Psi_k\) is a formula (symbol) in context \(\Gamma\), an axiom schema or there are indices \(i< k\) and \(j < k\) such that \(\Psi_k\) follow from \(\Psi_i\) and \(\Psi_j\) by modus ponens. We say that \(\Psi_n\) is the conclusion and the sequence \(\Psi_0,\ldots,\Psi_n\) with hypotheses in \(\Gamma\) is a proof of \(\Psi_n\). We write \(\Gamma \vdash \mathfrak{f}\) if we can prove \(\mathfrak{f}\) given the context \(\Gamma\).
+            <b>Proof</b> is a sequence \(\Psi_0,\ldots,\Psi_n\) of formulas such that for every \(k < n + 1\), either \(\Psi_k\) is a formula in context \(\Gamma\), an axiom schema or there are indices \(i_0,\ldots,i_l< k\) such that \(\Psi_k\) follow from \(\Psi_{i_0}, \ldots, \Psi_{i_l}\) by some inference rule. We say that \(\Psi_n\) is the conclusion and the sequence \(\Psi_0,\ldots,\Psi_n\) with hypotheses in \(\Gamma\) is a proof of \(\Psi_n\). We write \(\Gamma \vdash \Psi\) if there exists a proof of \(\Psi\) given the context \(\Gamma\).
         </div>
 
         <p>
-            We notice that the definition features something called <i>context</i>. This is a set of formulas which we suppose are true in the context of a given proof. It is not always true that when it rains, we get wet. Maybe we are smart and bring our umbrella when it rains. But let's say we assume the first implication is true. Then if we go out and it rains, we can conclude that we get wet. It's all about the context. We are ready for our first proof.
+            We notice that the definition features something called <i>context</i>. This is a set of formulas which we suppose are true in the context of a given proof. It is not always true that when it rains, we get wet. Maybe we are smart and bring our umbrella when it rains. But let's say we assume the first implication is true. Then if we go out and it rains, we can conclude that we get wet. It's all about the context. We should put the last definition to use and prove something. We start slowly.
         </p>
 
         <div class="theorem">
@@ -107,9 +107,8 @@
         </div>
 
         <p>
-            This it is just a reminder that we can use any formula with our axioms. Variables \(P_0, P_1, \ldots\) are by definition formulas in a given language so everything is fine. We shall prove something little bit more difficult called conjugation commutativity.
+            This is a reminder that we can use any concrete formula with our axioms and by definition variables \(P_0\) and \(P_1\) are formulas in any language. Using concrete formulas is fine, but the powerful thing logicians do is that they prove things about the <i>structure</i> of the axiomatic system. The idea is that if the proof structure is the same for every concrete formula, then why not just prove it abstractly.
         </p>
-
 
         <div class="theorem">
             \(\{\mathfrak{a} \land \mathfrak{b}\} \vdash \mathfrak{b} \land \mathfrak{a}\).
@@ -124,12 +123,9 @@
             </ol>
             \(\blacksquare\)
         </div>
-
+        
         <p>
-            <span style="color: red">work in progress</span>
-        </p>
-        <p>
-            Now this proof uses formula symbols. We could use concrete formulas and prove \(\{P_0 \land P_1\} \vdash P_1 \land P_0\). But the proof is also true for different formulas like \((\{P_1 \to P_3) \land P_1\} \vdash P_1 \land (P_1 \to P_3)\). This is why we prove the statement without concrete formulas. Can we obtain anything else then axioms from an empty context? We can. One such example is the proposition \(P \to P\).
+            We see that we learned something about the conjugation symbol &ndash; it does not matter if we swap formulas. We could prove many more things. For example same thing is true for the disjunction symbol. You might know the DeMorgan laws. These laws are very important theorems about the structure of logical connectives and how they play together. Let's prove something interesting.
         </p>
      
         <div class="theorem">
@@ -148,7 +144,7 @@
         </div>
 
         <p>
-            Why isn't this an axiom? It seems useful to know it from the start. We <i>could</i> add \(P \to P\) to the axiom schema and nothing would break. But we strive to have a set of axioms such that this set is in some sense minimal. This means that no axiom in the set is provable using the other axioms. The next theorem is useful for proving properties of the set of propositions. It can be rigorously proved but we will not bother with it. It follows from the definition of a proof.
+            Why isn't this an axiom? It seems useful to know it from the start. We <i>could</i> add \(P \to P\) to the axiom schema and nothing would break. But we strive to have a set of axioms such that this set is in some sense minimal. This means that no axiom in the set is provable using the other axioms. We end the introduction to axiomatic systems with the following theorem.
         </p>
             
         <div class="theorem">
@@ -160,6 +156,13 @@
             </ul>
         </div>
 
+        <p>
+            The proof of each statement follows almost directly from the definition of a proof. We only have to be little cautious with the last statement. This statement is only valid in axiomatic systems having the <i>modus ponens</i> rule. We will later see another proof system which is build a little differently.
+        </p>
+
         <h3>Theories</h3>
+        <p>
+            <span style="color: red">work in progress</span>
+        </p>
     </div>
 </body>

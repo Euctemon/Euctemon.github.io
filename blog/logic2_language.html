@@ -113,11 +113,11 @@
         </p>
 
         <div class="definition">
-        Fix a language \(\mathcal{L} = (\Gamma,\Delta,\Alpha)\). We say that \(\mathcal{M} = (U,I)\) is a <b>model</b> for language \(\mathcal{L}\) if the set \(U\), commonly called universe, is a nonempty set and \(I\) is a function which assigns to each k-ary function symbol in \(\Gamma\) a k-ary function from \(U\) to \(U\) and to each k-ary relation symbol in \(\Delta\) a k-ary relation on \(U\).
+        Fix a language \(\mathcal{L} = (\Gamma,\Delta,\Alpha)\). We say that \(\mathcal{M} = (\mathcal{U},\mathcal{I})\) is a <b>model</b> for language \(\mathcal{L}\) if the set \(\mathcal{U}\), commonly called universe, is a nonempty set and \(\mathcal{I}\) is a function which assigns to each k-ary function symbol in \(\Gamma\) a k-ary function from \(\mathcal{U}\) to \(\mathcal{U}\) and to each k-ary relation symbol in \(\Delta\) a k-ary relation on \(\mathcal{U}\).
         </div>
 
         <p>
-            Let's take again the language \(\mathcal{L}_1\) with one function symbol and one relation symbol and a universe \(U\) consisting of natural numbers. We will define two models for this language. Both models will interpret the function symbol \(f\) as adding a fixed natural number to the function's operand. The model \(\mathcal{M}_1\) will interpret the relation symbol as the greater or equal relation and the function symbol as adding number \(1\) to the argument. This can be written as \(\mathcal{M}_1 = (\mathbb{N}, I_1)\) where \(I_1(f) = (+1)\) and \(I_1(r) = (\geq)\). Now the second model \(\mathcal{M}_2\) will interpret the relation symbol as the divisibility relation and the function symbol as adding the number \(3\) to the argument. We can write the second model as \(\mathcal{M}_2 = (\mathbb{N}, I_2)\) where \(I_2(f) = (+3)\) and \(I_2(r) = (\: | \:)\).
+            Let's take again the language \(\mathcal{L}_1\) with one function symbol and one relation symbol and a universe \(\mathcal{U}\) consisting of natural numbers. We will define two models for this language. Both models will interpret the function symbol \(f\) as adding a fixed natural number to the function's operand. The model \(\mathcal{M}_1\) will interpret the relation symbol as the greater or equal relation and the function symbol as adding number \(1\) to the argument. This can be written as \(\mathcal{M}_1 = (\mathbb{N}, \mathcal{I}_1)\) where \(\mathcal{I}_1(f) = (+1)\) and \(\mathcal{I}_1(r) = (\geq)\). Now the second model \(\mathcal{M}_2\) will interpret the relation symbol as the divisibility relation and the function symbol as adding the number \(3\) to the argument. We can write the second model as \(\mathcal{M}_2 = (\mathbb{N}, \mathcal{I}_2)\) where \(\mathcal{I}_2(f) = (+3)\) and \(\mathcal{I}_2(r) = (\: | \:)\).
         </p>
 
         <p>
@@ -125,7 +125,7 @@
         </p>
 
         <div class="definition">
-            Fix a alphabet \(\Sigma\). The assignment function \(v\) is a function from the set of variables in \(\Sigma\) to the universe \(U\).
+            Fix a alphabet \(\Sigma\). The assignment function \(v\) is a function from the set of variables in \(\Sigma\) to the universe \(\mathcal{U}\).
         </div>
 
         <p>
@@ -166,13 +166,13 @@
         </p>
 
         <div class="definition">
-                Let \(\mathcal{M} = (U,I)\) be any model. We interpret formulas as follows
+                Let \(\mathcal{M} = (\mathcal{U},\mathcal{I})\) be any model. We interpret formulas as follows
 
                 <ul>
-                    <li>\(I(\bot) = \bot\)</li>
-                    <li>If \(I(P) = \top\) and \(I(Q) = \top\), then \(I(P \land Q) = \top\), otherwise \(I(P \land Q) = \bot\) </li>
-                    <li>If \(I(P) = \top\) or \(I(Q) = \top\), then \(I(P \lor Q) = \top\), otherwise \(I(P \lor Q) = \bot\) </li>
-                    <li>If \(I(P) = \bot\) or \(I(Q) = \top\), then \(I(P \to Q) = \top\), otherwise \(I(P \to Q) = \bot\) </li>
+                    <li>\(\mathcal{I}(\bot) = \bot\)</li>
+                    <li>If \(\mathcal{I}(P) = \top\) and \(\mathcal{I}(Q) = \top\), then \(\mathcal{I}(P \land Q) = \top\), otherwise \(\mathcal{I}(P \land Q) = \bot\) </li>
+                    <li>If \(\mathcal{I}(P) = \top\) or \(\mathcal{I}(Q) = \top\), then \(\mathcal{I}(P \lor Q) = \top\), otherwise \(\mathcal{I}(P \lor Q) = \bot\) </li>
+                    <li>If \(\mathcal{I}(P) = \bot\) or \(\mathcal{I}(Q) = \top\), then \(\mathcal{I}(P \to Q) = \top\), otherwise \(\mathcal{I}(P \to Q) = \bot\) </li>
                 </ul>
             </div>
 
