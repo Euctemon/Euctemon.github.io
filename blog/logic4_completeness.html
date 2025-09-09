@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <link rel="stylesheet" type="text/css" href="../styles/styles.css">
+    <link rel="icon" href="../styles/favicon.ico">
+
+
+    <!-- Katex extension -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css"
+        integrity="sha384-nB0miv6/jRmo5UMMR1wu3Gz6NLsoTkbqJghGIsx//Rlm+ZU03BU6SQNC66uf4l5+" crossorigin="anonymous">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"
+        integrity="sha384-7zkQWkzuo3B5mTepMUcHkMB5jZaolc2xDwL6VFqjFALcbeS9Ggm/Yr2r3Dy4lfFg"
+        crossorigin="anonymous"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"
+        integrity="sha384-43gviWU0YVjaDtb/GhzOouOXtZMP/7XUzwPTstBeZFe/+rCMvRwr4yROQP43s0Xk" crossorigin="anonymous"
+        onload="renderMathInElement(document.body);"></script>
+
+    <script type="text/javascript" src="../styles/buttons.js"></script>
+
+    <title>Logic</title>
+</head>
+
+<body>
+    <button onclick="navOpener()" id="blog-button">
+        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30">
+            <circle r="1.2" cx="6" cy="10" stroke="black" />
+            <circle r="1.2" cx="6" cy="16" stroke="black" />
+            <circle r="1.2" cx="6" cy="22" stroke="black" />
+            <line x1="12" y1="10" x2="25" y2="10" stroke="black" stroke-width="2" stroke-linecap="round" />
+            <line x1="12" y1="16" x2="25" y2="16" stroke="black" stroke-width="2" stroke-linecap="round" />
+            <line x1="12" y1="22" x2="25" y2="22" stroke="black" stroke-width="2" stroke-linecap="round" />
+        </svg>
+    </button>
+
+    <header>
+        <div id="blog-nav">
+            <ul>
+                <li><a href="../blog.html">Blog</a></li>
+                <li><a href="logic1_intro.html">Introduction</a></li>
+                <li><a href="logic2_language.html">Languages</a></li>
+                <li><a href="logic3_proving.html">Proof systems</a></li>
+                <li><a href="logic4_completeness.html">Completeness</a></li>
+                <li><a href="logic5_natural.html">Natural deduction</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <div class="blogpage">
+        <h1>Completeness and Soundness</h1>
+        <h2>Soundness</h2>
+        <p>
+            The main goal of the next two chapters is to show the connection between \(\vdash\) and \(\vDash\). The
+            soundness theorem expresses what provability says about models and logical consequnces.
+        </p>
+
+        <div class="theorem">
+            For every set \(\Gamma\) of propositional formulas and every propositional formula \(A\), we have that
+            \(\Gamma \vdash A\) implies \(\Gamma \vDash A\).
+        </div>
+
+        <div class="proof">
+            <p>
+                We use the induction on the set of sequents in natural deduction. This means we assume \(\Gamma \vdash
+                A\) is provable and we want to show that \(A\) is a logical consequence of \(\Gamma\), written as
+                \(\Gamma \vDash A\). Suppose that \(\Gamma \vdash A\) is an assumption. Then \(A\) is in \(\Gamma\) and
+                from the definition of logical consequence, we immidiately know \(\Gamma \vDash A\). Now we need to
+                prove the theorem for all introduction and elimination rules.
+            </p>
+
+            <b>Conjunction</b>
+
+            <p>
+                First the introduction rule. Suppose we derive \(\Gamma \vdash A \land B\) from \(\Gamma \vdash A\) and
+                \(\Gamma \vdash B\) using the introduction rule. Let \(v\) be any truth assignment which satisfies
+                \(\Gamma\), written as \(v \vDash \Gamma\). By the inductive hypothesis (using the conclusion of the
+                theorem for \(\Gamma \vdash A\) and \(\Gamma \vdash B\) ), we know that \(\Gamma \vDash A\) and \(\Gamma
+                \vDash B\). As \(v\) satisfies \(\Gamma\), we know that \(v\) satisfies \(A\) and \(B\) from the
+                definition of logical consequence and we write this as \(\llbracket A \rrbracket^v = \top\) and
+                \(\llbracket B \rrbracket^v = \top\). Using the definition of \(I\), we compute \(\llbracket A \land B
+                \rrbracket^v = \top\). This means we proved \(\Gamma \vDash A \land B\).
+            </p>
+
+            <p>
+                Now the elimination rule. Suppose we derive \(\Gamma \vdash A\) from \(\Gamma \vdash A \land B\). let
+                \(v\) by any truth assignment satisfying \(\Gamma\). By the inductive hypothesis, we have that \(v\)
+                satisfies \(A \land B\). We can write this as \(\llbracket A \land B \rrbracket^v = \top\). But from the
+                definition of evaluation of conjunction, we have \(\llbracket A \rrbracket^v = \top\). This means
+                \(\Gamma \vDash A\).
+            </p>
+
+            <b>Implication</b>
+
+            <p>
+                The proof of the case of implication shows how to deal with a changing context. We again start with the
+                introduction rule. Suppose we derive \(\Gamma \vdash A \to B\) from \(\Gamma \cup \{A\} \vdash B\). Let
+                \(v\) be any truth assignment satisfying \(\Gamma\). As we don't know whether \(\llbracket A
+                \rrbracket^v = \top\) or \(\llbracket A \rrbracket^v = \bot\), we need to assume either can happen. If
+                \(\llbracket A \rrbracket^v = \top\), then \(\llbracket A \to B \rrbracket^v = \top\) immidiately from
+                the definition of evaluating implication. If \(\llbracket A \rrbracket^v = \bot\), then by the induction
+                hypothesis, we know \(\llbracket B \rrbracket^v = \top\) and hence again \(\llbracket A \to B
+                \rrbracket^v = \top\) and \(\Gamma \vDash A \to B\).
+            </p>
+
+            <p>
+                The proof for the elimination rule is easier. Suppose we derive \(\Gamma \vdash B\) from \(\Gamma \vdash
+                A\) and \(\Gamma \vdash A \to B\). Let \(v\) be any truth assignment satisfying \(\Gamma\). This means
+                \(\llbracket A \to B \rrbracket^v = \top\) and also \(\llbracket A \rrbracket^v = \top\). Using the
+                definition of evaluating implication, we have \(\llbracket B \rrbracket^v = \top\) and \(\Gamma \vDash
+                B\).
+            </p>
+
+            <b>Reductio ad absurdum</b>
+
+            <p>
+                The introduction and elimination rule for disjunction would be handled similarly. But the case of
+                reductio ad absurdum is little tricky. The \(\bot\) has only the elimination rule.
+            </p>
+
+            $$ \dfrac{\Gamma \cup \{\lnot P\} \vdash \bot}{\Gamma \vdash P} \bot_E$$
+
+            <p>
+                We suppose that we derive \(\Gamma \vdash P\) from \(\Gamma \cup \{\lnot P\} \vdash \bot\). Let \(v\) be
+                any truth assignment which satisfies \(\Gamma\). Using the induction hypothesis we should write
+                \(\llbracket \bot \rrbracket^v = \top\). But from the definition of \(I\) there is no truth assignment
+                which would satisfy \(\bot\). This implies there is no truth assignment which would satisfy \(\Gamma\).
+                This means that \(\Gamma \vDash P\), because <i>every</i> assignment which satisfies \(\Gamma\) also
+                satisfies \(P\).
+            </p>
+            \(\blacksquare\)
+        </div>
+        <h2>Completeness</h2>
+        <h3>Consistency</h3>
+        <p>
+            The completeness deals with the other way, that is, if we know \(\Gamma \vDash P\), can we conclude that
+            \(\Gamma \vdash P \:\)? Proving soundness was relatively easy. We used introduction and elimination rules in
+            natural deduction to show the provability relation preserves the truth assignment. Now we know \(\Gamma
+            \vDash A\) which means that every truth assignment satisfying \(\Gamma\) also satisfies \(A\) and want to
+            say that there <i>exists</i> a proof of \(A\) from \(\Gamma\) without actually <i>constructing</i> the
+            proof. That is not trivial at all! We start with the statement of the theorem.
+        </p>
+
+        <div class="theorem">
+            For every set \(\Gamma\) of propositional formulas and every propositional formula \(A\), we have that
+            \(\Gamma \vDash A\) implies \(\Gamma \vdash A\).
+        </div>
+
+        <p>
+            First thing we do is to introduce the notion of consistency. With few simple lemmas, we will show that
+            proving completeness is equivalent to showing that if the set \(\Gamma\) is consistent, then is satisfiable.
+            The first lemma shows what happens if the set \(\Gamma\) is inconsistent.
+        </p>
+
+        <div class="definition">
+            Let \(\Gamma\) be any set of propositional formulas. We say that \(\Gamma\) is <i>inconsistent</i> if it
+            proves \(\bot\) and <i>consistent</i> otherwise.
+        </div>
+
+        <div class="theorem">
+            Let \(\Gamma\) be any set of propositional formulas. The following are equivalent for classical
+            propositional logic.
+            <ol>
+                <li>The set \(\Gamma\) is inconsistent.</li>
+                <li>For <i>some</i> formula \(A\), we have that \(\Gamma \vdash A\) and \(\Gamma \vdash \lnot A\) are
+                    provable.</li>
+                <li>For every formula \(A\), we know that \(\Gamma \vdash A\) is provable.</li>
+            </ol>
+        </div>
+
+        <div class="proof">
+            <ul>
+                <li>\(1 \to 3 \:\) Suppose that the set \(\Gamma\) is inconsistent. This means \(\Gamma \vdash \bot\).
+                    Using weakening we can write \(\Gamma \cup \{\lnot P\} \vdash \bot\) and using reductio ad absurdum
+                    we conclude \(\Gamma \vdash P\).</li>
+                <li>\(3 \to 2 \:\) Suppose we can prove any propositional formula \(P\) from the set \(\Gamma\). This
+                    means we can prove \(\Gamma \vdash A\) and also \(\Gamma \vdash \lnot A\) which we wanted.</li>
+                <li>\(2 \to 1 \:\) suppose we can prove \(\Gamma \vdash A\) and also \(\Gamma \vdash \lnot A\). We know
+                    that \(\lnot A\) is an abbreviation for \(A \to \bot\) and using elimination rule for implication we
+                    conclude \(\Gamma \vdash \bot\). This means \(\Gamma\) is inconsistent.</li>
+            </ul>
+            \(\blacksquare\)
+        </div>
+
+        <p>
+            We see that if \(\Gamma\) is inconsistent, then we can prove everything. This is called the <i>principle of
+                explosion</i>. Being able to prove everything means that we lose the ability to speak about truth. If
+            there are no false statements this means the proof of any statement carries no value at all. The next lemma
+            is a simple observation that we cannot find a truth assignment which satisfies \(\bot\). The proof is
+            trivial as we only have to carefully write down the definition of satisfiability and remember that \(I(\bot)
+            = \bot\). We used this line of reasoning for the case of reductio ad absurdum in the proof of soundness.
+        </p>
+
+        <div class="theorem">
+            Let \(\Gamma\) be any set of propositional formulas. The set \(\Gamma\) is unsatisfiable if and only if
+            \(\Gamma \vDash \bot\).
+        </div>
+
+        <p>
+            What happens when we add a negation of a formula \(A\) to the set \(\Gamma\) from which we could prove \(A
+            \:\)? We get inconsistency. This innocently looking lemma will be of much importance later on for using SAT
+            solvers for proving. It is also important for the completeness theorem.
+        </p>
+
+        <div class="theorem">
+            Let \(\Gamma\) be any set of propositional formulas and let \(A\) be a propositional formula. Then \(\Gamma
+            \vdash A\) if and only if \(\{\Gamma,\lnot A\}\) is inconsistent.
+        </div>
+
+        <div class="proof">
+            <p>
+                Suppose we can prove \(\Gamma \vdash A\). By weakening we know \(\Gamma \cup \{\lnot\} A \vdash A\) and
+                by the assumption rule we also know \(\Gamma \cup \{\lnot A\} \vdash \lnot A\). Using elimination rule
+                for implication we get \(\Gamma \cup \{\lnot A\} \vdash \bot\). This means that \(\Gamma \cup \{\lnot
+                A\}\) is inconsistent. For the other implication assume that \(\Gamma \cup \{\lnot A\}\) is
+                inconsistent. This means we can prove \(\Gamma \cup \{\lnot A\} \vdash \bot\). Using reductio ad
+                absurdum we immidately get \(\Gamma \vdash A\).
+            </p>
+            \(\blacksquare\)
+        </div>
+
+        <p>
+            We are getting closer to the proof of completeness. The next theorem does not have a name, but we will call
+            it <b>Consistency theorem</b>. We prove that Consistency theorem is in classical propositional logic
+            equivalent to the Completeness theorem. This means we can prove Completeness theorem using Consistency
+            theorem and vice versa.
+        </p>
+
+        <div class="theorem">
+            Every consistent set \(\Gamma\) of propositional formulas is satisfiable.
+        </div>
+
+        <div class="proof">
+            <b>Of equivalence</b>
+            <p>
+                First assume that Consistency theorem holds. Suppose that \(\Gamma \nvdash A\). From the previous lemma
+                we know \(\Gamma \cup \{\lnot A\}\) is consistent. By the Consistency theorem we know that \(\Gamma \cup
+                \{\lnot A\}\) is satisfiable. Let \(v\) be a truth assignment which satisfies \(\Gamma \cup \{\lnot
+                A\}\). Such \(v\) must satisfy \(\lnot A\), in other words \(\llbracket A \to \bot\rrbracket^v = \top\).
+                This is possible only if \(\llbracket A \rrbracket^v = \bot\) from the definition of evaluating
+                implication. Thus \(\Gamma \nvDash A\).
+            </p>
+
+            <p>
+                Now assume that the Completeness theorem holds. Suppose that \(\Gamma\) is consistent. From definition
+                of consistency we have \(\Gamma \nvdash \bot\). From the Completeness theorem we have \(\Gamma \nvDash
+                \bot\). Using the first lemma in this section we conclude that \(\Gamma\) is satifiable.
+            </p>
+        </div>
+
+        <h3>Maximally consistent sets</h3>
+
+        <p>
+            We are left with proving the Consistency theorem. In order to prove this statement, we will need to
+            introduce maximally consistent sets. These are the set of propositions, which are in some sense
+            <i>saturated</i>, meaning you cannot add another proposition without breaking consistency. Suprisingly, it
+            will be easier to prove that maximally consistent sets are satisfiable and from that prove the Consistency
+            theorem.
+        </p>
+
+        <div class="definition">
+            A set \(\Gamma\) of propositional formulas is <i>maximally consistent</i> if
+            <ul>
+                <li>it is consistent, and</li>
+                <li>for every propositional formula \(B \notin \Gamma\), the set \(\Gamma,B\) is inconsistent.</li>
+            </ul>
+        </div>
+
+        <p>
+            First we need to establish that we can extend any consistent set into a maximally consistent one.
+        </p>
+
+        <div class="theorem">
+            Let \(\Gamma\) be any consistent set of propositional formulas. Then there exists a maximally consistent set
+            \(\Delta\) such that \(\Gamma \subset \Delta\).
+        </div>
+
+        <div class="proof">
+            We assume that we have countably many propositional variables and therefore countably many propositional
+            formulas. This means we can enumerate these propositions as a sequence \(A_0,A_1,\ldots \:\) using natural
+            numbers. We define a sequence of sets \(\Gamma_i\) inductively. We set \(\Gamma_0 = \Gamma\) and
+
+            $$\Gamma_i = \begin{cases}
+            \Gamma_i \cup \{A_i\} &\text{if such set is consistent} \\
+            \Gamma_i &\text{otherwise }
+            \end{cases}$$
+
+            <p>
+                We set \(\Delta = \bigcup \Gamma_i\) where the \(i\) ranges over natural numbers. By induction every
+                \(\Gamma_i\) is consistent and thus \(\Delta\) is consistent too. We want to prove that \(\Delta\) is
+                maximally consistent. Suppose that \(A \notin \Delta\). We know that \(A = B_i\) for some \(i\). We also
+                know that \(A \notin \Gamma_{i+1}\) from the inductive construction. This means that \(\Gamma_{i+1} \cup
+                \{A\}\) is inconsistent which implies that \(\Delta \cup \{A\}\) is inconsistent.
+            </p>
+            \(\blacksquare\)
+        </div>
+
+        <p>
+            Before we prove that the maximally consistent set is satisfiable, we need one more technical lemma. It tells
+            us something about the <i>structure</i> of propositions one can find in a maximally consistent set.
+        </p>
+
+        <div class="theorem">
+            Let \(\Gamma\) be a maximally consistent set of propositional formulas. Then \(\Gamma\) has the following
+            properties
+
+            <ol>
+                <li>\(\Gamma\) is closed under deduction, which means if \(\Gamma \vdash A\), then \(A \in \Gamma\).
+                </li>
+                <li>\(\bot \notin \Gamma\)</li>
+                <li>\(A \land B \in \Gamma\) if and only if \(A \in \Gamma\) and \(B \in \Gamma\)</li>
+                <li>\(A \to B \in \Gamma\) if and only if \(A \notin \Gamma\) or \(B \in \Gamma\)</li>
+                <li>\(A \lor B \in \Gamma\) if and only if \(A \in \Gamma\) or \(B \in \Gamma\)</li>
+            </ol>
+        </div>
+
+        <div class="proof">
+            <p>
+                Suppose that \(\Gamma \vdash A\). We assume that \(\Gamma\) is consistent, which implies that \(\Gamma
+                \cup \{A\}\) is consistent too. If you are not sure why, then think what would it mean if this set
+                wasn't consistent. Inconsistency means we are able to prove \(\Gamma,A \vdash \bot\). Using introduction
+                rule for implication we get \(\Gamma \vdash A \to \bot\) which is the same as \(\Gamma \vdash \lnot A\).
+                From the first lemma in the previous section, this would mean that \(\Gamma\) is inconsistent! The
+                second claim follow from the first one, again using the first lemma in the previous section.
+            </p>
+
+            <p>
+                Suppose that \(A \land B \in \Gamma\). Using the first claim we know that \(\Gamma \vdash A \land B\).
+                This is equivalent to saying that \(\Gamma \vdash A\) and \(\Gamma \vdash B\) using the introduction or
+                elimination rules for conjunction. This is in turn equivalent to saying that \(A \in \Gamma\) and \(B
+                \in \Gamma\), again thanks to the first claim.
+            </p>
+
+            <p>
+                Suppose that \(A \to B \in \Gamma\). Using the first claim we get \(\Gamma \vdash A \to B\). If \(A \in
+                \Gamma\), then \(\Gamma \vdash A\) and using elimination rule for implication we have \(\Gamma \vdash
+                B\), or \(B \in \Gamma\) using the first claim. This means either \(A \notin \Gamma\) or \(B \in
+                \Gamma\). Now suppose that \(A \notin \Gamma\) or \(B \in \Gamma\). If \(A \notin \Gamma\), then the set
+                \(\Gamma \cup \{A\}\) is inconsistent because \(\Gamma\) is maximally consistent. Using the first lemma
+                in the previous section and knowing that \(\Gamma,A\) is inconsistent, we have \(\Gamma,A \vdash B\) and
+                using introduction rule for implication we conclude \(\Gamma \vdash A \to B\). If \(B \in \Gamma\), then
+                \(\Gamma \vdash B\) using the first claim and \(\Gamma,A \vdash B\) using weakening and thus again
+                \(\Gamma \vdash A \to B\) using introduction rule for implication.
+            </p>
+
+            <p>
+                The proof of the last case is done similarly using cases on \(A\) and \(B\).
+            </p>
+            \(\blacksquare\)
+        </div>
+
+        <p>
+            We use the previous lemma to define a rather funny truth assignment. We start with assigning truth to
+            propositional variables which belong to \(\Gamma\). We then conclude that the propositional formulas which
+            evaluate to true are exactly the ones one can find in the set \(\Gamma\).
+        </p>
+
+        <div class="theorem">
+            Suppose that \(\Gamma\) is maximally consistent set of propositional formulas. Define a truth assignment
+            \(v\) by setting \(v(P) = \top\) if \(P \in \Gamma\). Then for every propositional formula we have
+            \(\llbracket A \rrbracket^v = \top\) if and only if \(A \in \Gamma\).
+        </div>
+
+        <div class="proof">
+            <p>
+                We use the induction on propositional formulas \(A\). if \(A\) is a propositional variable then we know
+                \(v(A) = \top\) because that is how we defined the truth assignment for variables. The cases for
+                conjunction, disjunction and implication follow from the previous lemma.
+            </p>
+            \(\blacksquare\)
+        </div>
+
+        <p>
+            We can finally prove the consistency theorem. We repeat its statement and then prove it.
+        </p>
+
+        <div class="theorem">
+            Every consistent set \(\Gamma\) of propositional formulas is satisfiable.
+        </div>
+
+        <div class="proof">
+            <p>
+                Suppose \(\Gamma\) is consistent. We can extend this set to a maximally consistent set \(\Delta\) using
+                the inductive construction. The previous lemma tells us that we know how to define a truth assignment
+                satisfying \(\Delta\). We know that \(\Gamma \subset \Delta\), which implies that this assignment also
+                satisfies \(\Gamma\). Thus \(\Gamma\) is satisfiable.
+            </p>
+            \(\blacksquare\)
+        </div>
+    </div>
+</body>
