@@ -46,13 +46,13 @@ body {
 h1 {
     font-family: "Questa";
     font-weight: 400;
-    font-size: 3rem;
+    font-size: 2.5rem;
 }
 
 .main-nav {
     display: flex;
     justify-content: center;
-    font-size: 2rem;
+    font-size: 1.5rem;
     font-family: Questa;
     margin-bottom: 1em;
     
@@ -98,7 +98,7 @@ h1 {
     position: absolute;
     top: 65%;
     background-color: rgba(100, 100, 100, 0.25);
-    text-align: center;
+    text-align: left;
     border-radius: 1em;
 
 }
@@ -127,7 +127,7 @@ h1 {
 
 .content-body {
     max-width: 600px;
-    text-align: justify;
+    text-align: left;
 }
 
 #coproduct-svg {
