@@ -49,6 +49,17 @@ h1 {
     font-size: 2.5rem;
 }
 
+h2 {
+    font-family: "Questa";
+        font-weight: 400;
+    font-size: 2rem;
+}
+
+h3 {
+    font-family: "Questa";
+    font-size: 1.5rem;
+}
+
 .main-nav {
     display: flex;
     justify-content: center;
@@ -219,10 +230,6 @@ h1 {
     }
 }
 
-h2 {
-    padding-top: 3em;
-}
-
 .list-descript {
     margin: 1em auto 0.5em;
     color: var(--swamp);
@@ -250,15 +257,12 @@ h2 {
   transition: color 0.5s
 }
 
-
 .left-right-nav svg:hover {
   color: var(--swamp);
-
 }
 
 .left-right-nav a:hover {
   color: var(--swamp);
-
 }
 
 
@@ -305,14 +309,18 @@ h2 {
     font-weight: 400;
 }
 
+.def-word {
+    color: chocolate;
+}
+
 ol {
     margin: 0;
     & li {
         padding-left: 5px;
     }
 }
-/* .popover-content */
 
+/* .popover-content */
 .popover {
     position: relative;
     color: teal;
