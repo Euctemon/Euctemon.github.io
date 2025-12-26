@@ -1,2 +1,92 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><title>Introduction</title><link rel="icon" href="styles/favicon.ico"/><link rel="stylesheet" href="../styles/styles.css"/><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.27/dist/katex.min.css" integrity="sha384-Pu5+C18nP5dwykLJOhd2U4Xen7rjScHN/qusop27hdd2drI+lL5KvX7YntvT8yew" crossorigin="anonymous"/><script src="https://cdn.jsdelivr.net/npm/katex@0.16.27/dist/katex.min.js" defer="defer" crossorigin="anonymous" integrity="sha384-2B8pfmZZ6JlVoScJm/5hQfNS2TI/6hPqDZInzzPc8oHpN5SgeNOf4LzREO6p5YtZ"></script><script src="https://cdn.jsdelivr.net/npm/katex@0.16.27/dist/contrib/auto-render.min.js" defer="defer" crossorigin="anonymous" integrity="sha384-hCXGrW6PitJEwbkoStFjeJxv+fSOOQKOPbJxSfM6G5sWZjAyWhXiTIIAmQqnlLlh" onload="renderMathInElement(document.body);"></script><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><meta name="description" content="A beautiful site built with Tyxml"/></head><body><div class="content-flex"><div class="content-body"><h1>Mathematical logic</h1><p>The following pages are about mathematical logic. During my engineering studies, I wasn't concerned about logic at all. After I finished mechanical engineering, I went to study pure mathematics. For my bachelor thesis I chose to prove a theorem from algebra in a theorem prover. Theorem provers are programs for proving mathematical statements, and they rely heavily on logic. I got acquainted with some not-so-known types of logic systems and how they are used in theorem proving. I soon discovered that I had not understood mathematical logic at all. Why is first order logic so ubiquous? Why do we care about truth tables and how do they interact with propositional logic? Why do most theorem provers use higher order logic? I don't think my undestanding got much better since I started learning about these things. Nevertheless, I wanted to put down some of my thoughts on logic here, hoping that writing about it would make at least some ideas clear.</p><p>Logic can be described as a study of correct reasoning, and it is a cornerstone of philosophy and mathematics. It might come as a surprise that mathematicians do not know about logic as much as you would think. They need to know how to reason correctly, but very few mathematicians study logic directly. Those who do are interested in so-called mathematical logic. This branch of mathematics can be roughly divided into the study of sets, the study of the proof structures, and the study of the relationship between formal theories. During my undergraduate studies, I had two courses on logic. One was an introductory course, and the other one was on the computational aspects of logic, or in other words, how can we leverage logic to solve concrete problems. Apart from that, we were taught how to deal with quantifiers, how to structure a proof by contradiction, and a few other tools applicable in mathematics. But mathematical logic is far more.</p></div></div><div class="left-right-nav"><div></div><a href="../blog.html">Blog</a><a href="../logic/languages.html"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 3 30 30" width="35px" height="35px"><path d="M 12 9 L 18 15 L 12 21" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3px"></path></svg></a></div></body></html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <title>Introduction</title>
+    <link rel="icon" href="styles/favicon.ico" />
+    <link rel="stylesheet" href="../styles/styles.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/katex@0.16.27/dist/katex.min.css"
+      integrity="sha384-Pu5+C18nP5dwykLJOhd2U4Xen7rjScHN/qusop27hdd2drI+lL5KvX7YntvT8yew"
+      crossorigin="anonymous"
+    />
+    <script
+      src="https://cdn.jsdelivr.net/npm/katex@0.16.27/dist/katex.min.js"
+      defer="defer"
+      crossorigin="anonymous"
+      integrity="sha384-2B8pfmZZ6JlVoScJm/5hQfNS2TI/6hPqDZInzzPc8oHpN5SgeNOf4LzREO6p5YtZ"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/katex@0.16.27/dist/contrib/auto-render.min.js"
+      defer="defer"
+      crossorigin="anonymous"
+      integrity="sha384-hCXGrW6PitJEwbkoStFjeJxv+fSOOQKOPbJxSfM6G5sWZjAyWhXiTIIAmQqnlLlh"
+      onload="renderMathInElement(document.body);"
+    ></script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="A beautiful site built with Tyxml" />
+  </head>
+  <body>
+    <div class="content-flex">
+      <div class="content-body">
+        <h1>Mathematical logic</h1>
+        <p>
+          The following pages are about mathematical logic. During my
+          engineering studies, I wasn't concerned about logic at all. After I
+          finished mechanical engineering, I went to study pure mathematics. For
+          my bachelor thesis I chose to prove a theorem from algebra in a
+          theorem prover. Theorem provers are programs for proving mathematical
+          statements, and they rely heavily on logic. I got acquainted with some
+          not-so-known types of logic systems and how they are used in theorem
+          proving. I soon discovered that I had not understood mathematical
+          logic at all. Why is first order logic so ubiquous? Why do we care
+          about truth tables and how do they interact with propositional logic?
+          Why do most theorem provers use higher order logic? I don't think my
+          undestanding got much better since I started learning about these
+          things. Nevertheless, I wanted to put down some of my thoughts on
+          logic here, hoping that writing about it would make at least some
+          ideas clear.
+        </p>
+        <p>
+          Logic can be described as a study of correct reasoning, and it is a
+          cornerstone of philosophy and mathematics. It might come as a surprise
+          that mathematicians do not know about logic as much as you would
+          think. They need to know how to reason correctly, but very few
+          mathematicians study logic directly. Those who do are interested in
+          so-called mathematical logic. This branch of mathematics can be
+          roughly divided into the study of sets, the study of the proof
+          structures, and the study of the relationship between formal theories.
+          During my undergraduate studies, I had two courses on logic. One was
+          an introductory course, and the other one was on the computational
+          aspects of logic, or in other words, how can we leverage logic to
+          solve concrete problems. Apart from that, we were taught how to deal
+          with quantifiers, how to structure a proof by contradiction, and a few
+          other tools applicable in mathematics. But mathematical logic is far
+          more.
+        </p>
+      </div>
+    </div>
+    <div class="left-right-nav">
+      <div></div>
+      <a href="../blog.html">Blog</a
+      ><a href="../logic/languages.html"
+        ><svg
+          xmlns="http://www.w3.org/2000/svg"
+          xmlns:xlink="http://www.w3.org/1999/xlink"
+          viewBox="0 3 30 30"
+          width="35px"
+          height="35px"
+        >
+          <path
+            d="M 12 9 L 18 15 L 12 21"
+            fill="none"
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="3px"
+          ></path></svg
+      ></a>
+    </div>
+  </body>
+</html>
