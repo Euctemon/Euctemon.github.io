@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+
+<head>
+    <title>Natural deduction</title>
+    <link rel="icon" href="styles/favicon.ico" />
+    <link rel="stylesheet" href="../styles/styles.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.27/dist/katex.min.css"
+        integrity="sha384-Pu5+C18nP5dwykLJOhd2U4Xen7rjScHN/qusop27hdd2drI+lL5KvX7YntvT8yew" crossorigin="anonymous" />
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.27/dist/katex.min.js" defer="defer" crossorigin="anonymous"
+        integrity="sha384-2B8pfmZZ6JlVoScJm/5hQfNS2TI/6hPqDZInzzPc8oHpN5SgeNOf4LzREO6p5YtZ"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.27/dist/contrib/auto-render.min.js" defer="defer"
+        crossorigin="anonymous" integrity="sha384-hCXGrW6PitJEwbkoStFjeJxv+fSOOQKOPbJxSfM6G5sWZjAyWhXiTIIAmQqnlLlh"
+        onload="renderMathInElement(document.body);"></script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="A beautiful site built with Tyxml" />
+</head>
+
+<body>
+    <div class="content-flex">
+        <div class="content-body">
+            <h1>Other systems of logic</h1>
+            <h2>Natural deduction</h2>
+            <p>The Hilbert style is not the only way to set up a logic system. The axiomatic systems have mainly axioms
+                and only one rule. What if we had only one axiom and many rules? It turns out that such a system exists.
+                The idea is to reason about the alphabet and not about whole propositions. Let's look at the
+                conjunction. The Hilbert system had an axiom which <em>introduces</em> the proposition involving
+                conjunction, namely the third axiom \(A \to (B \to (A \land B))\). If, for some context \(\Gamma\), we
+                know that \(\Gamma \vdash A\) and \(\Gamma \vdash B\), we can use modus ponens two times to obtain
+                \(\Gamma \vdash A \land B\). It would be nice to have some kind of rule which would build the
+                conjunction out of its parts, something like</p>
+            <p>$$\dfrac{\Gamma \vdash A \qquad \Gamma \vdash B}{\Gamma \vdash A \land B}$$</p>
+            <p>The part above the line describes what we assume and the lower part describes what we can build out of
+                the assumptions. This is in agreement with the axiom schema where the modus ponens is built into the
+                introduction rule itself. We can also break apart the conjunction. This is what the fourth and fifth
+                axiom schemas tell us. In order to completely describe the behaviour of conjunction, we need one
+                introduction rule and two elimination rules.</p>
+            <p>$$\dfrac{\Gamma \vdash P \qquad \Gamma \vdash Q}{\Gamma \vdash P \land Q} \land_I \qquad \dfrac{\Gamma
+                \vdash P \land Q}{\Gamma \vdash P} \land_E \qquad \frac{\Gamma \vdash P \land Q}{\Gamma \vdash Q}
+                \land_E$$</p>
+            <p>The implication has one introductory rule and one elimination rule. The elimination rule is exactly modus
+                ponens. If you had not seen the Deduction theorem, the introduction rule might seem surprising. But when
+                you think about the Deduction theorem, it really <em>is</em> a way to introduce implication. Note how
+                the context is changed from \(\Gamma,P\) to \(\Gamma\).</p>
+            <p>$$\dfrac{\Gamma \cup\{P\} \vdash Q}{\Gamma \vdash P \to Q} \to_I \qquad \frac{\Gamma \vdash P \to Q
+                \qquad \Gamma \vdash P}{\Gamma \vdash Q} \to_E$$</p>
+            <p>Next logical connective is the disjunction. The two introduction rules are modelled according to the
+                sixth and seventh axiom. The elimination rule mirrors the eighth axiom and is also a context-changing
+                rule.</p>
+            <p>$$\dfrac{\Gamma \vdash P}{\Gamma \vdash P \lor Q} \lor_I \qquad \dfrac{\Gamma \vdash Q}{\Gamma \vdash P
+                \lor Q} \lor_I \qquad \dfrac{\Gamma \vdash P \lor Q \qquad \Gamma \cup\{P\} \vdash R \qquad \Gamma
+                \cup\{Q\} \vdash R}{\Gamma \vdash R} \lor_E$$</p>
+            <p>The next rule mirrors the ninth axiom schema and is called reductio ad absurdum. After introducing all
+                rules for natural deduction, we will say something more about this rule.</p>
+            <p>$$\frac{\Gamma \cup\{\lnot P\} \vdash \bot}{\Gamma \vdash P} \bot_E$$</p>
+            <p>The last rule is called the assumption rule. Remember that we proved \(P \to P\) from the first two axiom
+                schemas. There is nothing above the line which means we do not have to assume anything to use this rule,
+                this is the rule for introducing assumptions.</p>
+            <p>$$\frac{} {\Gamma,P \vdash P}$$</p>
+            <p>It seems that we encoded all the axiom schemas into introduction or elimination rules but the first two.
+                Our first task will be to construct a proof of the first axiom in the style of natural deduction. First
+                we use the assumption rule with context \(\Gamma \cup\{B\}\) and proposition \(A\).</p>
+            <p>$$\dfrac{} {\Gamma \cup\{A,B\} \vdash A}$$</p>
+            <p>Using the introduction rule for implication twice, we recover the first axiom schema!</p>
+            <p>$$\dfrac{\dfrac{\dfrac{} {\Gamma \cup\{A,B\} \vdash A}} {\Gamma \cup\{A\} \vdash B \to A} \to_I} {\Gamma
+                \vdash A \to (B \to A)} \to_I$$</p>
+            <p>We just wrote our first proof using the natural deduction system. We could also recover the second rule.
+                We already know what is meant by a proof in axiomatic system. The notion of proof in natural deduction
+                is not much different. The pair \( (\Gamma,A) \) is called a <em>sequent</em> where \(\Gamma\) is a
+                finite set of propositions and we write \(\Gamma \vdash A\). A proof is then a sequence of sequents in
+                which every sequent is obtained from the previous using elimination or introduction rule, apart from the
+                assumption rule.</p>
+            <div class="definition">
+                <p>The set of sequents provable in natural deduction is defined as the smallest set of sequents closed
+                    under the natural deduction rules.</p>
+            </div>
+            <p>One such use of induction in natural deduction system is the following lemma called <b>Weakening</b>. It
+                expresses that the natural deduction is a monotone system. In other words, adding a hypothesis does not
+                destroy propositions which were earlier provable.</p>
+            <div class="theorem">
+                <p>If \(\Gamma \vdash A\) is provable in natural deduction and \(\Gamma \subset \Delta\), then \(\Delta
+                    \vdash A\) is provable in natural deduction.</p>
+            </div>
+            <div class="proof">
+                <p>We will use induction on the set of provable sequents. But what does that mean? First we deal with
+                    the assumption rule. Suppose we know that \(\Gamma \cup\{A\} \vdash A\) is provable and want to
+                    prove \(\Delta \cup\{A\} \vdash A\). But we know that \(\Delta \cup\{A\} \vdash A\) holds from the
+                    assumption rule alone. What about the other rules? Let's take for example the introduction rule for
+                    conjunction.</p>
+                <p>$$\dfrac{\Gamma \vdash P \qquad \Gamma \vdash Q}{\Gamma \vdash P \land Q} \land_I$$</p>
+                <p>Let's say that \(\Gamma \vdash A \land B\) is provable. This requires that \(\Gamma \vdash A\) and
+                    \(\Gamma \vdash B\) are provable too. The induction principle tells us that we can use the theorem
+                    statement for the upper part of the introduction or elimination rule. For the case of introduction
+                    rule for conjunction, this means we assume that \(\Delta \vdash A\) and \(\Delta \vdash B\) are
+                    provable. Using the introduction rule we conclude that also \(\Delta \vdash A \land B\) is provable.
+                    Other rules would be checked in the same manner and we would find that all of them respect the
+                    provability relation. This means we proved the theorem. If \(\Gamma \vdash A\), then \(\Delta \vdash
+                    A\).</p>
+                <p>\(\blacksquare\)</p>
+            </div>
+            <p>This is not a rule as the introduction or elimination rules we have seen so far. We cannot derive this
+                rule using other rules. It is called an admissible rule which means it does not change the set of
+                provable sequents. We could work without it, but it is pleasant to use. For example we can have a more
+                general form of rules we introduced so far</p>
+            <p>$$\dfrac{\Gamma \vdash A \qquad \Delta \vdash B}{\Gamma \cup \Delta \vdash A \land B}$$</p>
+            <p>You might have been bothered by the form of the elimination rule for disjunction. The axiom schema has
+                the form of explicit implications, \((A \to C) \to (B \to C) \to (A \lor B \to C)\), but the rule is
+                written without implications. The question is, are these two rules equivalent?</p>
+            <p>$$\dfrac{\Gamma \vdash P \lor Q \qquad \Gamma \cup\{P\} \vdash R \qquad \Gamma \cup\{Q\} \vdash R}{\Gamma
+                \vdash R} \lor_E$$</p>
+            <p>$$\dfrac{\Gamma \vdash P \lor Q \qquad \Gamma \vdash P \to R \qquad \Gamma \vdash Q \to R}{\Gamma \vdash
+                R} \lor_E$$</p>
+            <p>Let's say we know that \(\Gamma \vdash P \lor Q\) and \(\Gamma \cup\{P\} \vdash R\) and \(\Gamma
+                \cup\{Q\} \vdash R\) are provable. Using introduction rule for implication we obtain \(\Gamma \vdash P
+                \to R\) and \(\Gamma \vdash Q \to R\). We can use the second form to conclude that \(\Gamma \vdash R\).
+                What about the other way? Assume we know that \(\Gamma \vdash P \lor Q\) and \(\Gamma \vdash P \to R\)
+                and \(\Gamma \vdash Q \to R\) are provable. How can we use the first form of the rule? We use the
+                weakening property to obtain \(\Gamma \cup\{P\} \vdash P \to R\) and \(\Gamma \cup\{Q\} \vdash Q \to
+                R\). From the assumption rule we know that \(\Gamma \cup\{P\} \vdash P\) and \(\Gamma \cup\{Q\} \vdash
+                Q\). Using introduction rule for implication we finally obtain \(\Gamma \cup\{P\} \vdash R\) and
+                \(\Gamma \cup\{Q\} \vdash R\) and we can use the first form of the rule to conclude that \(\Gamma \vdash
+                R\). This means that the weakening theorem tells us these rules are equivalent! One last remark. We
+                could write the weakening as a rule operating on context</p>
+            <p>$$\dfrac{\Gamma \vdash P}{\Gamma \cup\{A\} \vdash P} w_I$$</p>
+            <h2>Proof by contradiction</h2>
+            <p>It might come as a surprise that propositional logic has a few subtypes. The most known is the classical
+                propositional logic. Such logic is described by the nine axiom schemas we saw earlier, or the
+                corresponding natural deduction rules. Taking only the first eight axiom schemas would mean we work in
+                minimal propositional logic and replacing the last axiom schema with \(\bot \to A\) would mean we work
+                in intuitionistic propositional logic. The axiom schema \(\lnot \lnot A \to A\) is called double
+                negation elimination. First task is to recover the double negation elimination axiom from the
+                elimination rule for \(\bot\). We can happily prove falsity using implication elimination rule from two
+                simple assumptions.</p>
+            <p>$$\dfrac{\dfrac{} {\{\lnot A\} \vdash \lnot A} \qquad \dfrac{} {\{\lnot \lnot A\} \vdash \lnot \lnot A}}
+                {\{\lnot A, \lnot \lnot A\} \vdash \bot} \to_I$$</p>
+            <p>Note the lines above the assumptions. This means we needed to use the assumption rule. The second step is
+                to use the elimination rule for \(\bot\) called reduction ad absurdum. After that we use the
+                introduction rule for implication and we are done.</p>
+            <p>$$\dfrac{\dfrac{} {\{\lnot A\} \vdash \lnot A} \qquad \dfrac{} {\{\lnot \lnot A\} \vdash \lnot \lnot A}}
+                {\dfrac{\{\lnot A, \lnot \lnot A\} \vdash \bot}{\dfrac{\{\lnot \lnot A\} \vdash A}{\varnothing \vdash
+                \lnot \lnot A \to A} \to_I} \bot_E} \to_E$$</p>
+            <p>The reverse implication is similar, but we do not have to use the elimination rule for \(\bot\). This has
+                the consequence that the reverse implication is provable in minimal propositional logic. We again start
+                with proving falsity.</p>
+            <p>$$\dfrac{\dfrac{} {\{A\} \vdash A} \qquad \dfrac{} {\{\lnot A\} \vdash \lnot A}} {\{A, \lnot A\} \vdash
+                \bot} \to_E$$</p>
+            <p>Two introduction rules for implications are enough to conclude the desired proposition. In classical
+                logic we therefore have the equivalence \(A \leftrightarrow \lnot \lnot A\).</p>
+            <p>$$\dfrac{\dfrac{} {\{A\} \vdash A} \qquad \dfrac{} {\{\lnot A\} \vdash \lnot A}} {\dfrac{\{A, \lnot A\}
+                \vdash \bot}{\dfrac{\{A\} \vdash \lnot A \to \bot}{\varnothing \vdash A \to \lnot \lnot A} \to_I} \to_I}
+                \to_E$$</p>
+            <h2>The law of excluded middle</h2>
+            <p>Another famous thing in logic is the law of excluded middle. It says that the proposition \(P \lor \lnot
+                P\) is true without any further assumptions. The proof is tricky and not intuitive at all. Let's start
+                at the end. In order to prove \(P \lor \lnot P\) we use reductio ad absurdum.</p>
+            <p>$$\frac{\varnothing\vdash \lnot (A \lor \lnot A) \vdash \bot}{\varnothing \vdash A \lor \lnot A} \bot_E$$
+            </p>
+            <p>After that we use modus ponens (elimination rule for implication). The right side can be proved by the
+                assumption rule immediately. The problem is with the left side colored in red.</p>
+            <p>$$\dfrac{\dfrac{\vdots}{\textcolor{red}{\{\lnot(A \lor \lnot A)\} \vdash A \lor \lnot A}} \qquad \dfrac{}
+                {\{\lnot(A \lor \lnot A)\} \vdash\lnot(A \lor \lnot A)}}{\dfrac{\varnothing \vdash \lnot (A \lor \lnot
+                A) \vdash \bot}{\varnothing \vdash A \lor \lnot A} \bot_E} \to_E$$</p>
+            <p>We only need to prove one part of the disjunction thanks to the introduction rule for disjunction. If you
+                try to come up with the proof, you would have to try which part is provable. I will reveal that choosing
+                to prove \(\lnot A\) is the right way. The next step is to use reductio ad absurdum again and modus
+                ponens. The left part follows from the assumption rule.</p>
+            <p>$$\dfrac{\dfrac{} {\{\lnot(A \lor \lnot A)\} \vdash \lnot(A \lor \lnot A)} \qquad
+                \dfrac{\vdots}{\color{red}{\{\lnot \lnot A\} \vdash A \lor \lnot A}}}{\dfrac{\{\lnot \lnot A,\lnot(A
+                \lor \lnot A)\} \vdash \bot}{\dfrac{\{\lnot(A \lor \lnot A)\} \vdash \lnot A}{\color{red}{\{\lnot(A \lor
+                \lnot A)\} \vdash A \lor \lnot A}} \lor_I} \bot_E} \to_E$$</p>
+            <p>The right part seems even worse than what we have to prove but don't worry. Knowing \(\lnot \lnot A
+                \vdash A\) we can use introduction rule for disjunction to quickly finish the proof.</p>
+            <p>$$\dfrac{\dfrac{} {\{\lnot \lnot A\} \vdash A} \vdash}{\color{red}{\{\lnot \lnot A\} \vdash A \lor \lnot
+                A}} \lor_I$$</p>
+            <p>The provability of \(\{\lnot \lnot A\} \vdash A\) does not follow from the assumption rule but had to be
+                proved. That is why I added the symbol \(\vdash\) next to the line. It is not an official rule but it is
+                quite reasonable to write it this way. Remember that the symbol \(\vdash\) stands for provability. It
+                makes sense to have a kind of introduction rule for statements we have already proved. We do this in
+                mathematics all the time. We start by proving small lemmas and then use them to make bigger ones until
+                we end up with rather complex theorems. It resembles the structural rule for weakening as we act on the
+                structure of the proof. Of course we could simply copy the whole proof of \(\{\lnot \lnot A\} \vdash A\)
+                here.</p>
+        </div>
+    </div>
+    <div class="left-right-nav"><a href="../logic/completeness.html"><svg xmlns="http://www.w3.org/2000/svg"
+                xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 3 30 30" width="35px" height="35px">
+                <path d="M 19 9 L 13 15 L 19 21" fill="none" stroke="currentColor" stroke-linecap="round"
+                    stroke-linejoin="round" stroke-width="3px"></path>
+            </svg></a><a href="../blog.html">Blog</a>
+        <div></div>
+    </div>
+</body>
+
+</html>
