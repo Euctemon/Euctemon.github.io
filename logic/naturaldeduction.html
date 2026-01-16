@@ -21,108 +21,34 @@
     <div class="content-flex">
         <div class="content-body">
             <h1>Other systems of logic</h1>
-            <h2>Natural deduction</h2>
-            <p>The Hilbert style is not the only way to set up a logic system. The axiomatic systems have mainly axioms
-                and only one rule. What if we had only one axiom and many rules? It turns out that such a system exists.
-                The idea is to reason about the alphabet and not about whole propositions. Let's look at the
-                conjunction. The Hilbert system had an axiom which <em>introduces</em> the proposition involving
-                conjunction, namely the third axiom \(A \to (B \to (A \land B))\). If, for some context \(\Gamma\), we
-                know that \(\Gamma \vdash A\) and \(\Gamma \vdash B\), we can use modus ponens two times to obtain
-                \(\Gamma \vdash A \land B\). It would be nice to have some kind of rule which would build the
-                conjunction out of its parts, something like</p>
-            <p>$$\dfrac{\Gamma \vdash A \qquad \Gamma \vdash B}{\Gamma \vdash A \land B}$$</p>
-            <p>The part above the line describes what we assume and the lower part describes what we can build out of
-                the assumptions. This is in agreement with the axiom schema where the modus ponens is built into the
-                introduction rule itself. We can also break apart the conjunction. This is what the fourth and fifth
-                axiom schemas tell us. In order to completely describe the behaviour of conjunction, we need one
-                introduction rule and two elimination rules.</p>
-            <p>$$\dfrac{\Gamma \vdash P \qquad \Gamma \vdash Q}{\Gamma \vdash P \land Q} \land_I \qquad \dfrac{\Gamma
-                \vdash P \land Q}{\Gamma \vdash P} \land_E \qquad \frac{\Gamma \vdash P \land Q}{\Gamma \vdash Q}
-                \land_E$$</p>
-            <p>The implication has one introductory rule and one elimination rule. The elimination rule is exactly modus
-                ponens. If you had not seen the Deduction theorem, the introduction rule might seem surprising. But when
-                you think about the Deduction theorem, it really <em>is</em> a way to introduce implication. Note how
-                the context is changed from \(\Gamma,P\) to \(\Gamma\).</p>
-            <p>$$\dfrac{\Gamma \cup\{P\} \vdash Q}{\Gamma \vdash P \to Q} \to_I \qquad \frac{\Gamma \vdash P \to Q
-                \qquad \Gamma \vdash P}{\Gamma \vdash Q} \to_E$$</p>
-            <p>Next logical connective is the disjunction. The two introduction rules are modelled according to the
-                sixth and seventh axiom. The elimination rule mirrors the eighth axiom and is also a context-changing
-                rule.</p>
-            <p>$$\dfrac{\Gamma \vdash P}{\Gamma \vdash P \lor Q} \lor_I \qquad \dfrac{\Gamma \vdash Q}{\Gamma \vdash P
-                \lor Q} \lor_I \qquad \dfrac{\Gamma \vdash P \lor Q \qquad \Gamma \cup\{P\} \vdash R \qquad \Gamma
-                \cup\{Q\} \vdash R}{\Gamma \vdash R} \lor_E$$</p>
-            <p>The next rule mirrors the ninth axiom schema and is called reductio ad absurdum. After introducing all
-                rules for natural deduction, we will say something more about this rule.</p>
-            <p>$$\frac{\Gamma \cup\{\lnot P\} \vdash \bot}{\Gamma \vdash P} \bot_E$$</p>
-            <p>The last rule is called the assumption rule. Remember that we proved \(P \to P\) from the first two axiom
-                schemas. There is nothing above the line which means we do not have to assume anything to use this rule,
-                this is the rule for introducing assumptions.</p>
-            <p>$$\frac{} {\Gamma,P \vdash P}$$</p>
-            <p>It seems that we encoded all the axiom schemas into introduction or elimination rules but the first two.
-                Our first task will be to construct a proof of the first axiom in the style of natural deduction. First
-                we use the assumption rule with context \(\Gamma \cup\{B\}\) and proposition \(A\).</p>
-            <p>$$\dfrac{} {\Gamma \cup\{A,B\} \vdash A}$$</p>
-            <p>Using the introduction rule for implication twice, we recover the first axiom schema!</p>
-            <p>$$\dfrac{\dfrac{\dfrac{} {\Gamma \cup\{A,B\} \vdash A}} {\Gamma \cup\{A\} \vdash B \to A} \to_I} {\Gamma
-                \vdash A \to (B \to A)} \to_I$$</p>
-            <p>We just wrote our first proof using the natural deduction system. We could also recover the second rule.
-                We already know what is meant by a proof in axiomatic system. The notion of proof in natural deduction
-                is not much different. The pair \( (\Gamma,A) \) is called a <em>sequent</em> where \(\Gamma\) is a
-                finite set of propositions and we write \(\Gamma \vdash A\). A proof is then a sequence of sequents in
-                which every sequent is obtained from the previous using elimination or introduction rule, apart from the
-                assumption rule.</p>
-            <div class="definition">
-                <p>The set of sequents provable in natural deduction is defined as the smallest set of sequents closed
-                    under the natural deduction rules.</p>
-            </div>
-            <p>One such use of induction in natural deduction system is the following lemma called <b>Weakening</b>. It
-                expresses that the natural deduction is a monotone system. In other words, adding a hypothesis does not
-                destroy propositions which were earlier provable.</p>
-            <div class="theorem">
-                <p>If \(\Gamma \vdash A\) is provable in natural deduction and \(\Gamma \subset \Delta\), then \(\Delta
-                    \vdash A\) is provable in natural deduction.</p>
-            </div>
-            <div class="proof">
-                <p>We will use induction on the set of provable sequents. But what does that mean? First we deal with
-                    the assumption rule. Suppose we know that \(\Gamma \cup\{A\} \vdash A\) is provable and want to
-                    prove \(\Delta \cup\{A\} \vdash A\). But we know that \(\Delta \cup\{A\} \vdash A\) holds from the
-                    assumption rule alone. What about the other rules? Let's take for example the introduction rule for
-                    conjunction.</p>
-                <p>$$\dfrac{\Gamma \vdash P \qquad \Gamma \vdash Q}{\Gamma \vdash P \land Q} \land_I$$</p>
-                <p>Let's say that \(\Gamma \vdash A \land B\) is provable. This requires that \(\Gamma \vdash A\) and
-                    \(\Gamma \vdash B\) are provable too. The induction principle tells us that we can use the theorem
-                    statement for the upper part of the introduction or elimination rule. For the case of introduction
-                    rule for conjunction, this means we assume that \(\Delta \vdash A\) and \(\Delta \vdash B\) are
-                    provable. Using the introduction rule we conclude that also \(\Delta \vdash A \land B\) is provable.
-                    Other rules would be checked in the same manner and we would find that all of them respect the
-                    provability relation. This means we proved the theorem. If \(\Gamma \vdash A\), then \(\Delta \vdash
-                    A\).</p>
-                <p>\(\blacksquare\)</p>
-            </div>
-            <p>This is not a rule as the introduction or elimination rules we have seen so far. We cannot derive this
-                rule using other rules. It is called an admissible rule which means it does not change the set of
-                provable sequents. We could work without it, but it is pleasant to use. For example we can have a more
-                general form of rules we introduced so far</p>
-            <p>$$\dfrac{\Gamma \vdash A \qquad \Delta \vdash B}{\Gamma \cup \Delta \vdash A \land B}$$</p>
-            <p>You might have been bothered by the form of the elimination rule for disjunction. The axiom schema has
-                the form of explicit implications, \((A \to C) \to (B \to C) \to (A \lor B \to C)\), but the rule is
-                written without implications. The question is, are these two rules equivalent?</p>
-            <p>$$\dfrac{\Gamma \vdash P \lor Q \qquad \Gamma \cup\{P\} \vdash R \qquad \Gamma \cup\{Q\} \vdash R}{\Gamma
-                \vdash R} \lor_E$$</p>
-            <p>$$\dfrac{\Gamma \vdash P \lor Q \qquad \Gamma \vdash P \to R \qquad \Gamma \vdash Q \to R}{\Gamma \vdash
-                R} \lor_E$$</p>
-            <p>Let's say we know that \(\Gamma \vdash P \lor Q\) and \(\Gamma \cup\{P\} \vdash R\) and \(\Gamma
-                \cup\{Q\} \vdash R\) are provable. Using introduction rule for implication we obtain \(\Gamma \vdash P
-                \to R\) and \(\Gamma \vdash Q \to R\). We can use the second form to conclude that \(\Gamma \vdash R\).
-                What about the other way? Assume we know that \(\Gamma \vdash P \lor Q\) and \(\Gamma \vdash P \to R\)
-                and \(\Gamma \vdash Q \to R\) are provable. How can we use the first form of the rule? We use the
-                weakening property to obtain \(\Gamma \cup\{P\} \vdash P \to R\) and \(\Gamma \cup\{Q\} \vdash Q \to
-                R\). From the assumption rule we know that \(\Gamma \cup\{P\} \vdash P\) and \(\Gamma \cup\{Q\} \vdash
-                Q\). Using introduction rule for implication we finally obtain \(\Gamma \cup\{P\} \vdash R\) and
-                \(\Gamma \cup\{Q\} \vdash R\) and we can use the first form of the rule to conclude that \(\Gamma \vdash
-                R\). This means that the weakening theorem tells us these rules are equivalent! One last remark. We
-                could write the weakening as a rule operating on context</p>
-            <p>$$\dfrac{\Gamma \vdash P}{\Gamma \cup\{A\} \vdash P} w_I$$</p>
+            <h3>Theories</h3>
+            <p>When someone speaks about a theory of groups, or theory of lattices, they automatically assume one works
+                with first order logic. Apart from using logical connectives, this logic has two quantifiers, the
+                so-called existential \((\, \exists\,\)\) and universal \((\,\forall\,\)\) quantifier. We already know
+                that including logical symbols in language is probably a good idea. Their universal interpretation
+                enables us to write tautologies even though there might not be any tautologies in the set of atomic
+                formulas. Why do we need quantifiers? A formula can be satisfiable, true or tautology. We know that
+                tautology does not depend on the given model. But what happens when we fix a model? Now the formula
+                might be satisfiable or true.</p>
+            <p>For a single variable in a formula the quantifiers are in correspondence with satisfiability and truth.
+                Fix a language with no functions and only one relation \(r\) and interpret this language in the model
+                with a universe of integers and less than relation. The formula \(\exists x,\: x &lt; 5\) is satisfiable
+                because of number 3, but not true because of number 6. The numbers are the assignments themselves.
+                Explicitly we have assignment functions \(v_1(x) = 3\) and \(v_2(x) = 6\). The situation becomes
+                complicated for more than one variable. What about the atomic formula \(x &lt; y\)? It is not true, but
+                it is satisfiable. This is fine, but rather coarse distinction. For integers we know that for a given
+                number we can always pick a smaller number. Let's look at the formula \(\forall y,\exists x,\: x &lt;
+                y\) and think about the assignment function \(v(x,y)\) for a bit. The function \(v\) assigns integers to
+                the variables \(x\) and \(y\). Let's pretend we can split the assignment function \(v\) into two
+                functions, \(v_x\) and \(v_y\). The function \(v_2\) can assign any number to \(y\), which we model by
+                the universal assignment. The function \(v_1\) then must assign number smaller than \(v_2(y)\). By
+                defining such assignments, we make the formula true.</p>
+            <p> The use of quantitiers is essential in mathematics. For example if we switch the quantifiers in the last
+                formula as \(\exists y, \forall x,\: x &lt; y\), the formula is no longer true. Without quantifiers, we
+                could only discern whether the formula is true or satisfiable. With quantifiers, we can see how much it
+                is satisfiable. The formula \(\exists y, \exists x,\: x &lt; y\) being true means that we can find two
+                numbers satisfying the inequality. On the other hand \(\forall y, \exists x,\: x &lt; y\) means we can
+                allways find a smaller number \(x\) for any given number \(y\).</p>
             <h2>Proof by contradiction</h2>
             <p>It might come as a surprise that propositional logic has a few subtypes. The most known is the classical
                 propositional logic. Such logic is described by the nine axiom schemas we saw earlier, or the

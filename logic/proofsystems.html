@@ -64,19 +64,19 @@
                 \land q))\) where \(p, q, r\) and \(s\) are variables for the propositional logic.</p>
             <p>The interesting thing is that these axiom schemata were chosen so that every one of them produce
                 tautology. You can check that with truth tables. Before we look at how we use such axiomatic system, we
-                write down the definition of a proof. This definition is used for any language and not just for the
-                language of propositional logic.</p>
+                write down the definition of a proof.</p>
             <div class="definition"><span class="proof-word">Proof</span> is a sequence \(\Psi_0,\ldots,\Psi_n\) of
                 formulas such that for every \(k &lt; n + 1\), either \(\Psi_k\) is a formula in context \(\Gamma\), an
                 axiom schema or there are indices \(i_0,\ldots,i_l&lt; k\) such that \(\Psi_k\) follow from
                 \(\Psi_{i_0}, \ldots, \Psi_{i_l}\) by some inference rule. We say that \(\Psi_n\) is the conclusion and
                 the sequence \(\Psi_0,\ldots,\Psi_n\) with hypotheses in \(\Gamma\) is a proof of \(\Psi_n\). We write
                 \(\Gamma \vdash \Psi\) if there exists a proof of \(\Psi\) given the context \(\Gamma\).</div>
-            <p>We notice that the definition features something called context. This is a set of formulas which we
-                suppose are true in the context of a given proof. It is not always the case that \(p \lor q\) is true,
-                but we can add it to the context and then build proofs upon this assumption. Suppose we choose a context
-                made of \(c \lor b\), \(c \to d\) and \(b \to d\). The variable \(c\) stands for car, \(b\) for bus and
-                \(d\) for staying dry.</p>
+            <p>This is one of the possible ways to define what a proof is. We will see another type of proof when we get
+                to natural deduction. We notice that the definition features something called context. This is a set of
+                formulas which we suppose are true in the context of a given proof. It is not always the case that \(p
+                \lor q\) is true, but we can add it to the context and then build proofs upon this assumption. Suppose
+                we choose a context made of \(c \lor b\), \(c \to d\) and \(b \to d\). The variable \(c\) stands for
+                car, \(b\) for bus and \(d\) for staying dry.</p>
             <div class="theorem">\(\{c \lor b, c \to d, b \to d\} \vdash d\).</div>
             <div class="proof">
                 <ol>
@@ -112,26 +112,26 @@
                 <p>We learned something about the conjugation symbol. It does not matter if we swap the position of
                     formulas \(\mathfrak{a}\) and \(\mathfrak{b}\). We say that the conjunction is commutative. Let's
                     prove something seemingly trivial.</p>
-                <div class="theorem">\(\varnothing \vdash \mathfrak{f} \to \mathfrak{f}\).</div>
+                <div class="theorem">\(\varnothing \vdash \mathfrak{a} \to \mathfrak{a}\).</div>
                 <div class="proof">
                     <ol>
-                        <li>Obtain \(\mathfrak{f} \to (\mathfrak{f} \to \mathfrak{f})\) from the the axiom schema 1.
+                        <li>Obtain \(\mathfrak{a} \to (\mathfrak{a} \to \mathfrak{a})\) from the the axiom schema 1.
                         </li>
-                        <li>Obtain \(\mathfrak{f} \to ((\mathfrak{f} \to \mathfrak{f}) \to \mathfrak{f})\) from the
+                        <li>Obtain \(\mathfrak{a} \to ((\mathfrak{a} \to \mathfrak{a}) \to \mathfrak{a})\) from the
                             axiom schema 1.</li>
-                        <li>Obtain \((\mathfrak{f} \to ((\mathfrak{f} \to \mathfrak{f}) \to \mathfrak{f})) \to
-                            ((\mathfrak{f} \to (\mathfrak{f} \to \mathfrak{f})) \to (\mathfrak{f} \to \mathfrak{f}))\)
+                        <li>Obtain \((\mathfrak{a} \to ((\mathfrak{a} \to \mathfrak{a}) \to \mathfrak{a})) \to
+                            ((\mathfrak{a} \to (\mathfrak{a} \to \mathfrak{a})) \to (\mathfrak{a} \to \mathfrak{a}))\)
                             from the axiom schema 2.</li>
-                        <li>Obtain \(\mathfrak{f} \to (\mathfrak{f} \to \mathfrak{f})) \to \mathfrak{f} \to
-                            \mathfrak{f}) \) by modus ponens using formulas from steps 2 and 3.</li>
-                        <li>Obtain \(\mathfrak{f} \to \mathfrak{f} \) by modus ponens using formulas from steps 4 and 1.
+                        <li>Obtain \(\mathfrak{a} \to (\mathfrak{a} \to \mathfrak{a})) \to \mathfrak{a} \to
+                            \mathfrak{a}) \) by modus ponens using formulas from steps 2 and 3.</li>
+                        <li>Obtain \(\mathfrak{a} \to \mathfrak{a} \) by modus ponens using formulas from steps 4 and 1.
                         </li>
                     </ol>
                 </div>
                 <p>First thing you should note is that the context is empty. This means that the formula is true without
                     any supplemental assumtions, which makes such a formula a tautology. You might ask why isn't this
-                    formula an axiom. It seems useful to know it from the start. We could add \(\mathfrak{f} \to
-                    \mathfrak{f}\) to the set of axiom schemata and nothing would break. But we strive to have a set of
+                    formula an axiom. It seems useful to know it from the start. We could add \(\mathfrak{a} \to
+                    \mathfrak{a}\) to the set of axiom schemata and nothing would break. But we strive to have a set of
                     axioms which is in some sense minimal. This means that no axiom in the set is provable using the
                     other axioms.</p>
                 <p>The following theorem summarizes some important properties of the proof system. Proofs of these
@@ -141,74 +141,137 @@
                     <p>Suppose \(\Gamma\) is a set of formulas. The set of consequences is the set of formulas provable
                         from \(\Gamma\) and it is inductively generated by these rules</p>
                     <ul>
-                        <li>If \(A \in \Gamma\), then \(\Gamma \vdash A\)</li>
-                        <li>If \(A\) is an axiom schema, then \(\Gamma \vdash A\)</li>
-                        <li>If \(\Gamma \vdash A\) and \(\Gamma \vdash A \to B\), then \(\Gamma \vdash B\)</li>
+                        <li>If \(\mathfrak{a} \in \Gamma\), then \(\Gamma \vdash \mathfrak{a}\)</li>
+                        <li>If \(\mathfrak{a}\) is an axiom schema, then \(\Gamma \vdash \mathfrak{a}\)</li>
+                        <li>If \(\Gamma \vdash \mathfrak{a}\) and \(\Gamma \vdash \mathfrak{a} \to \mathfrak{b}\), then
+                            \(\Gamma \vdash \mathfrak{b}\)</li>
                     </ul>
                 </div>
-                <p>One of the important property of this proof system is the so-called deduction theorem. It enables us
-                    to move formulas from the context into the conclusion and shows a connection between context and
+                <p>One of the interesting properties of this proof system is the so-called deduction theorem. It enables
+                    us to move formulas from the context into the conclusion and shows a connection between context and
                     implications.</p>
-                <div class="theorem">Fix a context \(\Gamma\) and a formula \(\mathfrak{f}\). If \(\Gamma
-                    \cup\{\mathfrak{f}\} \vdash \mathfrak{g}\) then \(\Gamma \vdash \mathfrak{f} \to \mathfrak{g}\).
+                <div class="theorem"><span class="proof-word">Deduction theorem</span>
+                    <p>Fix a context \(\Gamma\) and a formula \(\mathfrak{a}\). If \(\Gamma \cup\{\mathfrak{a}\} \vdash
+                        \mathfrak{b}\) then \(\Gamma \vdash \mathfrak{a} \to \mathfrak{b}\).</p>
                 </div>
                 <div class="proof">
-                    <p>We fix \(\Gamma\) and \(\mathfrak{f}\), and use the induction on the set of consequences of
-                        \(\Gamma \cup\{\mathfrak{f}\}\). This means that if \(\mathfrak{g}\) is in the set of
+                    <p>We fix \(\Gamma\) and \(\mathfrak{a}\), and use the induction on the set of consequences of
+                        \(\Gamma \cup\{\mathfrak{a}\}\). This means that if \(\mathfrak{b}\) is in the set of
                         consequences, it has the form of one of the three cases mentioned earlier:</p>
                     <ol>
-                        <li>\(\mathfrak{g} \in \Gamma \cup \{\mathfrak{f}\}\)</li>
-                        <li>\(\mathfrak{g}\) is an axiom schema</li>
-                        <li>There is proposition \(\mathfrak{h}\) such that \(\Gamma \cup\{\mathfrak{f}\} \vdash
-                            \mathfrak{h}\) and \(\Gamma \cup\{\mathfrak{f}\} \vdash \mathfrak{h} \to \mathfrak{g}\)</li>
+                        <li>\(\mathfrak{b} \in \Gamma \cup \{\mathfrak{a}\}\)</li>
+                        <li>\(\mathfrak{b}\) is an axiom schema</li>
+                        <li>There is proposition \(\mathfrak{h}\) such that \(\Gamma \cup\{\mathfrak{a}\} \vdash
+                            \mathfrak{h}\) and \(\Gamma \cup\{\mathfrak{a}\} \vdash \mathfrak{h} \to \mathfrak{b}\)</li>
                     </ol>
-                    <p><span class="proof-case">Case 1</span><br />If \(\mathfrak{g} \in \Gamma\), we know that \(\Gamma
-                        \vdash \mathfrak{g}\) from a definition of a proof. Using the first axiom schema we also know
-                        that \(\Gamma \vdash \mathfrak{g} \to (\mathfrak{f} \to \mathfrak{g})\). The conclusion \(\Gamma
-                        \vdash \mathfrak{f} \to \mathfrak{g}\) is then obtained by modus ponens. If \(\mathfrak{g}\) is
-                        equivalent to \(\mathfrak{f}\), we need to show \(\Gamma \vdash \mathfrak{g} \to \mathfrak{g}\).
+                    <p><span class="proof-case">Case 1</span><br />If \(\mathfrak{b} \in \Gamma\), we know that \(\Gamma
+                        \vdash \mathfrak{b}\) from a definition of a proof. Using the first axiom schema we also know
+                        that \(\Gamma \vdash \mathfrak{b} \to (\mathfrak{a} \to \mathfrak{b})\). The conclusion \(\Gamma
+                        \vdash \mathfrak{a} \to \mathfrak{b}\) is then obtained by modus ponens. If \(\mathfrak{b}\) is
+                        equivalent to \(\mathfrak{a}\), we need to show \(\Gamma \vdash \mathfrak{b} \to \mathfrak{b}\).
                         But we already proved this.</p>
-                    <p><span class="proof-case">Case 2</span><br />If \(\mathfrak{g}\) is an axiom schema, we know that
-                        \(\Gamma \vdash \mathfrak{g}\) from definition of proof. We use the first axiom schema to
-                        conclude \(\Gamma \vdash \mathfrak{g} \to (\mathfrak{f} \to \mathfrak{g})\) and then use the
-                        modus ponens to obtain the conclusion \(\Gamma \vdash \mathfrak{f} \to \mathfrak{g}\).</p>
+                    <p><span class="proof-case">Case 2</span><br />If \(\mathfrak{b}\) is an axiom schema, we know that
+                        \(\Gamma \vdash \mathfrak{b}\) from definition of proof. We use the first axiom schema to
+                        conclude \(\Gamma \vdash \mathfrak{b} \to (\mathfrak{a} \to \mathfrak{b})\) and then use the
+                        modus ponens to obtain the conclusion \(\Gamma \vdash \mathfrak{a} \to \mathfrak{b}\).</p>
                     <p><span class="proof-case">Case 3</span><br />Using the inductive hypothesis we to obtain \(\Gamma
-                        \vdash \mathfrak{f} \to \mathfrak{h}\) and \(\Gamma \vdash \mathfrak{f} \to (\mathfrak{h} \to
-                        \mathfrak{g})\) from \(\Gamma \cup\{\mathfrak{f}\} \vdash \mathfrak{h}\) and \(\Gamma
-                        \cup\{\mathfrak{f}\} \vdash \mathfrak{h} \to \mathfrak{g}\). We use the second axiom schema to
-                        obtain \(\Gamma \vdash (\mathfrak{f} \to (\mathfrak{h} \to \mathfrak{g})) \to ((\mathfrak{f} \to
-                        \mathfrak{h}) \to (\mathfrak{f} \to \mathfrak{g}))\). Using the modus ponens twice, we conclude
-                        \(\Gamma \vdash \mathfrak{f} \to \mathfrak{g}\).</p>
+                        \vdash \mathfrak{a} \to \mathfrak{h}\) and \(\Gamma \vdash \mathfrak{a} \to (\mathfrak{h} \to
+                        \mathfrak{b})\) from \(\Gamma \cup\{\mathfrak{a}\} \vdash \mathfrak{h}\) and \(\Gamma
+                        \cup\{\mathfrak{a}\} \vdash \mathfrak{h} \to \mathfrak{b}\). We use the second axiom schema to
+                        obtain \(\Gamma \vdash (\mathfrak{a} \to (\mathfrak{h} \to \mathfrak{b})) \to ((\mathfrak{a} \to
+                        \mathfrak{h}) \to (\mathfrak{a} \to \mathfrak{b}))\). Using the modus ponens twice, we conclude
+                        \(\Gamma \vdash \mathfrak{a} \to \mathfrak{b}\).</p>
                 </div>
-                <h3>Theories</h3>
-                <p>When someone speaks about a theory of groups, or theory of lattices, they automatically assume one
-                    works with first order logic. Apart from using logical connectives, this logic has two quantifiers,
-                    the so-called existential \((\, \exists\,\)\) and universal \((\,\forall\,\)\) quantifier. We
-                    already know that including logical symbols in language is probably a good idea. Their universal
-                    interpretation enables us to write tautologies even though there might not be any tautologies in the
-                    set of atomic formulas. Why do we need quantifiers? A formula can be satisfiable, true or tautology.
-                    We know that tautology does not depend on the given model. But what happens when we fix a model? Now
-                    the formula might be satisfiable or true.</p>
-                <p>For a single variable in a formula the quantifiers are in correspondence with satisfiability and
-                    truth. Fix a language with no functions and only one relation \(r\) and interpret this language in
-                    the model with a universe of integers and less than relation. The formula \(\exists x,\: x &lt; 5\)
-                    is satisfiable because of number 3, but not true because of number 6. The numbers are the
-                    assignments themselves. Explicitly we have assignment functions \(v_1(x) = 3\) and \(v_2(x) = 6\).
-                    The situation becomes complicated for more than one variable. What about the atomic formula \(x &lt;
-                    y\)? It is not true, but it is satisfiable. This is fine, but rather coarse distinction. For
-                    integers we know that for a given number we can always pick a smaller number. Let's look at the
-                    formula \(\forall y,\exists x,\: x &lt; y\) and think about the assignment function \(v(x,y)\) for a
-                    bit. The function \(v\) assigns integers to the variables \(x\) and \(y\). Let's pretend we can
-                    split the assignment function \(v\) into two functions, \(v_x\) and \(v_y\). The function \(v_2\)
-                    can assign any number to \(y\), which we model by the universal assignment. The function \(v_1\)
-                    then must assign number smaller than \(v_2(y)\). By defining such assignments, we make the formula
-                    true.</p>
-                <p> The use of quantitiers is essential in mathematics. For example if we switch the quantifiers in the
-                    last formula as \(\exists y, \forall x,\: x &lt; y\), the formula is no longer true. Without
-                    quantifiers, we could only discern whether the formula is true or satisfiable. With quantifiers, we
-                    can see how much it is satisfiable. The formula \(\exists y, \exists x,\: x &lt; y\) being true
-                    means that we can find two numbers satisfying the inequality. On the other hand \(\forall y, \exists
-                    x,\: x &lt; y\) means we can allways find a smaller number \(x\) for any given number \(y\).</p>
+                <h2>Natural deduction</h2>
+                <p>The Hilbert style is not the only way to set up a logic system. The axiomatic systems have mainly
+                    axioms and only one rule. What if we had only one axiom and many rules? The idea is to shift the
+                    axiomatic system from formulas to logical symbols. Let's look at the conjunction. The Hilbert system
+                    had an axiom which introduces the proposition involving conjunction, namely the third axiom
+                    \(\mathfrak{a} \to (\mathfrak{b} \to (\mathfrak{a} \land \mathfrak{b}))\). If, for some context
+                    \(\Gamma\), we know that \(\Gamma \vdash \mathfrak{a}\) and \(\Gamma \vdash \mathfrak{b}\), we can
+                    use modus ponens two times to obtain \(\Gamma \vdash \mathfrak{a} \land \mathfrak{b}\). Instead of
+                    having this axiom in our system, we will work with a rule describing how to obtain a conjunction:
+                </p>
+                <p>$$\dfrac{\Gamma \vdash \mathfrak{a} \quad \Gamma \vdash \mathfrak{b}}{\Gamma \vdash \mathfrak{a}
+                    \land \mathfrak{b}}$$</p>
+                <p>The part above the line shows what we assume and the lower part shows what we can build given the
+                    assumptions. This is in agreement with the axiom schema where the modus ponens is built into the
+                    introduction rule itself. We can also break apart the conjunction in two ways. This is what the
+                    fourth and fifth axiom schemas tell us. In order to completely describe the behaviour of
+                    conjunction, we end up with one introduction rule and two elimination rules.</p>
+                <p>$$\dfrac{\Gamma \vdash \mathfrak{a} \qquad \Gamma \vdash \mathfrak{b}}{\Gamma \vdash \mathfrak{a}
+                    \land \mathfrak{b}} \land_I \quad \dfrac{\Gamma \vdash \mathfrak{a} \land \mathfrak{b}}{\Gamma
+                    \vdash \mathfrak{a}} \land_E \quad \frac{\Gamma \vdash \mathfrak{a} \land \mathfrak{b}}{\Gamma
+                    \vdash \mathfrak{b}} \land_E$$</p>
+                <p>Implication has one introduction rule and one elimination rule. Remember that we use modus ponens
+                    with implication and the premise to obtain the conclusion. This means that the introduction rule for
+                    implication has to be the modus ponens. We have also seen how to create implication by reducing the
+                    context set. The elimination rule is thus expressed by the deduction theorem.</p>
+                <p>$$\dfrac{\Gamma \cup\{\mathfrak{a}\} \vdash \mathfrak{b}}{\Gamma \vdash \mathfrak{a} \to
+                    \mathfrak{b}} \to_I \qquad \frac{\Gamma \vdash \mathfrak{a} \to \mathfrak{b} \quad \Gamma \vdash
+                    \mathfrak{a}}{\Gamma \vdash \mathfrak{b}} \to_E$$</p>
+                <p>Next logical connective is the disjunction. The two introduction rules are modelled according to the
+                    sixth and seventh axiom. The elimination rule mirrors the eighth axiom.</p>
+                <p>$$\dfrac{\Gamma \vdash \mathfrak{a}}{\Gamma \vdash \mathfrak{a} \lor \mathfrak{b}} \lor_I \qquad
+                    \dfrac{\Gamma \vdash \mathfrak{b}}{\Gamma \vdash \mathfrak{a} \lor \mathfrak{b}} \lor_I \qquad
+                    \dfrac{\Gamma \vdash \mathfrak{a} \lor \mathfrak{b} \quad \Gamma \cup\{\mathfrak{a}\} \vdash
+                    \mathfrak{c} \quad \Gamma \cup\{\mathfrak{b}\} \vdash \mathfrak{c}}{\Gamma \vdash \mathfrak{c}}
+                    \lor_E$$</p>
+                <p>The next rule mirrors the ninth axiom schema and is called reductio ad absurdum. This is the rule we
+                    use when we write proofs by contradiction. There are logic systems which do not assume this rule
+                    like minimal or intuitionistic logic. By using this rule, we are working with the so-called
+                    classical propositional logic.</p>
+                <p>$$\frac{\Gamma \cup\{\lnot \mathfrak{a}\} \vdash \bot}{\Gamma \vdash \mathfrak{a}} \bot_E$$</p>
+                <p>The last rule is called the assumption rule. Remember that we proved \(\mathfrak{a} \to
+                    \mathfrak{a}\) from the first two axiom schemas. There is nothing above the line which means we do
+                    not have to assume anything to use this rule. This rule introduces assumptions.</p>
+                <p>$$\frac{} {\Gamma \cup \{\mathfrak{a}\} \vdash \mathfrak{a}}$$</p>
+                <p>It seems that we encoded all the axiom schemas into introduction or elimination rules but the first
+                    two. We will prove the first axiom schema by using natural deduction to show that we can recover
+                    this axiom schema. I won't state the definition of proof in natural deduction as it would be rather
+                    involved. It is essentially a rooted tree of introduction and elimination rules with root being the
+                    conclusion. So how does the proof of the first axiom schema look like? We use the elimination rule
+                    twice together with the rule for introducing assumptions.</p>
+                <p>$$\dfrac{\dfrac{\dfrac{} {\Gamma \cup\{\mathfrak{a},\mathfrak{b}\} \vdash \mathfrak{a}}} {\Gamma
+                    \cup\{\mathfrak{a}\} \vdash \mathfrak{b} \to \mathfrak{a}} \to_I} {\Gamma \vdash \mathfrak{a} \to
+                    (\mathfrak{b} \to \mathfrak{a})} \to_I$$</p>
+                <p>The second axiom schema can be proved too and you can try it yourself. The following definition
+                    speaks about the set of all possible sequents we can prove. It is an inductively defined set in the
+                    same way the set of formulas over some language. This means we can use induction to prove properties
+                    about this set.</p>
+                <div class="definition">
+                    <p>The set of sequents provable in natural deduction is defined as the smallest set of sequents
+                        closed under the natural deduction rules.</p>
+                </div>
+                <p>One such use of induction over the set of sequents is the following lemma called weakening. It tells
+                    us that the natural deduction is a monotone system. This means that adding a hypothesis does not
+                    destroy propositions which were earlier provable.</p>
+                <div class="theorem">
+                    <p>If \(\Gamma \vdash A\) is provable in natural deduction and \(\Gamma \subset \Delta\), then
+                        \(\Delta \vdash A\) is provable in natural deduction.</p>
+                </div>
+                <div class="proof">
+                    <p>We will use induction on the set of provable sequents.</p>
+                    <p><span class="proof-case">Case of assumption</span><br />Suppose that \(\Gamma
+                        \cup\{\mathfrak{a}\} \vdash \mathfrak{a}\) is provable and we want to prove \(\Delta
+                        \cup\{\mathfrak{a}\} \vdash \mathfrak{a}\). But we know that \(\Delta \cup\{\mathfrak{a}\}
+                        \vdash \mathfrak{a}\) holds from the assumption rule used with the context \(\Delta\).</p>
+                    <p><span class="proof-case">Case of conjunction</span><br />Suppose that \(\Gamma \vdash
+                        \mathfrak{a} \land \mathfrak{b}\) is provable. This means that \(\Gamma \vdash \mathfrak{a}\)
+                        and \(\Gamma \vdash \mathfrak{b}\) are provable too. Using induction on the formulas
+                        \(\mathfrak{a}\) and \(\mathfrak{b}\), we get that \(\Delta \vdash \mathfrak{a}\) and \(\Delta
+                        \vdash \mathfrak{b}\) are provable. From the introduction rule for conjunction we conclude that
+                        \(\Delta \vdash \mathfrak{a} \land \mathfrak{b}\) is provable.</p>
+                    <p>Other cases are done similarly. To write a full proof, you would need to write down the
+                        justification for all implication and elimination rules. it could be done but it is not very
+                        interesting.</p>
+                </div>
+                <p>The weakening theorem is not something which is valid for all logical systems. For example the
+                    Believe revision is a process of changing beliefs to accomodate a new piece of information
+                    \(\mathfrak{m}\). This piece of information might be inconsistent with the old set of beliefs
+                    expressed by the context \(\Gamma\), and we might need to adjust the set of beliefs to maintain
+                    consistency. In other words, it is not true that \(\Gamma \vdash \mathfrak{a}\) automatically
+                    implies \(\Gamma \cup \{\mathfrak{m}\}\vdash \mathfrak{a}\)</p>
             </div>
         </div>
     </div>
@@ -216,12 +279,9 @@
                 xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 3 30 30" width="35px" height="35px">
                 <path d="M 19 9 L 13 15 L 19 21" fill="none" stroke="currentColor" stroke-linecap="round"
                     stroke-linejoin="round" stroke-width="3px"></path>
-            </svg></a><a href="../blog.html">Blog</a><a href="../logic/completeness.html"><svg
-                xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 3 30 30"
-                width="35px" height="35px">
-                <path d="M 12 9 L 18 15 L 12 21" fill="none" stroke="currentColor" stroke-linecap="round"
-                    stroke-linejoin="round" stroke-width="3px"></path>
-            </svg></a></div>
+            </svg></a><a href="../blog.html">Blog</a>
+        <div></div>
+    </div>
 </body>
 
 </html>
