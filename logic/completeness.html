@@ -20,124 +20,140 @@
 <body>
     <div class="content-flex">
         <div class="content-body">
-            <h1>Completeness and Soundness</h1>
-            <h2>Soundness</h2>
-            <p>The main goal of the next two chapters is to show the connection between \(\vdash\) and \(\vDash\). The
-                soundness theorem expresses what provability says about models and logical consequnces.</p>
-            <div class="theorem">
-                <p>For every set \(\Gamma\) of propositional formulas and every propositional formula \(A\), we have
-                    that \(\Gamma \vdash A\) implies \(\Gamma \vDash A\).</p>
+            <h1>Truth tables versus proofs</h1>
+            <p>An achingly important questing is whether there is any connection between truth tables and things we can
+                prove. To answer this question for the propositional logic, we need a definition of what it means to
+                deduce a formula from a set of formulas and their truth tables. When we spoke about proof systems, we
+                assumed that we can start with a set of formulas and called it a context. This context is also important
+                when working with model theory and we often call such set of formulas as a theory.</p>
+            <div class="definition">Let \(\mathcal{L}\) be a language, and let \(\mathcal{T}\) be a theory and
+                \(\mathcal{M}\) a model in \(\mathcal{L}\). We say that the model \(\mathcal{M}\) <span
+                    class="proof-word">satisfies</span> \(\mathcal{T}\), if for every formula \(\mathfrak{f} \in
+                \mathcal{T}\), it follows that \(\mathcal{M} \vDash \mathfrak{f}\). We say that \(\mathfrak{a}\) is a
+                <span class="proof-word">semantic consequence</span> of \(\mathcal{T}\), if every model of
+                \(\mathcal{T}\) is also a model for \(\mathfrak{a}\). We write this as \(\mathcal{T} \vDash
+                \mathfrak{a}\).
             </div>
+            <p>Note that \(\mathcal{M} \vDash \mathfrak{f}\) means that for every assignment function, the formula is
+                satisfiable in the model. We called such formulas true. Also note that a theory in first order logic is
+                a set of sentences, where a sentence is a formula without so called free variables. It means that all
+                variables in a formula are quantified by the universal or existential quantifier.</p>
+            <p>The main goal of the rest of the chapter is to show the connection between \(\vdash\) and \(\vDash\) for
+                propositional logic. We cannot prove it for any logical system as the interpretation of the truth symbol
+                \(\vDash\) is tied to a given model and provability symbol \(\vdash\) to a given proof system.</p>
+            <h2>Soundness</h2>
+            <p>A logical system is sound if every theory \(\mathcal{T}\), a formula provable from \(\mathcal{T}\) is
+                also a semantic consequence of \(\mathcal{T}\). In the case of propositional logic, this implication is
+                quite simple to prove.</p>
+            <div class="theorem">
+                <p>For every theory \(\mathcal{T}\) and every propositional formula \(\mathfrak{a}\), \(\mathcal{T}
+                    \vdash \mathfrak{a}\) implies \(\mathcal{T} \vDash \mathfrak{a}\).</p>
+            </div>
+            <p>Before we get to the proof, remember that for a propositional logic, we assume the one and only true
+                model made of two elements representing truth and falsity. The proofs in this chapter will therefore not
+                specify in which model we work.</p>
             <div class="proof">
-                <p>We use the induction on the set of sequents in natural deduction. This means we assume \(\Gamma
-                    \vdash A\) is provable and we want to show that \(A\) is a logical consequence of \(\Gamma\),
-                    written as \(\Gamma \vDash A\). Suppose that \(\Gamma \vdash A\) is an assumption. Then \(A\) is in
-                    \(\Gamma\) and from the definition of logical consequence, we immidiately know \(\Gamma \vDash A\).
-                    Now we need to prove the theorem for all introduction and elimination rules.</p><b>Conjunction</b>
-                <p>First the introduction rule. Suppose we derive \(\Gamma \vdash A \land B\) from \(\Gamma \vdash A\)
-                    and \(\Gamma \vdash B\) using the introduction rule. Let \(v\) be any truth assignment which
-                    satisfies \(\Gamma\), written as \(v \vDash \Gamma\). By the inductive hypothesis (using the
-                    conclusion of the theorem for \(\Gamma \vdash A\) and \(\Gamma \vdash B\) ), we know that \(\Gamma
-                    \vDash A\) and \(\Gamma \vDash B\). As \(v\) satisfies \(\Gamma\), we know that \(v\) satisfies
-                    \(A\) and \(B\) from the definition of logical consequence and we write this as \(\llbracket A
-                    \rrbracket^v = \top\) and \(\llbracket B \rrbracket^v = \top\). Using the definition of \(I\), we
-                    compute \(\llbracket A \land B \rrbracket^v = \top\). This means we proved \(\Gamma \vDash A \land
-                    B\).</p>
-                <p>Now the elimination rule. Suppose we derive \(\Gamma \vdash A\) from \(\Gamma \vdash A \land B\). Let
-                    \(v\) be any truth assignment satisfying \(\Gamma\). By the inductive hypothesis, we have that \(v\)
-                    satisfies \(A \land B\). We can write this as \(\llbracket A \land B \rrbracket^v = \top\). But from
-                    the definition of evaluation of conjunction, we have \(\llbracket A \rrbracket^v = \top\). This
-                    means \(\Gamma \vDash A\).</p><b>Implication</b>
-                <p>The proof of the case of implication shows how to deal with a changing context. We again start with
-                    the introduction rule. Suppose we derive \(\Gamma \vdash A \to B\) from \(\Gamma \cup \{A\} \vdash
-                    B\). Let \(v\) be any truth assignment satisfying \(\Gamma\). As we don't know whether \(\llbracket
-                    A \rrbracket^v = \top\) or \(\llbracket A \rrbracket^v = \bot\), we need to assume either can
-                    happen. If \(\llbracket A \rrbracket^v = \top\), then \(\llbracket A \to B \rrbracket^v = \top\)
-                    immidiately from the definition of evaluating implication. If \(\llbracket A \rrbracket^v = \bot\),
-                    then by the induction hypothesis, we know \(\llbracket B \rrbracket^v = \top\) and hence again
-                    \(\llbracket A \to B \rrbracket^v = \top\) and \(\Gamma \vDash A \to B\).</p>
-                <p>The proof for the elimination rule is easier. Suppose we derive \(\Gamma \vdash B\) from \(\Gamma
-                    \vdash A\) and \(\Gamma \vdash A \to B\). Let \(v\) be any truth assignment satisfying \(\Gamma\).
-                    This means \(\llbracket A \to B \rrbracket^v = \top\) and also \(\llbracket A \rrbracket^v = \top\).
-                    Using the definition of evaluating implication, we have \(\llbracket B \rrbracket^v = \top\) and
-                    \(\Gamma \vDash B\).</p><b>Reductio ad absurdum</b>
-                <p>The introduction and elimination rule for disjunction would be handled similarly. But the case of
-                    reductio ad absurdum is little tricky. The \(\bot\) has only the elimination rule.</p>
-                <p>$$ \\dfrac{\\Gamma \cup \{\\lnot P\} \vdash \bot}{\\Gamma \vdash P} \bot_E$$</p>
-                <p>We suppose that we derive \(\Gamma \vdash P\) from \(\Gamma \cup \{\lnot P\} \vdash \bot\). Let \(v\)
-                    be any truth assignment which satisfies \(\Gamma\). Using the induction hypothesis we should write
-                    \(\llbracket \bot \rrbracket^v = \top\). But from the definition of \(I\) there is no truth
-                    assignment which would satisfy \(\bot\). This implies there is no truth assignment which would
-                    satisfy \(\Gamma\). This means that \(\Gamma \vDash P\), because every assignment which satisfies
-                    \(\Gamma\) also satisfies \(P\).</p>
-                <p>\(\blacksquare\)</p>
+                <p>We use the induction on the set of sequents in natural deduction for the set \(\mathcal{T}\). We
+                    prove the theorem for three of the eleven rules for natural deduction as the proofs are similar.</p>
+                <p><span class="proof-case">Case of assumption</span><br />Suppose the proof of formula \(\mathfrak{a}\)
+                    was obtained by the assumption rule. This means that \(\mathfrak{a}\) is in \(\mathcal{T}\). From a
+                    definition of semantic consequence, we get \(\mathcal{T} \vDash \mathfrak{a}\).</p>
+                <p><span class="proof-case">Case of conjunction introduction</span><br />Suppose we derive \(\mathcal{T}
+                    \vdash \mathfrak{a} \land \mathfrak{b}\) from \(\mathcal{T} \vdash \mathfrak{a}\) and \(\mathcal{T}
+                    \vdash \mathfrak{b}\) using the introduction rule. Let \(v\) be any truth assignment which satisfies
+                    \(\mathcal{T}\). We use the inductive hypothesis to get \(\mathcal{T} \vDash \mathfrak{a}\) and
+                    \(\mathcal{T} \vDash \mathfrak{b}\). As \(v\) satisfies \(\mathcal{T}\), we know that \(v\)
+                    satisfies \(\mathfrak{a}\) and \(\mathfrak{b}\) from the definition of semantic consequence. We
+                    write this as \(\mathfrak{a}[v] = \top\) and \(\mathfrak{b}[v] = \top\). Using the definition of
+                    interpretation function, we find out that \((\mathfrak{a} \land \mathfrak{b}) [v] = \top\). In other
+                    words, we proved \(\mathcal{T} \vDash \mathfrak{a} \land \mathfrak{b}\).</p>
+                <p><span class="proof-case">Case of implication introduction</span><br />Suppose we derive \(\mathcal{T}
+                    \vdash \mathfrak{a} \to \mathfrak{b}\) from \(\mathcal{T} \cup \{\mathfrak{a}\} \vdash
+                    \mathfrak{b}\). Let \(v\) be any truth assignment satisfying \(\mathcal{T}\). Now it can happen that
+                    \(\mathfrak{a}[v] = \bot\) or \(\mathfrak{a}[v] = \top\). The first case implies \((\mathcal{a} \to
+                    \mathcal{b})[v] = \top\) from the definition of the interpretation function. If \(\mathcal{a}\)
+                    evaluates to true under the assignment \(v\), then the assignment function satisfies all formulas in
+                    \(\mathcal{T} \cup \{\mathfrak{a}\}\). From the induction hypothesis we know that \(\mathcal{T} \cup
+                    \{\mathfrak{a}\} \vDash \mathfrak{b}\). From the definition of semantic consequence we get
+                    \(\mathfrak{b}[v] = \top\). Because the assignment function satisfies both formulas, we get
+                    \((\mathfrak{a} \to \mathfrak{b})[v] = \top\) and thus \(\mathcal{T} \vDash \mathfrak{a} \to
+                    \mathfrak{b}\).</p>
             </div>
             <h2>Completeness</h2>
             <h3>Consistency</h3>
-            <p>The completeness deals with the other way, that is, if we know \(\Gamma \vDash P\), can we conclude that
-                \(\Gamma \vdash P\)? Proving soundness was relatively easy. We used introduction and elimination rules
-                in natural deduction to show the provability relation preserves the truth assignment. Now we know
-                \(\Gamma \vDash A\) which means that every truth assignment satisfying \(\Gamma\) also satisfies \(A\)
-                and want to say that there exists a proof of \(A\) from \(\Gamma\) without actually constructing the
-                proof. That is not trivial at all! We start with the statement of the theorem.</p>
+            <p>The completeness deals with the other way, that is, if we know \(\mathcal{T} \vDash P\), can we conclude
+                that \(\mathcal{T} \vdash P\)? Proving soundness was relatively easy. We used introduction and
+                elimination rules in natural deduction to show the provability relation preserves the truth assignment.
+                Now we know \(\mathcal{T} \vDash \mathfrak{a}\) which means that every truth assignment satisfying
+                \(\mathcal{T}\) also satisfies \(\mathfrak{a}\) and want to say that there exists a proof of
+                \(\mathfrak{a}\) from \(\mathcal{T}\) without actually constructing the proof. That is not trivial at
+                all! We start with the statement of the theorem.</p>
             <div class="theorem">
-                <p>For every set \(\Gamma\) of propositional formulas and every propositional formula \(A\), we have
-                    that \(\Gamma \vDash A\) implies \(\Gamma \vdash A\).</p>
+                <p>For every set \(\mathcal{T}\) of propositional formulas and every propositional formula
+                    \(\mathfrak{a}\), we have that \(\mathcal{T} \vDash \mathfrak{a}\) implies \(\mathcal{T} \vdash
+                    \mathfrak{a}\).</p>
             </div>
             <p>First thing we do is to introduce the notion of consistency. With few simple lemmas, we will show that
-                proving completeness is equivalent to showing that if the set \(\Gamma\) is consistent, then is
-                satisfiable. The first lemma shows what happens if the set \(\Gamma\) is inconsistent.</p>
+                proving completeness is equivalent to showing that if the set \(\mathcal{T}\) is consistent, then is
+                satisfiable. The first lemma shows what happens if the set \(\mathcal{T}\) is inconsistent.</p>
             <div class="definition">
-                <p>Let \(\Gamma\) be any set of propositional formulas. We say that \(\Gamma\) is inconsistent if it
-                    proves \(\bot\) and consistent otherwise.</p>
+                <p>Let \(\mathcal{T}\) be any set of propositional formulas. We say that \(\mathcal{T}\) is inconsistent
+                    if it proves \(\bot\) and consistent otherwise.</p>
             </div>
             <div class="theorem">
                 <ol>
-                    <li>The set \(\Gamma\) is inconsistent.</li>
-                    <li>For <em>some</em> formula \(A\), we have that \(\Gamma \vdash A\) and \(\Gamma \vdash \lnot A\)
-                        are provable.</li>
-                    <li>For every formula \(A\), we know that \(\Gamma \vdash A\) is provable.</li>
+                    <li>The set \(\mathcal{T}\) is inconsistent.</li>
+                    <li>For <em>some</em> formula \(\mathfrak{a}\), we have that \(\mathcal{T} \vdash \mathfrak{a}\) and
+                        \(\mathcal{T} \vdash \lnot \mathfrak{a}\) are provable.</li>
+                    <li>For every formula \(\mathfrak{a}\), we know that \(\mathcal{T} \vdash \mathfrak{a}\) is
+                        provable.</li>
                 </ol>
             </div>
             <div class="proof">
                 <ul>
-                    <li>\(1 \to 3 \: \) Suppose that the set \(\Gamma\) is inconsistent. This means \(\Gamma \vdash
-                        \bot\). Using weakening we can write \(\Gamma \cup \{\lnot P\} \vdash \bot\) and using reductio
-                        ad absurdum we conclude \(\Gamma \vdash P\).</li>
-                    <li>\(3 \to 2 \: \) Suppose we can prove any propositional formula \(P\) from the set \(\Gamma\).
-                        This means we can prove \(\Gamma \vdash A\) and also \(\Gamma \vdash \lnot A\) which we wanted.
-                    </li>
-                    <li>\(2 \to 1 \:\) suppose we can prove \(\Gamma \vdash A\) and also \(\Gamma \vdash \lnot A\). We
-                        know that \(\lnot A\) is an abbreviation for \(A \to \bot\) and using elimination rule for
-                        implication we conclude \(\Gamma \vdash \bot\). This means \(\Gamma\) is inconsistent.</li>
+                    <li>\(1 \to 3 \: \) Suppose that the set \(\mathcal{T}\) is inconsistent. This means \(\mathcal{T}
+                        \vdash \bot\). Using weakening we can write \(\mathcal{T} \cup \{\lnot P\} \vdash \bot\) and
+                        using reductio ad absurdum we conclude \(\mathcal{T} \vdash P\).</li>
+                    <li>\(3 \to 2 \: \) Suppose we can prove any propositional formula \(P\) from the set
+                        \(\mathcal{T}\). This means we can prove \(\mathcal{T} \vdash \mathfrak{a}\) and also
+                        \(\mathcal{T} \vdash \lnot \mathfrak{a}\) which we wanted.</li>
+                    <li>\(2 \to 1 \:\) suppose we can prove \(\mathcal{T} \vdash \mathfrak{a}\) and also \(\mathcal{T}
+                        \vdash \lnot \mathfrak{a}\). We know that \(\lnot \mathfrak{a}\) is an abbreviation for
+                        \(\mathfrak{a} \to \bot\) and using elimination rule for implication we conclude \(\mathcal{T}
+                        \vdash \bot\). This means \(\mathcal{T}\) is inconsistent.</li>
                 </ul>
                 <p>\(\blacksquare\)</p>
             </div>
-            <p>We see that if \(\Gamma\) is inconsistent, then we can prove everything. This is called the <em>principle
-                    of explosion</em>. Being able to prove everything means that we lose the ability to speak about
-                truth. If there are no false statements this means the proof of any statement carries no value at all.
-                The next lemma is a simple observation that we cannot find a truth assignment which satisfies \(\bot\).
-                The proof is trivial as we only have to carefully write down the definition of satisfiability and
-                remember that \(I(\bot\) = \bot\). We used this line of reasoning for the case of reductio ad absurdum
-                in the proof of soundness.</p>
+            <p>We see that if \(\mathcal{T}\) is inconsistent, then we can prove everything. This is called the
+                <em>principle of explosion</em>. Being able to prove everything means that we lose the ability to speak
+                about truth. If there are no false statements this means the proof of any statement carries no value at
+                all. The next lemma is a simple observation that we cannot find a truth assignment which satisfies
+                \(\bot\). The proof is trivial as we only have to carefully write down the definition of satisfiability
+                and remember that \(I(\bot\) = \bot\). We used this line of reasoning for the case of reductio ad
+                absurdum in the proof of soundness.
+            </p>
             <div class="theorem">
-                <p>Let \(\Gamma\) be any set of propositional formulas. The set \(\Gamma\) is unsatisfiable if and only
-                    if \(\Gamma \vDash \bot\).</p>
+                <p>Let \(\mathcal{T}\) be any set of propositional formulas. The set \(\mathcal{T}\) is unsatisfiable if
+                    and only if \(\mathcal{T} \vDash \bot\).</p>
             </div>
-            <p>What happens when we add a negation of a formula \(A\) to the set \(\Gamma\) from which we could prove
-                \(A\)? We get inconsistency. This innocently looking lemma will be of much importance later on for using
-                SAT solvers for proving. It is also important for the completeness theorem.</p>
+            <p>What happens when we add a negation of a formula \(\mathfrak{a}\) to the set \(\mathcal{T}\) from which
+                we could prove \(\mathfrak{a}\)? We get inconsistency. This innocently looking lemma will be of much
+                importance later on for using SAT solvers for proving. It is also important for the completeness
+                theorem.</p>
             <div class="theorem">
-                <p>Let \(\Gamma\) be any set of propositional formulas and let \(A\) be a propositional formula. Then
-                    \(\Gamma \vdash A\) if and only if \(\Gamma \cup \{\lnot A\}\) is inconsistent.</p>
+                <p>Let \(\mathcal{T}\) be any set of propositional formulas and let \(\mathfrak{a}\) be a propositional
+                    formula. Then \(\mathcal{T} \vdash \mathfrak{a}\) if and only if \(\mathcal{T} \cup \{\lnot
+                    \mathfrak{a}\}\) is inconsistent.</p>
             </div>
             <div class="proof">
-                <p>Suppose we can prove \(\Gamma \vdash A\). By weakening we know \(\Gamma \cup \{\lnot A\} \vdash A\)
-                    and by the assumption rule we also know \(\Gamma \cup \{\lnot A\} \vdash \lnot A\). Using
-                    elimination rule for implication we get \(\Gamma \cup \{\lnot A\} \vdash \bot\). This means that
-                    \(\Gamma \cup \{\lnot A\}\) is inconsistent. For the other implication assume that \(\Gamma \cup
-                    \{\lnot A\}\) is inconsistent. This means we can prove \(\Gamma \cup \{\lnot A\} \vdash \bot\).
-                    Using reductio ad absurdum we immidately get \(\Gamma \vdash A\).</p>
+                <p>Suppose we can prove \(\mathcal{T} \vdash \mathfrak{a}\). By weakening we know \(\mathcal{T} \cup
+                    \{\lnot \mathfrak{a}\} \vdash \mathfrak{a}\) and by the assumption rule we also know \(\mathcal{T}
+                    \cup \{\lnot \mathfrak{a}\} \vdash \lnot \mathfrak{a}\). Using elimination rule for implication we
+                    get \(\mathcal{T} \cup \{\lnot \mathfrak{a}\} \vdash \bot\). This means that \(\mathcal{T} \cup
+                    \{\lnot \mathfrak{a}\}\) is inconsistent. For the other implication assume that \(\mathcal{T} \cup
+                    \{\lnot \mathfrak{a}\}\) is inconsistent. This means we can prove \(\mathcal{T} \cup \{\lnot
+                    \mathfrak{a}\} \vdash \bot\). Using reductio ad absurdum we immidately get \(\mathcal{T} \vdash
+                    \mathfrak{a}\).</p>
                 <p>\(\blacksquare\)</p>
             </div>
             <p>We are getting closer to the proof of completeness. The next theorem does not have a name, but we will
@@ -145,97 +161,105 @@
                 logic equivalent to the Completeness theorem. This means we can prove Completeness theorem using
                 Consistency theorem and vice versa.</p>
             <div class="theorem">
-                <p>Every consistent set \(\Gamma\) of propositional formulas is satisfiable.</p>
+                <p>Every consistent set \(\mathcal{T}\) of propositional formulas is satisfiable.</p>
             </div>
             <div class="proof"><b>Of equivalence</b>
-                <p>First assume that Consistency theorem holds. Suppose that \(\Gamma \n+ nvdash A\). From the previous
-                    lemma we know \(\Gamma \cup \{\lnot A\}\) is consistent. By the Consistency theorem we know that
-                    \(\Gamma \cup \{\lnot A\}\) is satisfiable. Let \(v\) be a truth assignment which satisfies \(\Gamma
-                    \cup \{\lnot A\}\). Such \(v\) must satisfy \(\lnot A\), in other words \(\llbracket A \to
-                    \bot\rrbracket^v = \top\). This is possible only if \(\llbracket A \rrbracket^v = \bot\) from the
-                    definition of evaluating implication. Thus \(\Gamma \nvDash A\).</p>
-                <p>Now assume that the Completeness theorem holds. Suppose that \(\Gamma\) is consistent. From
-                    definition of consistency we have \(\Gamma \n+ nvdash \bot\). From the Completeness theorem we have
-                    \(\Gamma \nvDash \bot\). Using the first lemma in this section we conclude that \(\Gamma\) is
-                    satifiable.</p>
+                <p>First assume that Consistency theorem holds. Suppose that \(\mathcal{T} \n+ nvdash \mathfrak{a}\).
+                    From the previous lemma we know \(\mathcal{T} \cup \{\lnot \mathfrak{a}\}\) is consistent. By the
+                    Consistency theorem we know that \(\mathcal{T} \cup \{\lnot \mathfrak{a}\}\) is satisfiable. Let
+                    \(v\) be a truth assignment which satisfies \(\mathcal{T} \cup \{\lnot \mathfrak{a}\}\). Such \(v\)
+                    must satisfy \(\lnot \mathfrak{a}\), in other words \(\llbracket \mathfrak{a} \to \bot\rrbracket^v =
+                    \top\). This is possible only if \(\llbracket \mathfrak{a} \rrbracket^v = \bot\) from the definition
+                    of evaluating implication. Thus \(\mathcal{T} \nvDash \mathfrak{a}\).</p>
+                <p>Now assume that the Completeness theorem holds. Suppose that \(\mathcal{T}\) is consistent. From
+                    definition of consistency we have \(\mathcal{T} \n+ nvdash \bot\). From the Completeness theorem we
+                    have \(\mathcal{T} \nvDash \bot\). Using the first lemma in this section we conclude that
+                    \(\mathcal{T}\) is satifiable.</p>
             </div>
             <h3>Maximally consistent sets</h3>
             <p>We are left with proving the Consistency theorem. In order to prove this statement, we will need to
                 introduce maximally consistent sets. These are the set of propositions, which are in some sense
                 <em>saturated</em>, meaning you cannot add another proposition without breaking consistency.
                 Suprisingly, it will be easier to prove that maximally consistent sets are satisfiable and from that
-                prove the Consistency theorem.</p>
+                prove the Consistency theorem.
+            </p>
             <div class="definition">
-                <p>A set \(\Gamma\) of propositional formulas is <em>maximally consistent</em> if</p>
+                <p>\mathfrak{a} set \(\mathcal{T}\) of propositional formulas is <em>maximally consistent</em> if</p>
                 <ul>
                     <li>it is consistent, and</li>
-                    <li>for every propositional formula \(B \notin \Gamma\), the set \(\Gamma, B\) is inconsistent.</li>
+                    <li>for every propositional formula \(\mathfrak{b} \notin \mathcal{T}\), the set \(\mathcal{T},
+                        \mathfrak{b}\) is inconsistent.</li>
                 </ul>
             </div>
             <p>First we need to establish that we can extend any consistent set into a maximally consistent one.</p>
             <div class="theorem">
-                <p>Let \(\Gamma\) be any consistent set of propositional formulas. Then there exists a maximally
-                    consistent set \(\Delta\) such that \(\Gamma \subset \Delta\).</p>
+                <p>Let \(\mathcal{T}\) be any consistent set of propositional formulas. Then there exists a maximally
+                    consistent set \(\Delta\) such that \(\mathcal{T} \subset \Delta\).</p>
             </div>
             <div class="proof">
                 <p>We assume that we have countably many propositional variables and therefore countably many
                     propositional formulas. This means we can enumerate these propositions as a sequence
                     \(A_0,A_1,\ldots\) using natural numbers. We define a sequence of sets \(\Gamma_i\) inductively. We
-                    set \(\Gamma_0 = \Gamma\) and</p>
+                    set \(\Gamma_0 = \mathcal{T}\) and</p>
                 <p>$$\Gamma_i = \begin{cases}\n \Gamma_i \cup \{A_i\} &amp;\text{if such set is consistent} \\n \Gamma_i
                     &amp;\text{otherwise }\n \end{cases}$$</p>
                 <p>We set \(\Delta = \bigcup \Gamma_i\) where the \(i\) ranges over natural numbers. By induction every
                     \(\Gamma_i\) is consistent and thus \(\Delta\) is consistent too. We want to prove that \(\Delta\)
-                    is maximally consistent. Suppose that \(A \notin \Delta\). We know that \(A = B_i\) for some \(i\).
-                    We also know that \(A \notin \Gamma_{i+1}\) from the inductive construction. This means that
-                    \(\Gamma_{i+1} \cup \{A\}\) is inconsistent which implies that \(\Delta \cup \{A\}\) is
-                    inconsistent.</p>
+                    is maximally consistent. Suppose that \(\mathfrak{a} \notin \Delta\). We know that \(\mathfrak{a} =
+                    B_i\) for some \(i\). We also know that \(\mathfrak{a} \notin \Gamma_{i+1}\) from the inductive
+                    construction. This means that \(\Gamma_{i+1} \cup \{\mathfrak{a}\}\) is inconsistent which implies
+                    that \(\Delta \cup \{\mathfrak{a}\}\) is inconsistent.</p>
                 <p>\(\blacksquare\)</p>
             </div>
             <p>Before we prove that the maximally consistent set is satisfiable, we need one more technical lemma. It
                 tells us something about the <em>structure</em> of propositions one can find in a maximally consistent
                 set.</p>
             <div class="theorem">
-                <p>Let \(\Gamma\) be a maximally consistent set of propositional formulas. Then \(\Gamma\) has the
-                    following properties</p>
+                <p>Let \(\mathcal{T}\) be a maximally consistent set of propositional formulas. Then \(\mathcal{T}\) has
+                    the following properties</p>
                 <ol>
-                    <li>\(\Gamma\) is closed under deduction, which means if \(\Gamma \vdash A\), then \(A \in \Gamma\).
-                    </li>
-                    <li>\(\bot \notin \Gamma\)</li>
-                    <li>\(A \land B \in \Gamma\) if and only if \(A \in \Gamma\) and \(B \in \Gamma\)</li>
-                    <li>\(A \to B \in \Gamma\) if and only if \(A \notin \Gamma\) or \(B \in \Gamma\)</li>
-                    <li>\(A \lor B \in \Gamma\) if and only if \(A \in \Gamma\) or \(B \in \Gamma\)</li>
+                    <li>\(\mathcal{T}\) is closed under deduction, which means if \(\mathcal{T} \vdash \mathfrak{a}\),
+                        then \(\mathfrak{a} \in \mathcal{T}\).</li>
+                    <li>\(\bot \notin \mathcal{T}\)</li>
+                    <li>\(\mathfrak{a} \land \mathfrak{b} \in \mathcal{T}\) if and only if \(\mathfrak{a} \in
+                        \mathcal{T}\) and \(\mathfrak{b} \in \mathcal{T}\)</li>
+                    <li>\(\mathfrak{a} \to \mathfrak{b} \in \mathcal{T}\) if and only if \(\mathfrak{a} \notin
+                        \mathcal{T}\) or \(\mathfrak{b} \in \mathcal{T}\)</li>
+                    <li>\(\mathfrak{a} \lor \mathfrak{b} \in \mathcal{T}\) if and only if \(\mathfrak{a} \in
+                        \mathcal{T}\) or \(\mathfrak{b} \in \mathcal{T}\)</li>
                 </ol>
             </div>
             <div class="proof">
-                <p>Suppose that \(\Gamma \vdash A\). We assume that \(\Gamma\) is consistent, which implies that
-                    \(\Gamma \cup \{A\}\) is consistent too. If you are not sure why, then think what would it mean if
-                    this set wasn't consistent. Inconsistency means we are able to prove \(\Gamma,A \vdash \bot\). Using
-                    introduction rule for implication we get \(\Gamma \vdash A \to \bot\) which is the same as \(\Gamma
-                    \vdash \lnot A\). From the first lemma in the previous section, this would mean that \(\Gamma\) is
-                    inconsistent! The second claim follow from the first one, again using the first lemma in the
+                <p>Suppose that \(\mathcal{T} \vdash \mathfrak{a}\). We assume that \(\mathcal{T}\) is consistent, which
+                    implies that \(\mathcal{T} \cup \{\mathfrak{a}\}\) is consistent too. If you are not sure why, then
+                    think what would it mean if this set wasn't consistent. Inconsistency means we are able to prove
+                    \(\mathcal{T},\mathfrak{a} \vdash \bot\). Using introduction rule for implication we get
+                    \(\mathcal{T} \vdash \mathfrak{a} \to \bot\) which is the same as \(\mathcal{T} \vdash \lnot
+                    \mathfrak{a}\). From the first lemma in the previous section, this would mean that \(\mathcal{T}\)
+                    is inconsistent! The second claim follow from the first one, again using the first lemma in the
                     previous section.</p>
             </div>
             <div class="theorem">
-                <p>Suppose that \(\Gamma\) is maximally consistent. Define a truth assignment \(v\) by setting \(v(P) =
-                    \top\) if \(P \in \Gamma\). Then for every propositional formula we have \(\llbracket A \rrbracket^v
-                    = \top\) if and only if \(A \in \Gamma\).</p>
+                <p>Suppose that \(\mathcal{T}\) is maximally consistent. Define a truth assignment \(v\) by setting
+                    \(v(P) = \top\) if \(P \in \mathcal{T}\). Then for every propositional formula we have \(\llbracket
+                    \mathfrak{a} \rrbracket^v = \top\) if and only if \(\mathfrak{a} \in \mathcal{T}\).</p>
             </div>
             <div class="proof">
-                <p>We use the induction on propositional formulas \(A\). if \(A\) is a propositional variable then we
-                    know \(v(A) = \top\) because that is how we defined the truth assignment for variables. The cases
-                    for conjunction, disjunction and implication follow from the previous lemma.</p>
+                <p>We use the induction on propositional formulas \(\mathfrak{a}\). if \(\mathfrak{a}\) is a
+                    propositional variable then we know \(v(\mathfrak{a}) = \top\) because that is how we defined the
+                    truth assignment for variables. The cases for conjunction, disjunction and implication follow from
+                    the previous lemma.</p>
                 <p>\(\blacksquare\)</p>
             </div>
             <p>We can finally prove the consistency theorem. We repeat its statement and then prove it.</p>
             <div class="theorem">
-                <p>Every consistent set \(\Gamma\) of propositional formulas is satisfiable.</p>
+                <p>Every consistent set \(\mathcal{T}\) of propositional formulas is satisfiable.</p>
             </div>
             <div class="proof">
-                <p>Suppose \(\Gamma\) is consistent. We can extend this set to a maximally consistent set \(\Delta\)
-                    using the inductive construction. The previous lemma tells us that we know how to define a truth
-                    assignment satisfying \(\Delta\). We know that \(\Gamma \subset \Delta\), which implies that this
-                    assignment also satisfies \(\Gamma\). Thus \(\Gamma\) is satisfiable.</p>
+                <p>Suppose \(\mathcal{T}\) is consistent. We can extend this set to a maximally consistent set
+                    \(\Delta\) using the inductive construction. The previous lemma tells us that we know how to define
+                    a truth assignment satisfying \(\Delta\). We know that \(\mathcal{T} \subset \Delta\), which implies
+                    that this assignment also satisfies \(\mathcal{T}\). Thus \(\mathcal{T}\) is satisfiable.</p>
             </div>
             <p>\(\blacksquare\)</p>
         </div>
@@ -244,12 +268,9 @@
                 xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 3 30 30" width="35px" height="35px">
                 <path d="M 19 9 L 13 15 L 19 21" fill="none" stroke="currentColor" stroke-linecap="round"
                     stroke-linejoin="round" stroke-width="3px"></path>
-            </svg></a><a href="../blog.html">Blog</a><a href="../logic/naturaldeduction.html"><svg
-                xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 3 30 30"
-                width="35px" height="35px">
-                <path d="M 12 9 L 18 15 L 12 21" fill="none" stroke="currentColor" stroke-linecap="round"
-                    stroke-linejoin="round" stroke-width="3px"></path>
-            </svg></a></div>
+            </svg></a><a href="../blog.html">Blog</a>
+        <div></div>
+    </div>
 </body>
 
 </html>
