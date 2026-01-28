@@ -154,11 +154,9 @@
                     <p>Fix a context \(\Gamma\) and a formula \(\mathfrak{a}\). If \(\Gamma \cup\{\mathfrak{a}\} \vdash
                         \mathfrak{b}\) then \(\Gamma \vdash \mathfrak{a} \to \mathfrak{b}\).</p>
                 </div>
-                <div class="proof">
-                    <p>We fix \(\Gamma\) and \(\mathfrak{a}\), and use the induction on the set of consequences of
-                        \(\Gamma \cup\{\mathfrak{a}\}\). This means that if \(\mathfrak{b}\) is in the set of
-                        consequences, it has the form of one of the three cases mentioned earlier:</p>
-                    <ol>
+                <div class="proof">We fix \(\Gamma\) and \(\mathfrak{a}\), and use the induction on the set of
+                    consequences of \(\Gamma \cup\{\mathfrak{a}\}\). This means that if \(\mathfrak{b}\) is in the set
+                    of consequences, it has the form of one of the three cases mentioned earlier:<ol>
                         <li>\(\mathfrak{b} \in \Gamma \cup \{\mathfrak{a}\}\)</li>
                         <li>\(\mathfrak{b}\) is an axiom schema</li>
                         <li>There is proposition \(\mathfrak{h}\) such that \(\Gamma \cup\{\mathfrak{a}\} \vdash
@@ -239,21 +237,16 @@
                     speaks about the set of all possible sequents we can prove. It is an inductively defined set in the
                     same way the set of formulas over some language. This means we can use induction to prove properties
                     about this set.</p>
-                <div class="definition">
-                    <p>The set of sequents provable in natural deduction is a set of sequents inductively genereated by
-                        the introduction and elimination rules of natural deduction.</p>
-                </div>
+                <div class="definition">The set of sequents provable in natural deduction is a set of sequents
+                    inductively genereated by the introduction and elimination rules of natural deduction.</div>
                 <p>One such use of induction over the set of sequents is the following lemma called weakening. It tells
                     us that the natural deduction is a monotone system. This means that adding a hypothesis does not
                     destroy propositions which were earlier provable.</p>
-                <div class="theorem">
-                    <p>If \(\Gamma \vdash \mathfrak{a}\) holds in natural deduction and \(\Gamma \subset \Delta\), then
-                        \(\Delta \vdash \mathfrak{a}\) holds in natural deduction.</p>
-                </div>
-                <div class="proof">
-                    <p>We will use induction on the set of provable sequents.</p>
-                    <p><span class="proof-case">Case of assumption</span><br />Let's say the formula \(\mathfrak{a}\)
-                        was proved by the assumption rule from the context \(\Gamma\). This means we have some set
+                <div class="theorem">If \(\Gamma \vdash \mathfrak{a}\) holds in natural deduction and \(\Gamma \subset
+                    \Delta\), then \(\Delta \vdash \mathfrak{a}\) holds in natural deduction.</div>
+                <div class="proof">We will use induction on the set of provable sequents.<p><span
+                            class="proof-case">Case of assumption</span><br />Let's say the formula \(\mathfrak{a}\) was
+                        proved by the assumption rule from the context \(\Gamma\). This means we have some set
                         \(\Omega\) such that \(\Gamma = \Omega \cup \{\mathfrak{a}\}\).
                         What this means is that \(\mathfrak{a}\) is in \(\Gamma\) and therefore in \(\Delta\). We can
                         use the assumption rule to get \(\Delta \cup \{\mathfrak{a}\} \vdash \mathfrak{a}\) and because
