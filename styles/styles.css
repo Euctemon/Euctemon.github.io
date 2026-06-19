@@ -1,71 +1,109 @@
 /* GENERAL */
 
 :root {
-    --swamp: indianred;
+    /* Surfaces */
+    --paper:        #F6F5F1;                  /* page background */
+    --paper-raised: #FBFAF7;                  /* card backgrounds (e.g. diagram) */
+    --rule:         #E1DCD2;                  /* hairline dividers, card borders */
+    --surface:      #E2E2E2;                  /* neutral UI: blog button, popover bg */
+
+    /* Text */
+    --ink:          #1C1B19;                  /* body text */
+    --ink-muted:    #75726A;                  /* captions, tags, secondary labels */
+
+    /* Accents */
+    --coral:        #CD5C5C;                  /* primary accent: hover, definition labels */
+    --coral-dark:   #A84040;                  /* hover state on coral elements */
+    --coral-tint:   rgba(205, 92, 92, 0.04);  /* definition/theorem background wash */
+    --blue:         #3A4480;                  /* links, popover terms */
+
+    /* Structure */
+    --border-strong: #444444;                 /* table inner borders */
 }
 
 @font-face {
     font-display: swap;
-    font-family: Inter;
-    font-style: light;
+    font-family: "Inter";
+    font-style: normal;
     font-weight: 300;
     src: url('Inter-Light.otf') format('opentype');
 }
 
 @font-face {
     font-display: swap;
-    font-family: Inter;
-    font-style: regular;
+    font-family: "Inter";
+    font-style: normal;
     font-weight: 400;
     src: url('Inter-Regular.otf') format('opentype');
 }
 
 @font-face {
     font-display: swap;
-    font-family: Inter;
-    font-style: medium;
+    font-family: "Inter";
+    font-style: normal;
     font-weight: 500;
     src: url('Inter-Medium.otf') format('opentype');
 }
 
 @font-face {
     font-display: swap;
-    font-family: Questa;
-    font-style: regular;
-    font-weight: 400;
-    src: url('QuestaGrande-Regular.otf') format('opentype');
+    font-family: "STIX Two Text";
+    font-style: normal;
+    font-weight: 600;
+    src: url('Stix-Two-Text-Medium.ttf') format('truetype');
 }
+
+@font-face {
+    font-display: swap;
+    font-family: "STIX Two Math";
+    font-style: normal;
+    font-weight: 400;
+    src: url('Stix-Two-Math-Regular.ttf') format('truetype');
+}
+
+
+/* BASE */
 
 body {
     margin: 0;
-    font-family: "Inter";
+    background-color: var(--paper);
+    color: var(--ink);
+    font-family: "Inter", sans-serif;
     font-weight: 400;
-    line-height: 1.45;
+    line-height: 1.65;
 }
 
 h1 {
-    font-family: "Questa";
-    font-weight: 400;
+    font-family: "STIX Two Text", serif;
+    font-weight: 600;
     font-size: 2.5rem;
+    margin-bottom: 0;
 }
 
 h2 {
-    font-family: "Questa";
-    font-weight: 400;
+    font-family: "STIX Two Text", serif;
+    font-weight: 600;
     font-size: 2rem;
 }
 
 h3 {
-    font-family: "Questa";
+    font-family: "STIX Two Text", serif;
+    font-weight: 600;
     font-size: 1.5rem;
 }
+
+a {
+    color: var(--blue);
+}
+
+
+/* NAVIGATION */
 
 .main-nav {
     display: flex;
     justify-content: center;
-    font-size: 1.5rem;
-    font-family: Questa;
-    margin-bottom: 1em;
+    font-family: "STIX Two Text", serif;
+    font-size: 2rem;
 
     & ul {
         list-style-type: none;
@@ -78,18 +116,36 @@ h3 {
     }
 
     & a {
-        color: black;
+        color: var(--ink);
         text-decoration: none;
         font-size: 1.4em;
-        transition: color 0.5s
+        transition: color 0.3s;
     }
 
     & a:hover {
-        color: var(--swamp);
+        color: var(--coral);
     }
 }
 
-/* LANDING, HOME, ABOUT and BLOG pages */
+.site-nav {
+    & ul {
+        padding: 0;
+        margin: 0 0 0 1em;
+    }
+
+    & a {
+        color: var(--ink);
+        text-decoration: none;
+        transition: color 0.3s;
+    }
+
+    & a:hover {
+        color: var(--coral);
+    }
+}
+
+
+/* LANDING PAGE */
 
 #landing-body {
     background-image: url(../styles/landingpicture.webp);
@@ -111,22 +167,23 @@ h3 {
     background-color: rgba(100, 100, 100, 0.25);
     text-align: left;
     border-radius: 1em;
-
 }
 
-#landing-button>a {
+#landing-button > a {
     text-decoration: none;
-    color: chocolate;
-    font-family: "Questa";
+    color: var(--coral);
+    font-family: "STIX Two Text", serif;
     font-weight: 400;
     font-size: 3.5rem;
-
-    transition: color 500ms ease, color 500ms ease;
+    transition: color 300ms ease;
 }
 
-#landing-button>a:hover {
-    color: brown;
+#landing-button > a:hover {
+    color: var(--coral-dark);
 }
+
+
+/* HOME, ABOUT, BLOG — shared layout */
 
 .content-flex {
     display: flex;
@@ -141,13 +198,95 @@ h3 {
     text-align: left;
 }
 
-#coproduct-svg {
+.diagram-card {
+    background-color: var(--paper-raised);
+    border: 1px solid var(--rule);
+    border-radius: 4px;
+    padding: 24px;
+    align-self: center;
     width: 400px;
 }
 
+.math-label {
+    font-family: "STIX Two Math", serif;
+    font-size: 100px;
+}
+
+.math-label-sub {
+    font-family: "STIX Two Math", serif;
+    font-size: 58.3px;
+}
+
+/* BLOG index */
+
+.list-descript {
+    margin: 1em auto 0.5em;
+    color: var(--coral);
+}
+
+.blog-entries {
+    margin-top: 1rem;
+}
+
+.blog-entry {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    padding: 18px 0;
+    border-bottom: 1px solid var(--rule);
+}
+
+.blog-entries > .blog-entry:first-child {
+    border-top: 1px solid var(--rule);
+}
+
+.blog-entry-marker {
+    color: var(--coral);
+    flex: 0 0 auto;
+    line-height: 1.4;
+}
+
+.blog-entry-body {
+    flex: 1;
+}
+
+.blog-entry-title {
+    font-family: "STIX Two Text", serif;
+    font-size: 1.1rem;
+    font-weight: 500;
+}
+
+.blog-entry-title a {
+    color: var(--ink);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.3s;
+}
+
+.blog-entry-title a:hover {
+    border-bottom-color: var(--coral);
+}
+
+.blog-entry-desc {
+    font-size: 0.875rem;
+    color: var(--ink-muted);
+    margin-top: 4px;
+}
+
+.blog-entry-tag {
+    flex: 0 0 auto;
+    font-size: 0.75rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+}
+
+
+/* BLOG course pages — fixed nav + arrows */
+
 #blog-nav {
     z-index: 1;
-    background-color: white;
+    background-color: var(--paper);
     position: fixed;
     bottom: 17%;
     right: 5%;
@@ -163,19 +302,18 @@ h3 {
     }
 
     & a {
-        color: black;
+        color: var(--ink);
         text-decoration: none;
         font-size: 0.9em;
-        transition: color 0.5s;
+        transition: color 0.3s;
     }
 
     & a:hover {
-        color: var(--swamp);
+        color: var(--coral);
     }
 
-    border: 0.1em solid rgb(226, 226, 226);
+    border: 0.1em solid var(--rule);
     border-radius: 1em;
-
 }
 
 #blog-button {
@@ -185,42 +323,15 @@ h3 {
     right: 5%;
     width: 30pt;
     height: 30pt;
-    background-color: rgb(226, 226, 226);
+    background-color: var(--surface);
     border-radius: 50%;
     border: 0;
     padding: 0;
-    transition: background-color 500ms ease, background-color 500ms ease;
+    transition: background-color 300ms ease;
 }
 
 #blog-button:hover {
-    background-color: rgba(205, 92, 92, 0.591);
-}
-
-.site-nav {
-    & ul {
-
-        padding: 0;
-        margin: 0 0 0 1em;
-    }
-
-    & a {
-        color: black;
-        text-decoration: none;
-        transition: color 0.5s
-    }
-
-    & a:hover {
-        color: var(--swamp);
-    }
-}
-
-
-
-/* BLOG Pages */
-
-.list-descript {
-    margin: 1em auto 0.5em;
-    color: var(--swamp);
+    background-color: color-mix(in srgb, var(--coral) 60%, transparent);
 }
 
 .left-right-nav {
@@ -235,77 +346,90 @@ h3 {
 }
 
 .left-right-nav a {
-    color: black;
+    color: var(--ink);
     text-decoration: none;
     font-weight: 500;
-    transition: color 0.5s
+    transition: color 0.3s;
 }
 
 .left-right-nav svg {
-    color: black;
-    transition: color 0.5s
+    color: var(--ink);
+    transition: color 0.3s;
 }
 
 .left-right-nav svg:hover {
-    color: var(--swamp);
+    color: var(--coral);
 }
 
 .left-right-nav a:hover {
-    color: var(--swamp);
+    color: var(--coral);
 }
 
 
-
-/* Math stuff */
+/* MATH blocks */
 
 .definition {
-    border-width: 1px;
-    padding: 15px;
-    margin: 5px 0px;
+    border: none;
+    border-left: 3px solid var(--coral);
+    background-color: var(--coral-tint);
+    padding: 16px 20px;
+    margin: 1.5rem 0;
 }
 
 .definition::before {
-    content: 'Definition \A';
-    white-space: pre-wrap;
-    color: chocolate;
-    font-family: "Questa";
-    font-size: 1.5rem;
+    display: block;
+    content: 'Definition';
+    color: var(--coral);
+    font-family: "STIX Two Text", serif;
+    font-weight: 600;
+    font-size: 1.2rem;
+    margin-bottom: 0.5em;
 }
 
 .theorem {
-    border-width: 1px;
-    padding: 15px;
-    margin: 5px 0px;
+    border: none;
+    border-left: 3px solid var(--coral);
+    background-color: var(--coral-tint);
+    padding: 16px 20px;
+    margin: 1.5rem 0;
 }
 
 .theorem::before {
-    content: 'Theorem \A';
-    white-space: pre-wrap;
-    color: chocolate;
-    font-family: "Questa";
-    font-size: 1.5rem;
+    display: block;
+    content: 'Theorem';
+    color: var(--coral);
+    font-family: "STIX Two Text", serif;
+    font-weight: 600;
+    font-size: 1.2rem;
+    margin-bottom: 0.5em;
 }
 
 .proof {
-    border-width: 1px;
-    padding: 15px;
-    margin: 5px 0px;
+    border: none;
+    border-left: 2px solid var(--rule);
+    padding: 16px 20px;
+    margin: 1.5rem 0;
 }
 
 .proof::before {
-    content: 'Proof \A';
-    white-space: pre-wrap;
-    color: chocolate;
-    font-family: "Questa";
-    font-size: 1.5rem;
+    display: block;
+    content: 'Proof';
+    color: var(--ink-muted);
+    font-family: "STIX Two Text", serif;
+    font-weight: 600;
+    font-size: 1.2rem;
+    margin-bottom: 0.5em;
 }
 
 .proof-word {
-    color: chocolate;
+    color: var(--coral);
+    font-style: normal;
+    font-weight: 600;
 }
 
 .proof-case {
-    color: green;
+    color: var(--ink);
+    font-weight: 600;
 }
 
 ol {
@@ -316,36 +440,37 @@ ol {
     }
 }
 
-/* .popover-content */
+
+/* POPOVERS */
+
 .popover {
     position: relative;
-    color: teal;
+    color: var(--blue);
 }
 
-.popover>span {
+.popover > span {
     visibility: hidden;
     width: 200px;
-    background-color: rgb(237, 237, 237);
-    color: black;
+    background-color: var(--surface);
+    color: var(--ink);
     text-align: center;
     border-radius: 10px;
-    /* border: 2px solid black; */
     padding: 5px;
     position: absolute;
     bottom: 125%;
-    /* Position above the element */
     left: 50%;
     margin-left: -100px;
-    /* Center the popover, dependent on width */
     opacity: 0;
     transition: opacity 0.3s;
 }
 
-.popover:hover>span {
+.popover:hover > span {
     visibility: visible;
     opacity: 1;
 }
 
+
+/* TABLES */
 
 table.inner {
     border-collapse: collapse;
@@ -353,26 +478,22 @@ table.inner {
 
 table.inner td,
 table.inner th {
-    border: 1px solid #444;
-}
-
-/* Remove outer borders */
-.table-style {
-    justify-items: center;
+    border: 1px solid var(--border-strong);
 }
 
 .table-style table {
     border-collapse: collapse;
     border-style: hidden;
     text-align: center;
+    margin: 0 auto;
 }
 
 .table-style table td {
-    border: 1px solid black;
+    border: 1px solid var(--ink);
     min-width: 2rem;
     padding: 4px 0.5rem;
 }
 
 .table-style tr {
-    border: 1px solid black;
+    border: 1px solid var(--ink);
 }
