@@ -61,6 +61,14 @@
     src: url('Stix-Two-Math-Regular.ttf') format('truetype');
 }
 
+@font-face {
+  font-display: swap;
+  font-family: "Source Code Pro"
+  font-style: normal;
+  font-weight: 400;
+  src: url('Source-Code-Pro-Regular.ttf') format('truetype');
+}
+
 
 /* BASE */
 
@@ -159,22 +167,25 @@ a {
 }
 
 #landing-button {
-    font-size: x-large;
     width: auto;
     padding: 1em;
     position: absolute;
+    opacity: 1;
     top: 65%;
     background-color: rgba(100, 100, 100, 0.25);
+    border-style: solid;
+    border-color: var(--border-strong);
+    border-width: 2px;
     text-align: left;
     border-radius: 1em;
 }
 
 #landing-button > a {
     text-decoration: none;
-    color: var(--coral);
-    font-family: "STIX Two Text", serif;
-    font-weight: 400;
-    font-size: 3.5rem;
+    color: var(--paper);
+    font-family: "Source Code Pro", serif;
+    font-weight: 600;
+    font-size: 1.5rem;
     transition: color 300ms ease;
 }
 
@@ -205,6 +216,23 @@ a {
     padding: 24px;
     align-self: center;
     width: 400px;
+}
+
+@media (max-width: 760px) {
+    .content-flex {
+        margin: 0 6% 0 6%;
+        gap: 32px;
+    }
+
+    .content-body {
+        max-width: 100%;
+    }
+
+    .diagram-card {
+        flex: 0 0 auto;
+        width: 90%;
+        max-width: 400px;
+    }
 }
 
 .math-label {
