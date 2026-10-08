@@ -2,23 +2,23 @@
 
 :root {
     /* Surfaces */
-    --paper:        #F6F5F1;                  /* page background */
-    --paper-raised: #FBFAF7;                  /* card backgrounds (e.g. diagram) */
-    --rule:         #E1DCD2;                  /* hairline dividers, card borders */
-    --surface:      #E2E2E2;                  /* neutral UI: blog button, popover bg */
+    --paper:        #FDFDFC;  /* page background */
+    --paper-raised: #FBFAF7;  /* card backgrounds (e.g. diagram) */
+    --rule:         #E1DCD2;  /* hairline dividers, card borders */
+    --surface:      #E2E2E2;  /* neutral UI: blog button, popover background */
 
     /* Text */
-    --ink:          #1C1B19;                  /* body text */
-    --ink-muted:    #75726A;                  /* captions, tags, secondary labels */
+    --ink:          #080808;  /* body text */
+    --ink-muted:    #75726A;  /* captions, tags, secondary labels */
 
     /* Accents */
-    --coral:        #CD5C5C;                  /* primary accent: hover, definition labels */
-    --coral-dark:   #A84040;                  /* hover state on coral elements */
-    --coral-tint:   rgba(205, 92, 92, 0.04);  /* definition/theorem background wash */
-    --blue:         #3A4480;                  /* links, popover terms */
+    --coral:        #CD5C5C;  /* primary accent: hover, definition labels */
+    --coral-dark:   #A84040;  /* hover state on coral elements */
+    --coral-tint:   #FAFAF7;  /* definition/theorem background wash */
+    --blue:         #3A4480;  /* links, popover terms */
 
     /* Structure */
-    --border-strong: #444444;                 /* table inner borders */
+    --border-strong: #444444; /* table inner borders */
 }
 
 @font-face {
@@ -60,15 +60,6 @@
     font-weight: 400;
     src: url('Stix-Two-Math-Regular.ttf') format('truetype');
 }
-
-@font-face {
-  font-display: swap;
-  font-family: "Source Code Pro"
-  font-style: normal;
-  font-weight: 400;
-  src: url('Source-Code-Pro-Regular.ttf') format('truetype');
-}
-
 
 /* BASE */
 
@@ -182,10 +173,10 @@ a {
 
 #landing-button > a {
     text-decoration: none;
-    color: var(--paper);
-    font-family: "Source Code Pro", serif;
-    font-weight: 600;
-    font-size: 1.5rem;
+    color: var(--rule);
+    font-family: "STIX Two Text", serif;
+    font-weight: 400;
+    font-size: 2rem;
     transition: color 300ms ease;
 }
 
@@ -216,6 +207,26 @@ a {
     padding: 24px;
     align-self: center;
     width: 400px;
+}
+
+.coproduct-figure {
+    margin: 0;
+    text-align: center;   /* centers the caption under the image */
+    max-width: 400px;     /* match your image width if you like */
+}
+
+.coproduct-figure img,
+.coproduct-figure svg {
+    max-width: 100%;
+    height: auto;
+    margin: 0 auto;
+}
+
+.coproduct-figure figcaption {
+    margin-top: 0.5em;
+    font-size: 0.9rem;
+    color: var(--border-strong);
+    font-style: italic;
 }
 
 @media (max-width: 760px) {
